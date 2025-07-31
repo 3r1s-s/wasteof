@@ -134,6 +134,8 @@
     flex-direction: column;
     gap: 4px;
     flex-grow: 1;
+    overflow: hidden;
+    text-wrap: balance;
 }
 
 .end {
@@ -215,7 +217,7 @@
 }
 
 .banner {
-    height: calc(150px + env(safe-area-inset-top));
+    height: calc(150px + 0px);
     margin-bottom: -10%;
     width: 100%;
 }
@@ -359,6 +361,7 @@
 .post.repost {
     border-radius: 12px;
     border: 2px solid var(--app-300);
+    overflow: hidden;
 }
 
 .post-replies {
