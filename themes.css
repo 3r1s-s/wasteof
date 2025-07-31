@@ -1,0 +1,292 @@
+.light {
+    --app-text: #1b1b2f;
+    --app-link: #382a83;
+
+    --app-100: #f7f3ff;
+    --app-200: #efedfa;
+    --app-300: #e9e6ff;
+    --app-400: #d5d1f3;
+    --app-500: #c0bbe7;
+    --app-600: #b0abd9;
+    --app-700: #9b96c3;
+    --app-800: #8985ac;
+    --app-900: #726f90;
+
+    --app-accent: #553fcd;
+    
+    --titlebar: rgba(239, 236, 255, 0.8);
+
+    --app-blue: #1f6bff;
+    --app-red: #e84136;
+    --app-green: #3cb57f;
+    --app-yellow: #ffe463;
+    --app-pink: #ff47ff;
+    --app-purple: #7044ff;
+    --app-orange: #ff8a47;
+
+    --app-dark-blue: #2056c8;
+    --app-dark-red: #b6382e;
+    --app-dark-green: #2f8960;
+    --app-dark-yellow: #c7a800;
+    --app-dark-pink: #b941b4;
+    --app-dark-purple: #5332bf;
+    --app-dark-orange: #c76933;
+
+    --modal-100: var(--app-100);
+    --modal-200: var(--app-200);
+    --modal-300: var(--app-400);
+    --modal-400: var(--app-300);
+    --modal-500: var(--app-600);
+    --modal-600: var(--app-500);
+    --modal-700: var(--app-700);
+    --modal-800: var(--app-800);
+    --modal-900: var(--app-900);
+
+    --brand-purple: #a083ff;
+    --brand-purple-dark: #4d3f7d;
+
+    .content {
+        background: var(--app-100);
+    }
+
+    .modal-outer.open, .alert-outer.open, .view-image-outer.open {
+        background-color: rgba(101, 100, 108, 0.8);
+    }
+}
+
+.oled {
+    --app-text: #e7e9f3;
+    --app-link: #3679f0;
+    --app-100: #000000;
+    --app-200: #020202;
+    --app-300: #141414;
+    --app-400: #171717;
+    --app-500: #1e1e1e;
+    --app-600: #262626;
+    --app-700: #333333;
+    --app-800: #434343;
+    --app-900: #4e4e4e;
+
+    --modal-100: var(--app-100);
+    --modal-200: var(--app-200);
+    --modal-300: var(--app-300);
+    --modal-400: var(--app-100);
+    --modal-500: var(--app-400);
+    --modal-600: var(--app-600);
+    --modal-700: var(--app-700);
+    --modal-800: var(--app-800);
+    --modal-900: var(--app-900);
+
+    --titlebar: rgba(12, 12, 12, 0.8);
+}
+
+.acrylic {
+    --app-text: #e7e9f3;
+    --app-link: #3679f0;
+    --app-100: #000000df;
+    --app-200: #ffffff14;
+    --app-300: #ffffff0d;
+    --app-400: #ffffff08;
+    --app-500: #ffffff06;
+    --app-600: #ffffff04;
+    --app-700: #000000df;
+    --app-800: #000000bf;
+    --app-900: #ffffff47;
+
+    --modal-100: #202020;
+    --modal-200: #323232;
+    --modal-300: #202020;
+    --modal-400: #202020;
+    --modal-500: #252525;
+    --modal-600: #2b2b2b;
+    --modal-700: #2f2f2f;
+    --modal-800: #343434;
+    --modal-900: var(--app-900);
+
+    --titlebar: #ffffff0d;
+
+    --wallpaper-url: '';
+
+    body {
+        background-image: var(--wallpaper-url);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+
+        background-color: #fff;
+    }
+
+    .app {
+        backdrop-filter: blur(30px) saturate(125%);
+        -webkit-backdrop-filter: blur(30px) saturate(125%);
+        background: var(--app-100);
+    }
+
+    .titlebar, .nav {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    .settings-options {
+        background: transparent;
+    }
+
+    .content, .titlebar.large {
+        background: transparent;
+    }
+
+    .content {
+        clip-path: polygon(0 calc(var(--titlebar-height) + env(safe-area-inset-top)), 100% calc(var(--titlebar-height) + env(safe-area-inset-top)), 100% calc(100% - var(--nav-height) - env(safe-area-inset-bottom)), 0 calc(100% - var(--nav-height) - env(safe-area-inset-bottom)));
+    }
+    
+    .titlebar.large + .content {
+        clip-path: polygon(0 calc(var(--titlebar-height) + env(safe-area-inset-top) + 10px), 100% calc(var(--titlebar-height) + env(safe-area-inset-top) + 10px), 100% calc(100% - var(--nav-height) - env(safe-area-inset-bottom)), 0 calc(100% - var(--nav-height) - env(safe-area-inset-bottom)));
+    }
+    
+    .content.max {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    .tooltip {
+        background: var(--modal-100);
+        border: 2px solid var(--modal-300);
+    }
+
+    .titlebar.trans .titlebar-back::before, .titlebar.large .titlebar-back::before {
+        background: var(--app-300);
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+
+    .pulltab {
+        background: var(--modal-300);
+    }
+    
+    .json-block {
+        background: #00000094;
+    }
+
+    .form-input, .form label {
+        background: var(--modal-400);
+    }
+
+    .accordion .menu-button {
+        background: transparent;
+    }
+    
+    .accordion .menu-button:active {
+        background: var(--app-500);
+    }
+}
+
+.acrylic.disable-backdrop-blur .app {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+}
+
+.catppuccin-macchiato {
+    --app-text: #cad3f5;
+    --app-link: #8aadf4;
+    --app-100: #181926;
+    --app-200: #1e2030;
+    --app-300: #24273a;
+    --app-400: #363a4f;
+    --app-500: #494d64;
+    --app-600: #5b6078;
+    --app-700: #6e738d;
+    --app-800: #8087a2;
+    --app-900: #939ab7;
+
+    --modal-100: var(--app-400);
+    --modal-200: var(--app-300);
+    --modal-300: var(--app-300);
+    --modal-400: var(--app-100);
+    --modal-500: var(--app-200);
+    --modal-600: var(--app-300);
+    --modal-700: var(--app-400);
+    --modal-800: var(--app-500);
+    --modal-900: var(--app-600);
+
+    --titlebar: rgba(34, 36, 57, 0.8);
+
+    --app-blue: #8aadf4;
+    --app-red: #ed8796;
+    --app-green: #a6da95;
+    --app-yellow: #eed49f;
+    --app-pink: #f5bde6;
+    --app-purple: #c6a0f6;
+    --app-orange: #ee99a0;
+
+    --brand-purple: #8aadf4;
+    --brand-purple-dark: #b2c8e4;
+
+    .chat-icon-svg {
+        background: var(--app-300);
+    }
+}
+
+.thirteen {
+    --app-blue: #1f6bff;
+    --app-red: #e84136;
+    --app-green: #23a55a;
+    --app-yellow: #ecce3c;
+    --app-pink: #e04ae0;
+    --app-purple: #3a17ab;
+    --app-orange: #f7772d;
+
+    --app-dark-blue: #2056c8;
+    --app-dark-red: #b6382e;
+    --app-dark-green: #127f3f;
+    --app-dark-yellow: #c7a800;
+    --app-dark-pink: #8f2f8f;
+    --app-dark-purple: #210d60;
+    --app-dark-orange: #c76933;
+
+    --app-text: #eeeeee;
+    --app-link: var(--app-orange);
+    --app-100: #000000;
+    --app-200: #020202;
+    --app-300: #080808;
+    --app-400: #101010;
+    --app-500: #151515;
+    --app-600: #191919;
+    --app-700: #1a1a1a;
+    --app-800: #1f1f1f;
+    --app-900: #292929;
+
+    --modal-100: var(--app-100);
+    --modal-200: var(--app-200);
+    --modal-300: var(--app-300);
+    --modal-400: var(--app-100);
+    --modal-500: var(--app-400);
+    --modal-600: var(--app-600);
+    --modal-700: var(--app-700);
+    --modal-800: var(--app-800);
+    --modal-900: var(--app-900);
+
+    --brand-purple: var(--app-orange);
+    --brand-purple-dark: var(--app-dark-orange);
+
+    --titlebar: rgba(0, 0, 0, 0.8);
+
+    .chat {
+        background: var(--app-100);
+    }
+
+    .chat:active {
+        background: var(--app-500);
+    }
+
+    .chat.favourite {
+        background: var(--app-300);
+    }
+
+    .chat.chat.favourite:active {
+        background: var(--app-500);
+    }
+
+    .checked .toggle {
+        border: 2px solid var(--app-orange);
+        background-color: var(--app-orange);
+    }
+}
