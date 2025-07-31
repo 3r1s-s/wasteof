@@ -1,15 +1,4 @@
-# ErisUI
+# wasteof
+I don't have a unique name yet ok
 
-A cool UI framework. (I may come up with a better name later)
-Since TeleMeow is essentially dead now I'm not gonna just let that awesome code go to waste.
-
-I'll update the things you can do eventually.
-
-## Forms/Text input
-
-```
-<div class="form">
-    <input class="form-input" id="id" type="text" autocomplete="">
-    <label for="id">Label</label>
-</div>
-```
+![icon](https://github.com/3r1s-s/wasteof/blob/main/src/assets/images/icon-mobile.png?raw=true)
