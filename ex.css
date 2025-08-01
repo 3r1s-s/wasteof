@@ -319,13 +319,13 @@
 }
 
 .modal-button {
-    border: 2px solid var(--app-700);
+    /* border: 2px solid var(--app-700); */
 }
 
 .modal-button.highlight {
     background: var(--app-blue);
     color: var(--app-white);
-    border: 2px solid #70a3ff;
+    /* border: 2px solid #70a3ff; */
 
     font-weight: 600;
     text-shadow: 0 0 10px #00000050;
@@ -333,7 +333,7 @@
 
 .modal-button.highlight:active {
     background: var(--app-dark-blue);
-    border: 2px solid #70a3ff;
+    /* border: 2px solid #70a3ff; */
 }
 
 .newpost-outer {

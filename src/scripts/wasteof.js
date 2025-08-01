@@ -169,8 +169,8 @@ function createPost(data, isRepost, backpage = '') {
                 ${repost || ''}
             </div>
             ${!isRepost ? `
-                <div class="post-info" onclick="event.stopPropagation();">
-                    <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}">
+                <div class="post-info">
+                    <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}" onclick="event.stopPropagation();lovePost(&quot;${data._id}&quot;);">
                         <span class="icon">${icon.love}</span>
                         <span class="count">${data.loves}</span>
                     </div>
@@ -213,7 +213,7 @@ function createBigPost(data) {
                 ${repost || ''}
             </div>
             <div class="post-info">
-                <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}">
+                <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}" onclick="event.stopPropagation();lovePost(&quot;${data._id}&quot;);">
                     <span class="icon">${icon.love}</span>
                     <span class="count">${data.loves}</span>
                 </div>
@@ -253,7 +253,7 @@ function newPost() {
         fill: true,
         buttons: [
             { text: "Cancel", action: `closeModal();` },
-            { text: "Post", action: `closeModal();`, highlight: `true` }
+            { text: "Post", action: `sendPost(document.querySelector('.postbox').value);`, highlight: `true` }
         ]
     })
 }
@@ -563,4 +563,51 @@ function notificationBadge() {
 
 function openLink(link) {
     window.open(link, '_blank');
+}
+
+async function sendPost(content) {
+    if (!storage.get('session')) {
+        loginModal();
+        return;
+    }
+
+    const postRes = await fetch('https://api.wasteof.money/posts', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `${storage.get('token')}`
+        },
+        body: JSON.stringify({ post: content })
+    });
+
+    closeModal();
+}
+
+async function lovePost(id) {
+    if (!storage.get('session')) {
+        loginModal();
+        return;
+    }
+
+    const post = document.getElementById(`${id}`);
+    const loveElement = post.querySelector('.post-loves');
+    const loved = loveElement.classList.toggle('loved');
+
+    if (loved) {
+        loveCache[id] = true;
+        loveElement.querySelector('.count').textContent++;
+    } else {
+        loveCache[id] = false;
+        loveElement.querySelector('.count').textContent--;
+    }
+
+    haptic();
+
+    const postRes = await fetch(`https://api.wasteof.money/posts/${id}/loves`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `${storage.get('token')}`
+        }
+    });
 }
