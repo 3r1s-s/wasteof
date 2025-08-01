@@ -473,6 +473,9 @@ function settingsPage() {
             <div class="settings-options">
                 <div class="menu-button" onclick="navigateForward('devicePage()')"><span>Device Info</span>${icon.arrow}</div>
             </div>
+            <div class="page-footer">
+                <button class="hyperlink" onclick="openLink('https://github.com/3r1s-s/wasteof')">GitHub</button>
+            </div>
         </div>
     `;
 
