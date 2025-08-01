@@ -78,6 +78,7 @@ function profilePage(name) {
     titlebar.back(`navigateBack('feedPage()')`);
 
     navigation.show();
+    resetContentClasses();
     content.classList.add('max');
     content.scrollTo(0,0);
     content.style = `padding-top: 0;`;
@@ -141,6 +142,7 @@ function myProfilePage() {
     titlebar.show();
     titlebar.back();
 
+    resetContentClasses();
     navigation.show();
     content.scrollTo(0,0);
     content.classList.add('max');
