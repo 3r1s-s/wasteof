@@ -56,7 +56,9 @@ function explorePage() {
 
     content.innerHTML = `
     <div class="wasteof page">
-
+        <div class="search">
+            <div class="text-input"><input type="text" placeholder="Search" autocomplete="off"/>${icon.search}</div>
+        <div>
     <div>
     `;
 
@@ -84,6 +86,16 @@ function profilePage(name) {
     <div class="profile-page">
         <div class="banner">
             <img src="https://api.wasteof.money/users/${name}/banner" class="profile-banner">
+        </div>
+        <div class="edge-scroll-effect-soft">
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="gradient"></div>
         </div>
         <div class="profile-info">
             <div class="profile-section">
@@ -137,6 +149,16 @@ function myProfilePage() {
     <div class="profile-page">
         <div class="banner">
             <img src="https://api.wasteof.money/users/${name}/banner" class="profile-banner">
+        </div>
+        <div class="edge-scroll-effect-soft">
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="blur-filter"></div>
+                <div class="gradient"></div>
         </div>
         <div class="profile-info">
             <div class="profile-section">
