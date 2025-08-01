@@ -380,6 +380,13 @@ function themesPage() {
                         <span>Twilight</span>
                     </div>
                 </div>
+                <div class="theme-option wom-blue" onclick="theme.set('wom-blue');haptic()">
+                    <div class="theme-colour">
+                    </div>
+                    <div class="theme-name">
+                        <span>Dusk</span>
+                    </div>
+                </div>
                 </div>
             </div>
         </div>
