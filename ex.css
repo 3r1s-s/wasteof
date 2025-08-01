@@ -9,6 +9,7 @@
     gap: 8px;
     border-top: 2px solid var(--app-300);
     border-bottom: 2px solid var(--app-300);
+    overflow: hidden;
 
     transition: opacity 0.2s ease-out;
     opacity: 1;
@@ -645,4 +646,16 @@ ol>li {
 }
 .profile-pinned .post:not(.repost) {
     border-bottom: none;
+}
+
+pre {
+    font-family: 'Reddit Mono', monospace;
+    background: #000;
+    color: #fff;
+    padding: 5px;
+    margin: 0;
+    border-radius: 5px;
+    box-sizing: border-box;
+    overflow: scroll;
+    width: 100%;
 }
