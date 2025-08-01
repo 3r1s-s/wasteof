@@ -686,6 +686,53 @@ pre {
     padding: calc(var(--titlebar-height) - 0px + env(safe-area-inset-top)) 0 calc(var(--nav-height) + env(safe-area-inset-bottom)) 0;
 }
 
+.nameplate {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    box-sizing: border-box;
+    gap: 6px;
+    border: 1px solid #ffffff25;
+    border-radius: 12px;
+    font-weight: 500;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.nameplate::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    filter: blur(10px);
+    opacity: 0.2;
+    z-index: -1;
+
+    background-image: var(--image);
+    background-size: cover;
+    background-position: center;
+}
+
+.nameplate .pfp {
+    width: 32px;
+    height: 32px;
+}
+
+.explore-users {
+    padding: 12px;
+    padding-top: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
 /* Edge Scroll Effect Soft */
 
 .edge-scroll-effect-soft {

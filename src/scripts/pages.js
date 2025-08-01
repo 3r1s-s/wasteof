@@ -57,10 +57,29 @@ function explorePage() {
     content.innerHTML = `
     <div class="wasteof page">
         <div class="search">
-            <div class="text-input"><input type="text" placeholder="Search" autocomplete="off"/>${icon.search}</div>
-        <div>
-    <div>
+            <div class="text-input">
+                <input type="text" placeholder="Search" autocomplete="off"/>${icon.search}
+            </div>
+        </div>
+        <div class="explore-users">
+
+        </div>
+    </div>
     `;
+
+    const saveForLater = `
+                <div class="nameplate" style="--image: url('https://api.wasteof.money/users/eris/banner');">
+                <div class="pfp-container">
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/eris/picture');"></div>
+                </div>
+                <span>eris</span>
+            </div>
+            <div class="nameplate" style="--image: url('https://api.wasteof.money/users/radi8/banner');">
+                <div class="pfp-container">
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/radi8/picture');"></div>
+                </div>
+                <span>radi8</span>
+            </div>`
 
     getTrending();
     pageElements();
