@@ -218,7 +218,7 @@
 }
 
 .banner {
-    height: calc(150px + 0px);
+    height: calc(150px + env(safe-area-inset-top));
     margin-bottom: -10%;
     width: 100%;
 }
