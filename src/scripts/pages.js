@@ -7,7 +7,7 @@ function feedPage() {
     titlebar.back(``);
 
     navigation.show();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -50,7 +50,7 @@ function explorePage() {
     titlebar.back(``);
 
     navigation.show();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -207,9 +207,10 @@ async function postPage(id, backpage) {
     }
 
     navigation.show();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = `padding: calc(var(--titlebar-height) - 0px + env(safe-area-inset-top)) 0 calc(var(--nav-height) + env(safe-area-inset-bottom)) 0;`;
+    content.classList.add('post-page');
 
     content.innerHTML = `
     <div class="post-page">
@@ -237,7 +238,7 @@ function notifsPage() {
     titlebar.back(``);
 
     navigation.show();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -268,7 +269,7 @@ function infoPage() {
     titlebar.back(``);
 
     navigation.show();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -346,7 +347,7 @@ function themesPage() {
     titlebar.type();
     titlebar.back(`navigateBack('settingsPage()');`);
 
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
 
     content.innerHTML = `
@@ -426,7 +427,7 @@ function devicePage() {
     titlebar.show();
     titlebar.back('navigateBack(`settingsPage()`)');
 
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -453,10 +454,10 @@ function settingsPage() {
     titlebar.set(`Settings`);
     titlebar.type('large');
     titlebar.show();
-    titlebar.back(`myProfilePage()`);
+    titlebar.back(`navigateBack('myProfilePage()')`);
 
     navigation.hide();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -489,7 +490,7 @@ function accountPage() {
     titlebar.back(`navigateBack('settingsPage()')`);
 
     navigation.hide();
-    content.classList.remove('max');
+    resetContentClasses();
     content.scrollTo(0,0);
     content.style = ``;
 
@@ -504,4 +505,9 @@ function accountPage() {
     pageElements();
 
     document.querySelectorAll('.active').forEach(element => element.classList.remove('active'));
+}
+
+function resetContentClasses() {
+    content.classList.remove('post-page');
+    content.classList.remove('max');
 }

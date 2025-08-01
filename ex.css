@@ -682,6 +682,10 @@ pre {
     box-sizing: border-box;
 }
 
+.content.post-page {
+    padding: calc(var(--titlebar-height) - 0px + env(safe-area-inset-top)) 0 calc(var(--nav-height) + env(safe-area-inset-bottom)) 0;
+}
+
 /* Edge Scroll Effect Soft */
 
 .edge-scroll-effect-soft {
