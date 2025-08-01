@@ -169,7 +169,7 @@ function createPost(data, isRepost, backpage = '') {
                 ${repost || ''}
             </div>
             ${!isRepost ? `
-                <div class="post-info">
+                <div class="post-info" onclick="event.stopPropagation();">
                     <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}">
                         <span class="icon">${icon.love}</span>
                         <span class="count">${data.loves}</span>
