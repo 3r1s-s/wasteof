@@ -102,12 +102,13 @@
     border-radius: 8px;
     max-height: 400px;
     object-fit: cover;
-    box-shadow: 0 0 0 1px #ffffff25;
+    border: 1px solid #ffffff25;
+    box-sizing: border-box;
 }
 
 .post-page .post-content>img {
     max-height: 100%;
-}
+}   
 
 .pfp {
     background-image: var(--image);
@@ -697,6 +698,11 @@ pre {
     font-weight: 500;
     z-index: 1;
     overflow: hidden;
+    flex-shrink: 0;
+}
+
+.nameplate.small {
+    border-radius: 8px;
 }
 
 .nameplate::before {
@@ -721,7 +727,7 @@ pre {
     height: 32px;
 }
 
-.explore-users {
+.users-column {
     padding: 12px;
     padding-top: 0;
     box-sizing: border-box;
@@ -730,6 +736,21 @@ pre {
     gap: 8px;
     border-radius: 12px;
     overflow: hidden;
+}
+
+.explore-users {
+    padding: 12px;
+    padding-top: 0;
+    box-sizing: border-box;
+    display: flex;
+
+    gap: 8px;
+    overflow-x: scroll;
+}
+
+.nameplate.small .pfp {
+    width: 20px;
+    height: 20px;
 }
 
 /* Edge Scroll Effect Soft */

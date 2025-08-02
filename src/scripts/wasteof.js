@@ -293,6 +293,28 @@ async function getTrending() {
     });
 
     updatePosts('explorePage()');
+
+    const res2 = await fetch('https://api.wasteof.money/explore/users/top');
+    const data2 = await res2.json();
+
+    if (data2.error) {
+        return;
+    }
+
+    data2.forEach(data => {
+        document.querySelector('.explore-users').innerHTML += createUserPlate(data.name, true);
+    })
+}
+
+function createUserPlate(user, small) {
+    return `
+        <div class="nameplate ${small ? 'small' : ''}" style="--image: url('https://api.wasteof.money/users/${user}/banner');" onclick="navigateForward('profilePage(&quot;${user}&quot;)')">
+            <div class="pfp-container">
+                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${user}/picture');"></div>
+            </div>
+            <div class="nameplate-name">${user}</div>
+        </div>
+    `;
 }
 
 async function loadUserPosts(user) {
@@ -470,7 +492,7 @@ function createNotification(data) {
             <div class="notification-content">
                 <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
                 <div class="notification-post post-content">
-                    ${data.data.comment.content}
+                    ${data.data.comment ? data.data.comment.content : '<p style="font-style: italic">but the comment was deleted :(</p>'}
                 </div>
             </div>
         </div>
@@ -484,7 +506,7 @@ function createNotification(data) {
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
                     <div class="notification-post post-content">
-                        ${data.data.comment.content}
+                        ${data.data.comment.content || '<p style="font-style: italic">but the comment was deleted :(</p>'}
                     </div>
                 </div>
             </div>
@@ -577,7 +599,7 @@ async function sendPost(content) {
             'Content-Type': 'application/json',
             authorization: `${storage.get('token')}`
         },
-        body: JSON.stringify({ post: content })
+        body: JSON.stringify({ post: `<p>${content.sanitize()}</p>` })
     });
 
     closeModal();
