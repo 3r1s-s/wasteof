@@ -239,7 +239,7 @@ async function postPage(id, backpage) {
         </div>
     </div>
     <div class="post-replies"></div>
-    <div class="reply-box">
+    <div class="reply-box" onclick="newReply('${id}')">
         <div class="pfp" style="--image: url('https://api.wasteof.money/users/eris/picture'); width: 20px; height: 20px;"></div>
         <span id="reply-to-text">Reply to</span>
     </div>

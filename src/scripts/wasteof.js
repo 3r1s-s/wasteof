@@ -102,7 +102,7 @@ function loginModal() {
 
 function loadPost(data) {
     postCache[data._id] = {
-        data,
+        data: data,
         comments: [],
     };
     return fetchPost(data._id);
@@ -178,7 +178,7 @@ function createPost(data, isRepost, backpage = '') {
                             <span class="icon">${icon.repost}</span>
                             <span class="count">${data.reposts}</span>
                     </div>
-                    <div class="post-reposts post-info-item">
+                    <div class="post-reposts post-info-item" onclick="event.stopPropagation();newReply('${data._id}');">
                         <span class="icon">${icon.comment}</span>
                         <span class="count">${data.comments}</span>
                     </div>
@@ -221,7 +221,7 @@ function createBigPost(data) {
                         <span class="icon">${icon.repost}</span>
                         <span class="count">${data.reposts}</span>
                 </div>
-                <div class="post-reposts post-info-item">
+                <div class="post-reposts post-info-item" onclick="event.stopPropagation();newReply('${data._id}');">
                     <span class="icon">${icon.comment}</span>
                     <span class="count">${data.comments}</span>
                 </div>
@@ -256,6 +256,44 @@ function newPost() {
             { text: "Post", action: `sendPost(document.querySelector('.postbox').value);`, highlight: `true` }
         ]
     })
+}
+
+async function newReply(id) {
+    if (!storage.get('session')) {
+        loginModal();
+        return;
+    }
+
+    openModal({
+        body: `
+        <div class="replying-to-post">
+            
+        </div>
+        <div class="newpost-outer">
+            <div class="">
+                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
+            </div>
+            <div class="newpost-container">
+                <div class="newpost-user">${storage.get('user')}</div>
+                <textarea class="postbox" placeholder="Replying to..."></textarea>
+            </div>
+        </div>
+        `,
+        fill: true,
+        buttons: [
+            { text: "Cancel", action: `closeModal();` },
+            { text: "Post", action: `sendReply(document.querySelector('.postbox').value, &quot;${id}&quot;);`, highlight: `true` }
+        ]
+    });
+
+    try {
+        const data = await fetchPost(id);
+        document.querySelector('.replying-to-post').innerHTML = createPost(data.data, true);
+        document.querySelector('.postbox').placeholder = `Replying to ${data.data.poster.name}...`;
+    } catch (err) {
+        console.error("Failed to load the post you're replying to:", err);
+        document.querySelector('.replying-to-post').textContent = "Error loading post.";
+    }
 }
 
 async function getFeed() {
@@ -592,7 +630,7 @@ async function sendPost(content) {
         loginModal();
         return;
     }
-
+    loggingIn('Sending...');
     const postRes = await fetch('https://api.wasteof.money/posts', {
         method: 'POST',
         headers: {
@@ -602,7 +640,40 @@ async function sendPost(content) {
         body: JSON.stringify({ post: `<p>${content.sanitize()}</p>` })
     });
 
+    closeAlert();
     closeModal();
+    
+    if (postRes.ok) {
+        tooltip({icon: icon.check, title: 'Posted!'});
+    } else {
+        tooltip({icon: icon.cross, title: 'Error'});    
+    }
+}
+
+async function sendReply(content, id) {
+    if (!storage.get('session')) {
+        loginModal();
+        return;
+    }
+    loggingIn('Sending...');
+    const postRes = await fetch(`https://api.wasteof.money/posts/${id}/comments`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            authorization: `${storage.get('token')}`
+        },
+        body: JSON.stringify({ content: `<p>${content.sanitize()}</p>` }),
+        parent: null
+    });
+
+    closeAlert();
+    closeModal();
+
+    if (postRes.ok) {
+        tooltip({icon: icon.check, title: 'Sent!'});
+    } else {
+        tooltip({icon: icon.cross, title: 'Error'});
+    }
 }
 
 async function lovePost(id) {

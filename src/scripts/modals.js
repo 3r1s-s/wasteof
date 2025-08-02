@@ -191,7 +191,7 @@ function openAlert(data) {
     modalOuter.classList.add("open");
 }
 
-function loggingIn() {
+function loggingIn(g) {
     const modalOuter = document.querySelector(".alert-outer");
     const modalInner = document.querySelector(".alert-inner");
     const modal = document.querySelector(".alert");
@@ -201,7 +201,7 @@ function loggingIn() {
     document.querySelector(".alert-options").style.display = "flex";
 
     modalInner.innerHTML = `
-    <span class="alert-header">Logging in...</span>
+    <span class="alert-header">${g ? g : 'Logging in...'}</span>
     `;
 
     modal.classList.add("center");
