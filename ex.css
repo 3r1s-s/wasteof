@@ -142,6 +142,7 @@
     flex-grow: 1;
     overflow: hidden;
     text-wrap: wrap;
+    word-wrap: anywhere;
 }
 
 .end {
@@ -446,6 +447,7 @@
     flex-direction: column;
     justify-content: center;
     gap: 6px;
+    overflow: hidden;
 }
 
 .notification-title {
