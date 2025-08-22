@@ -1,4 +1,4 @@
 # wasteof
 I don't have a unique name yet ok
 
-![icon](https://github.com/3r1s-s/wasteof/blob/master/src/assets/images/wom.png?raw=true)
+![icon](https://eris.cafe/src/assets/image/banners/wom.png)
