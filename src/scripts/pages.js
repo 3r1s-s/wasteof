@@ -1,5 +1,6 @@
 function feedPage() {
     page = `feed`;
+    history.push({ pageFunc: 'feedPage', args: [] });
 
     titlebar.set(`Feed`);
     titlebar.type('large');
@@ -90,6 +91,7 @@ function explorePage() {
 
 function profilePage(name) {
     page = `profile`;
+    history.push({ pageFunc: 'profilePage', args: [name] });
 
     titlebar.set(``);
     titlebar.type('clear');

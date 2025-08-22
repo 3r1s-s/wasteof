@@ -4,6 +4,8 @@ let page;
 let back;
 let name;
 
+let history = [];
+
 const titlebar = (() => {
     const titlebar = document.querySelector('.titlebar');
     const backButton = titlebar.querySelector('.titlebar-back');
@@ -301,6 +303,18 @@ function navigateBack(topage) {
             content.classList.remove('left-back');
         }, 1);
     }, 100);
+}
+
+function historyForward(topage) {
+    history.push({ pageFunc: topage, args: [] });
+    navigateForward(history[history.length - 1].pageFunc);
+}
+
+function historyBack() {
+    if (history.length > 0) {
+        history.pop();
+        navigateBack(history[history.length - 1].pageFunc);
+    }
 }
 
 function navigateTab(topage) {
