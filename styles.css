@@ -221,6 +221,7 @@ span.logo>svg {
     justify-content: center;
     align-items: center;
     font-size: 0.8rem;
+    color: #fff;
 }
 
 .notification-badge.active {

@@ -1,5 +1,6 @@
 const URL = 'http://localhost:8000';
 const dropdowns = new Map();
+const version = '1.0.0';
 
 const storage = (() => {
     let storageData = {};

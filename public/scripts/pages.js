@@ -390,7 +390,10 @@ function settingsPage() {
                 <span class="dot"></span>
                 <a href="https://wasteof.money/rules" target="_blank">Terms</a>
             </span>
-        </div>
+            </div>
+            <span class="center" style="margin-top: 1rem;opacity: 0.5">
+                V${version}
+            </span>
     </div>
     `;
 
