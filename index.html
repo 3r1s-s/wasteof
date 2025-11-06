@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>worm</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/css/themes.css">
+    <link rel="stylesheet" href="/css/custom.css">
+    <link rel="stylesheet" href="https://eris.cafe/fonts.css">
+
+    <link rel="icon" type="image/png" href="/images/icon-web.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/images/icon-mobile.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f0f14">
+    <meta name="background-color" content="#0f0f14">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+
+    <link rel="manifest" href="/manifest.webmanifest">
+</head>
+<body ontouchstart>
+    <div class="app">
+        <div class="nav"></div>
+        <div class="main">
+            <div class="titlebar">
+                <span class="title">home</span>
+                <div class="back-button" id="back" onclick="router.back()"></div>
+                <div class="content-mask">
+                    <div class="mask-left-outer">
+                        <div class="mask-left"></div>
+                    </div>
+                    <div class="mask-right-outer">
+                        <div class="mask-right"></div>
+                    </div>
+                    <span class="mask-border"></span>
+                </div>
+            </div>
+            <div class="content-width">
+                <div class="content"></div>
+            </div>
+            <div class="jump" onclick="jump()"></div>
+        </div>
+        <div class="modal-outer">
+            <div class="modal">
+                <div class="modal-inner">
+                    
+                </div>
+                <div class="modal-options">
+                </div>
+            </div>
+        </div>
+        <div class="alert-outer">
+            <div class="alert">
+                <div class="alert-inner">
+                    
+                </div>
+                <div class="alert-options">
+                </div>
+            </div>
+        </div>
+        <div class="command-palette-outer">
+            <div class="command-palette">
+                <div class="text-input" style="height: 64px;font-size: 1.2rem;">
+                    <input type="text" placeholder="Search" autocomplete="off" class="command-palette-input" name="cmd palette">
+                </div>
+            </div>
+        </div>
+        <div class="splash open"></div>
+    </div>
+</body>
+<script src="/scripts/icons.js"></script>
+<script src="/scripts/haptics.js"></script>
+<script src="/scripts/api.js"></script>
+<script src="/scripts/modals.js"></script>
+<script src="/scripts/image.js"></script>
+<script src="/scripts/pages.js"></script>
+<script src="/index.js"></script>
+</html>
