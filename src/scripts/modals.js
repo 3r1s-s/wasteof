@@ -1,4 +1,7 @@
-function openModal(data) {
+import { haptic } from "./haptics.js";
+import { sanitize } from "./utils.js";
+
+export function openModal(data) {
     const modalOuter = document.querySelector(".modal-outer");
     const modalInner = document.querySelector(".modal-inner");
     const modal = document.querySelector(".modal");
@@ -12,7 +15,7 @@ function openModal(data) {
         if (data.title) {
             let titleElement = document.createElement("span");
             titleElement.classList.add("modal-header");
-            titleElement.textContent = data.title.sanitize()
+            titleElement.textContent = sanitize(data.title)
             modalInner.append(titleElement);
         }
 
@@ -68,19 +71,34 @@ function openModal(data) {
             modal.classList.add("post-modal");
         }
 
-        let buttons = ``;
-        if (data.buttons) {
+        const optionsContainer = document.querySelector('.modal-options');
+
+        optionsContainer.innerHTML = '';
+
+        if (Array.isArray(data.buttons)) {
             data.buttons.forEach(button => {
-                buttons += `<button class="modal-button ${button.highlight ? 'highlight' : ''}" onclick="${button.action}">${button.text}</button>`;
+                const btn = document.createElement('button');
+                btn.className = `modal-button ${button.highlight ? 'highlight' : ''}`;
+                btn.textContent = button.text;
+
+                if (typeof button.action === 'function') {
+                    btn.addEventListener('click', button.action);
+                } else {
+                    btn.addEventListener('click', closeModal);
+                }
+
+                optionsContainer.appendChild(btn);
             });
         } else if (data.buttons === false) {
-            buttons = ``;
-            document.querySelector(".modal-options").style.display = "none";
+            optionsContainer.style.display = 'none';
         } else {
-            buttons = `<button class="modal-button" onclick="closeModal()">Close</button>`;
+            const btn = document.createElement('button');
+            btn.className = 'modal-button';
+            btn.textContent = 'Close';
+            btn.addEventListener('click', closeModal);
+            optionsContainer.appendChild(btn);
         }
 
-        document.querySelector(".modal-options").innerHTML = buttons;
     }
     modalOuter.style.visibility = "visible";
     modalOuter.classList.add("open");
@@ -121,7 +139,7 @@ function openModal(data) {
     });
 }
 
-function closeModal() {
+export function closeModal() {
     const modalOuter = document.querySelector(".modal-outer");
     const modalInner = document.querySelector(".modal-inner");
     const modal = document.querySelector(".modal");
@@ -144,7 +162,7 @@ document.querySelector('.modal-outer').addEventListener("click", function(event)
     }
 });
 
-function closeAlert() {
+export function closeAlert() {
     const modalOuter = document.querySelector(".alert-outer");
     const modalInner = document.querySelector(".alert-inner");
     const modal = document.querySelector(".alert");
@@ -160,7 +178,7 @@ function closeAlert() {
     }, 500);
 }
 
-function openAlert(data) {
+export function openAlert(data) {
     const modalOuter = document.querySelector(".alert-outer");
     const modalInner = document.querySelector(".alert-inner");
     const modal = document.querySelector(".alert");
@@ -175,14 +193,14 @@ function openAlert(data) {
         if (data.title) {
             let titleElement = document.createElement("span");
             titleElement.classList.add("alert-header");
-            titleElement.textContent = data.title.sanitize();
+            titleElement.textContent = sanitize(data.title)
             modalInner.append(titleElement);
         }
 
         if (data.message) {
             let messageElement = document.createElement("span");
             messageElement.classList.add("alert-message");
-            messageElement.textContent = data.message.sanitize();
+            messageElement.textContent = sanitize(data.message)
             modalInner.append(messageElement);
         }
 
@@ -200,25 +218,33 @@ function openAlert(data) {
             modal.id = '';
         }
 
-        let buttons = ``;
-        if (data.buttons) {
+        const optionsContainer = document.querySelector('.alert-options');
+        optionsContainer.innerHTML = ''; // clear old buttons
+        optionsContainer.style.display = 'flex';
+
+        if (Array.isArray(data.buttons)) {
             data.buttons.forEach(button => {
-                buttons += `<button class="modal-button" onclick="${button.action}">${button.text}</button>`;
+                const btn = document.createElement('button');
+                btn.className = `modal-button ${button.highlight ? 'highlight' : ''}`;
+                btn.textContent = button.text;
+
+                if (typeof button.action === 'function') {
+                    btn.addEventListener('click', button.action);
+                } else {
+                    btn.addEventListener('click', closeAlert);
+                }
+
+                optionsContainer.appendChild(btn);
             });
         } else if (data.buttons === false) {
-            buttons = ``;
-            document.querySelector(".alert-options").style.display = "none";
+            optionsContainer.style.display = 'none';
         } else {
-            buttons = `<button class="modal-button" onclick="closeAlert()">Close</button>`;
+            const btn = document.createElement('button');
+            btn.className = 'modal-button';
+            btn.textContent = 'Close';
+            btn.addEventListener('click', closeAlert);
+            optionsContainer.appendChild(btn);
         }
-
-        if (data.center === true) {
-            modal.classList.add("center");
-        } else {
-            modal.classList.remove("center");
-        }
-
-        document.querySelector(".alert-options").innerHTML = buttons;
     }
     modalOuter.style.visibility = "visible";
     modalOuter.classList.add("open");
@@ -233,7 +259,7 @@ document.querySelector('.alert-outer').addEventListener("click", function(event)
     }
 });
 
-function loggingIn(g) {
+export function loggingIn(g) {
     const modalOuter = document.querySelector(".alert-outer");
     const modalInner = document.querySelector(".alert-inner");
     const modal = document.querySelector(".alert");
@@ -400,7 +426,7 @@ function closeImage() {
     }, 350);
 }
 
-function tooltip(data) {
+export function tooltip(data) {
     document.querySelectorAll('.tooltip').forEach(tooltip => {
         tooltip.classList.remove('visible');
         setTimeout(() => {
@@ -413,7 +439,7 @@ function tooltip(data) {
 
     tooltip.innerHTML = `
         ${data.icon ? `<div>${data.icon}</div>` : ``}
-        ${data.title ? `<span>${data.title.sanitize()}</span>` : ``}
+        ${data.title ? `<span>${sanitize(data.title)}</span>` : ``}
     `;
     
     document.body.appendChild(tooltip);

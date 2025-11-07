@@ -1,7 +1,15 @@
-const postCache = {}; // { id: { data: {...}, comments: [...] } }
-const loveCache = {}; // { id: true/false }
+import { storage } from './storage.js';
+import { setNotifications, notificationsIcon, content, splash, postImages, backButton } from '../index.js';
+import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener } from './utils.js';
+import { icon } from './icons.js';
+import { openAlert, closeAlert, loggingIn, closeModal, tooltip } from './modals.js';
+import { router } from './router.js';
+import { settingsPage } from '../pages/settings.js';
 
-const manageCache = (() => {
+export const postCache = {}; // { id: { data: {...}, comments: [...] } }
+export const loveCache = {}; // { id: true/false }
+
+export const manageCache = (() => {
     return {
         add(id, data) {
             if (!postCache[id]) {
@@ -82,7 +90,7 @@ function logout() {
     }, 200);
 }
 
-async function fetchPost(id) {
+export async function fetchPost(id) {
     if (!manageCache.get(id)) {
         await fetch(`https://api.wasteof.money/posts/${id}`, {
             headers: {
@@ -124,7 +132,7 @@ function loadPost(data) {
     return fetchPost(data._id);
 }
 
-function createPost(data, isRepost, focused) {
+export function createPost(data, isRepost, focused) {
     let post;
     let repost;
 
@@ -147,11 +155,34 @@ function createPost(data, isRepost, focused) {
     if (focused) {
         let postdropdown = `
         ${storage.get('user') === data.poster.name ? `
-            <div class="option" onclick="closeDropdown('dropdown-${data._id}');"><span>Edit</span><span class="option-icon">${icon.edit}</span></div>
-            <div class="option" onclick="closeDropdown('dropdown-${data._id}');deletePostModal('${data._id}');"><span>Delete</span><span class="option-icon">${icon.delete}</span></div>
-            <div class="option" id="pin-post" onclick="closeDropdown('dropdown-${data._id}');pinPost('${data._id}');"><span>Pin</span><span class="option-icon" style="width: 18px;">${icon.pin}</span></div>
-        ` : `<div class="option" onclick="reportModal('${data._id}');closeDropdown('dropdown-${data._id}');"><span>Report</span><span class="option-icon">${icon.report}</span></div>`}
-        `
+            <div class="option" 
+                data-action="edit-post" 
+                data-id="${data._id}">
+                <span>Edit</span>
+                <span class="option-icon">${icon.edit}</span>
+            </div>
+            <div class="option" 
+                data-action="delete-post" 
+                data-id="${data._id}">
+                <span>Delete</span>
+                <span class="option-icon">${icon.delete}</span>
+            </div>
+            <div class="option" 
+                data-action="pin-post" 
+                data-id="${data._id}" 
+                id="pin-post">
+                <span>Pin</span>
+                <span class="option-icon" style="width: 18px;">${icon.pin}</span>
+            </div>
+        ` : `
+            <div class="option" 
+                data-action="report-post" 
+                data-id="${data._id}">
+                <span>Report</span>
+                <span class="option-icon">${icon.report}</span>
+            </div>
+        `}
+        `;
     
         post = `
             <div class="post focused" id="${data._id}">
@@ -183,7 +214,7 @@ function createPost(data, isRepost, focused) {
                     </div>
                 </div>
                 <div class="context-outer more" id="dropdown-${data._id}">
-                    <div class="context" onclick="openDropdown('dropdown-${data._id}')" data-dropdown="dropdown-${data._id}">
+                    <div class="context" data-dropdown="dropdown-${data._id}">
                     ${icon.more}
                     </div>
                     <div class="dropdown">
@@ -192,9 +223,26 @@ function createPost(data, isRepost, focused) {
                 </div>
             </div>
         `;
+    } else if (isRepost) {
+        post = `
+            <div class="post repost unfocused clickable" id="${data._id}" data-post-id="${data._id}">
+            <div class="pfp-container">
+                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="event.stopPropagation();router.navigate('/users/${data.poster.name}')"></div>
+            </div>
+            <div class="post-container">
+                <div class="post-header">
+                    <div class="post-title">${data.poster.name}</div>
+                    <span class="post-date">${timeAgo(data.time)}</span>
+                </div>
+                <div class="post-content" onclick="">${data.content}</div>
+                <div class="post-repost">
+                </div>
+            </div>
+            </div>
+        `;
     } else {
     post = `
-        <div class="post ${isRepost ? 'repost' : ''} ${data.pinned ? 'pinned' : ''} unfocused" id="${data._id}" onclick="event.stopPropagation();router.navigate('/posts/${data._id}')">
+        <div class="post ${isRepost ? 'repost' : ''} ${data.pinned ? 'pinned' : ''} unfocused" id="${data._id}">
         <div class="pfp-container">
             <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="event.stopPropagation();router.navigate('/users/${data.poster.name}')"></div>
         </div>
@@ -231,7 +279,7 @@ function createPost(data, isRepost, focused) {
     return post;
 }
 
-async function getTrending() {
+export async function getTrending() {
     const res = await fetch('https://api.wasteof.money/explore/posts/trending?timeframe=day');
     const data = await res.json();
 
@@ -247,9 +295,24 @@ async function getTrending() {
 
     document.getElementById('loading').remove();
 
+    const exploreContainer = document.querySelector('.explore-posts');
     data.posts.forEach(post => {
-        document.querySelector('.explore-posts').innerHTML += createPost(post);
+        const temp = document.createElement('div');
+        temp.innerHTML = createPost(post).trim();
+
+        const postElement = temp.firstChild;
+        postElement.addEventListener('click', () => {
+            event.stopPropagation();
+            router.navigate('/posts/' + post._id);
+        });
+
+        postElement.ondragstart = () => {
+            return false;
+        };
+
+        exploreContainer.appendChild(postElement);
     });
+
 
     const res2 = await fetch('https://api.wasteof.money/explore/users/top');
     const data2 = await res2.json();
@@ -264,7 +327,7 @@ async function getTrending() {
     })
 }
 
-async function getSearch(query) {
+export async function getSearch(query) {
     document.querySelector('.explore-posts').innerHTML = `
         <div class="content-center" id="loading"><span class="loader animate">${icon.loader}</span></div>
     `;
@@ -300,7 +363,7 @@ async function getSearch(query) {
     })
 }
 
-async function getFeed() {
+export async function getFeed() {
     if (storage.get('session')) {
         const res = await fetch(`https://api.wasteof.money/users/${storage.get('user')}/following/posts`);
         const data = await res.json();
@@ -319,10 +382,39 @@ async function getFeed() {
         document.getElementById('loading').remove();
 
         data.posts.forEach(post => {
-            content.innerHTML += createPost(post);
+            const temp = document.createElement('div');
+            temp.innerHTML = createPost(post).trim();
+
+            const postElement = temp.firstChild;
+            postElement.addEventListener('click', () => {
+                event.stopPropagation();
+                router.navigate('/posts/' + post._id);
+            });
+
+            postElement.ondragstart = () => {
+                return false;
+            };
+
+            content.appendChild(postElement);
         });
     }
 }
+
+export async function fetchPostPage(id) {
+    let post = await fetchPost(id);
+
+    if (document.querySelector('.post-view')) {   
+        document.querySelector('.post-view').innerHTML = createPost(post.data, false, true);
+    }
+
+    loadPostComments(id);
+    updateContext(id);
+    dropdownListeners();
+    repostListener(id);
+    // document.getElementById('loading-post').remove();
+    backButton.classList.add('active');
+}
+
 
 async function lovePost(id) {
     if (!storage.get('session')) {
@@ -391,7 +483,7 @@ async function unpinPost(id) {
     updateContext(id);
 }
 
-async function deletePost(id) {
+export async function deletePost(id) {
     if (!storage.get('session')) {
         return;
     }
@@ -424,7 +516,7 @@ async function setBio(newBio) {
     tooltip({icon: icon.check, title: 'Updated!'});
 }
 
-async function postContext(data) {
+export async function postContext(data) {
     const pinEl = document.querySelector(`#dropdown-${data._id} #pin-post`);
     if (!pinEl) return;
 
@@ -440,19 +532,7 @@ async function postContext(data) {
     pinEl.innerHTML = pinHTML;
 }
 
-async function updateContext(id) {
-    const postData = manageCache.get(id)?.data;
-    if (!postData) {
-        console.warn(`No cached data found for post ${id}`);
-        return;
-    }
-
-    await postContext(postData);
-}
-
-// Nameplates
-
-function notificationBadge() {
+export function notificationBadge() {
     if (storage.get('session') === true) {
         fetch('https://api.wasteof.money/messages/unread', {
             method: 'GET',
@@ -464,14 +544,14 @@ function notificationBadge() {
             const notifBadge = document.querySelector('.notification-badge');
 
             notifBadge.textContent = data.unread.length;
-            notifications = data.unread.length;
+            setNotifications(data.unread.length);
 
             if (data.unread.length > 0) {
                 notifBadge.classList.add('active');
             } else {
                 notifBadge.classList.remove('active');
             }
-            setNotificationsIcon();
+            notificationsIcon();
         });
     }
 }
@@ -489,7 +569,7 @@ function createNameplate(user, small) {
 
 // User
 
-async function loadUserPosts(user) {
+export async function loadUserPosts(user) {
     try {
         const res = await fetch('https://api.wasteof.money/users/' + user + '/posts');
         const data = await res.json();
@@ -506,7 +586,20 @@ async function loadUserPosts(user) {
 
         if (document.querySelector('.profile-posts')) {
             data.posts.forEach(post => {
-                document.querySelector('.profile-posts').innerHTML += createPost(post);
+                const temp = document.createElement('div');
+                temp.innerHTML = createPost(post).trim();
+
+                const postElement = temp.firstChild;
+                postElement.addEventListener('click', () => {
+                    event.stopPropagation();
+                    router.navigate('/posts/' + post._id);
+                });
+
+                postElement.ondragstart = () => {
+                    return false;
+                };
+
+                document.querySelector('.profile-posts').appendChild(postElement);
             });
         }
         await Promise.all(data.pinned.map(post => loadPost(post)));
@@ -517,8 +610,26 @@ async function loadUserPosts(user) {
 
         document.getElementById('loading').remove();
         if (data.pinned.length !== 0) {
-            document.querySelector('.profile-pinned').innerHTML = createPost(data.pinned[0]);
-            document.querySelector('.profile-pinned').innerHTML += `<span class="pin-indicator">${icon.pin}</span>`;
+            document.querySelector('.profile-pinned')
+            const temp = document.createElement('div');
+            temp.innerHTML = createPost(data.pinned[0]).trim();
+
+            const postElement = temp.firstChild;
+            postElement.addEventListener('click', event => {
+                event.stopPropagation();
+                router.navigate('/posts/' + data.pinned[0]._id);
+            });
+
+            postElement.ondragstart = () => {
+                return false;
+            };
+
+            document.querySelector('.profile-pinned').appendChild(postElement);
+
+            const pinEl = document.createElement('span');
+            pinEl.classList.add('pin-indicator');
+            pinEl.innerHTML = `${icon.pin}`;
+            document.querySelector('.profile-pinned').appendChild(pinEl);
         }
 
         if (!data.last) {
@@ -530,7 +641,7 @@ async function loadUserPosts(user) {
     }
 }
 
-async function loadMoreUserPosts(user) {
+export async function loadMoreUserPosts(user) {
 // https://api.wasteof.money/users/eris/posts?page=2
     document.querySelector('.load-more').classList.add('hide');
     document.querySelector('.profile-posts').innerHTML += `
@@ -559,7 +670,7 @@ async function loadMoreUserPosts(user) {
     }
 }
 
-async function loadUserInfo(user) {
+export async function loadUserInfo(user) {
     try {
         const following = await fetch(`https://api.wasteof.money/users/${user}/followers/${storage.get('user')}`).then(res => res.json());
         
@@ -584,7 +695,8 @@ async function loadUserInfo(user) {
         if (user === storage.get('user')) {
             document.querySelector('.follow-button').innerText = 'Settings';
             document.querySelector('.follow-button').classList.remove('following');
-            document.querySelector('.follow-button').setAttribute('onclick', 'router.navigate("/settings")');
+            document.querySelector('.follow-button').addEventListener('click', settingsPage);
+            document.querySelector('.follow-button').removeEventListener('click', toggleFollowButton);
         }
 
         const res = await fetch('https://api.wasteof.money/users/' + user);
@@ -606,7 +718,7 @@ async function loadUserInfo(user) {
     }
 }
 
-async function loadUserSettings(user) {
+export async function loadUserSettings(user) {
     try {
         const res = await fetch('https://api.wasteof.money/users/' + user);
         const data = await res.json();
@@ -617,7 +729,7 @@ async function loadUserSettings(user) {
     }
 }
 
-async function loadUserColor(user) {
+export async function loadUserColor(user) {
     try {
         const res = await fetch('https://api.wasteof.money/users/' + user);
         const data = await res.json();
@@ -628,7 +740,7 @@ async function loadUserColor(user) {
     }
 }
 
-async function loadPinned(user) {
+export async function loadPinned(user) {
     try {
         const res = await fetch('https://api.wasteof.money/users/' + user + '/posts');
         const data = await res.json();
@@ -641,7 +753,7 @@ async function loadPinned(user) {
 
 // Notifications
 
-async function loadNotifications() {
+export async function loadNotifications() {
     let mark = [];
 
     const unreadRes = await fetch('https://api.wasteof.money/messages/unread', {
@@ -810,7 +922,7 @@ function createNotification(data) {
 
 // Comments
 
-async function loadPostComments(postId) {
+export async function loadPostComments(postId) {
     fetch(`https://api.wasteof.money/posts/${postId}/comments`)
         .then(res => res.json())
         .then(data => {
@@ -888,7 +1000,7 @@ async function loadRepostPreview(id) {
     })
 }
 
-async function sendPost(content, repost) {
+export async function sendPost(content, repost) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -901,13 +1013,13 @@ async function sendPost(content, repost) {
             'Content-Type': 'application/json',
             authorization: `${storage.get('token')}`
         },
-        body: JSON.stringify({ post: `<p>${content.sanitize()}</p>${imgHtml()}`, repost: repost })
+        body: JSON.stringify({ post: `<p>${sanitize(content)}</p>${imgHtml()}`, repost: repost })
     });
 
     closeAlert();
     closeModal();
 
-    postImages = [];
+    postImages.clear
     
     if (postRes.ok) {
         tooltip({icon: icon.check, title: 'Posted!'});
@@ -918,7 +1030,7 @@ async function sendPost(content, repost) {
 
 function imgHtml() {
     let html = '';
-    postImages.forEach(img => {
+    postImages.return().forEach(img => {
         html += `<img src="${img}">`;
     });
     return html;
@@ -937,7 +1049,7 @@ async function sendComment(postId, content, parentid) {
             authorization: `${storage.get('token')}`
         },
         body: JSON.stringify({
-            content: `<p>${content.sanitize()}</p>`,
+            content: `<p>${sanitize(content)}</p>`,
             parent: parentid
         })
     });
@@ -994,7 +1106,7 @@ async function follow(user) {
     });
 }
 
-async function followButton(user) {
+export async function followButton(user) {
     if (user === storage.get('user')) {
         return;
     }
@@ -1007,13 +1119,14 @@ async function followButton(user) {
             document.querySelector('.follow-button').innerText = 'Follow';
             document.querySelector('.follow-button').classList.remove('following');
         }
+        document.querySelector('.follow-button').addEventListener('click', toggleFollowButton.bind(null, user));
     } catch (error) {
         document.querySelector('.follow-button').innerText = 'Follow';
         document.querySelector('.follow-button').classList.remove('following');
     }
 }
     
-function toggleFollowButton() {
+function toggleFollowButton(user) {
     if (document.querySelector('.follow-button').classList.contains('following')) {
         document.querySelector('.follow-button').innerText = 'Follow';
         document.querySelector('.follow-button').classList.remove('following');
@@ -1021,6 +1134,7 @@ function toggleFollowButton() {
         document.querySelector('.follow-button').innerText = 'Unfollow';
         document.querySelector('.follow-button').classList.add('following');
     }
+    follow(user);
 }
 
 async function profileColor(color) {
@@ -1108,7 +1222,7 @@ async function reportPost(id, reason) {
     }
 }
 
-async function checkWom() {
+export async function checkWom() {
     const res = await fetch('https://api.wasteof.money/');
     const data = await res.json();
     if (data.ok === "ok") {

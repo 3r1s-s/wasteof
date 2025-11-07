@@ -1,3 +1,5 @@
+import { device } from "./device.js";
+
 function webkitHaptic() {
     try {
         const label = document.createElement("label");
@@ -17,7 +19,7 @@ function webkitHaptic() {
     }
 }
 
-function haptic(x) {
+export function haptic(x) {
     if (device.supports.haptics) {
         navigator.vibrate(x || 50);
     } else if (device.is.iPhone) {
