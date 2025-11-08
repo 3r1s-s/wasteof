@@ -1684,14 +1684,27 @@ span.dot {
     .nav-logo, .nav-profile {
         display: none;
     }
+
+    .nav-item.active {
+        opacity: 1;
+    }
+
+    .nav-item.active::before {
+        opacity: 1;
+        transform: scale(1);
+    }
     
     .modal {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
 
+    .content-width {
+        padding-top: 1rem;
+    }
+
     .content {
-        padding: calc(0px + var(--titlebar-height)) 0 calc(1rem + 63px) 0;
+        padding-bottom: calc(63px + env(safe-area-inset-bottom));
     }
 
     .jump {
@@ -1701,10 +1714,6 @@ span.dot {
 
     .post {
         padding: 0.8rem 1rem;
-    }
-
-    .content {
-        padding: calc(var(--titlebar-height) + env(--safe-area-inset-top)) 0 calc(1rem + 63px + env(--safe-area-inset-bottom)) 0;
     }
 
     .titlebar {
