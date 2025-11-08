@@ -1699,17 +1699,21 @@ span.dot {
         border-bottom-right-radius: 0;
     }
 
+    .app {
+        height: calc(100vh - 63px - env(safe-area-inset-bottom))
+    }
+
     .content-width {
-        padding-top: 64px;
+        padding-top: var(--titlebar-height);
     }
 
     .content {
         padding-top: 0;
-        padding-bottom: calc(63px + env(safe-area-inset-bottom));
+        padding-bottom: calc(63px);
     }
 
     .jump {
-        bottom: calc(1rem + 63px);
+        bottom: calc(1rem + 63px + env(safe-area-inset-bottom));
         right: 1rem;
     }
 
