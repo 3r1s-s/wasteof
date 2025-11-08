@@ -1003,3 +1003,19 @@ input::placeholder {
         corner-shape: superellipse(1.5);
     }
 }
+
+/* Mobile */
+
+@media only screen and (max-width: 600px) {
+    .profile-info {
+        padding: 0.25rem 1rem;
+    }
+
+    .profile-section {
+        flex-direction: column;
+    }
+
+    .banner {
+        height: 200px;
+    }
+}
