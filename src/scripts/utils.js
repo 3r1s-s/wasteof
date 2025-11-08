@@ -1,5 +1,5 @@
 import { app, dropdowns, content } from "../index.js";
-import { manageCache, postContext } from "./api.js";
+import { manageCache, postContext, pinPost, unpinPost } from "./api.js";
 import { themeName, setTheme } from "./theme.js";
 import { reportModal, deletePostModal } from "./page-helpers.js";
 import { router } from "./router.js";
@@ -147,6 +147,10 @@ export function dropdownListeners() {
 
                 case 'pin-post':
                 pinPost(id);
+                break;
+
+                case 'unpin-post':
+                unpinPost(id);
                 break;
 
                 case 'report-post':

@@ -435,7 +435,7 @@ export async function lovePost(id) {
     });
 }
 
-async function pinPost(id) {
+export async function pinPost(id) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -454,7 +454,7 @@ async function pinPost(id) {
     updateContext(id);
 }
 
-async function unpinPost(id) {
+export async function unpinPost(id) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -515,12 +515,12 @@ export async function postContext(data) {
     if (!pinEl) return;
 
     let pinHTML = `<span>Pin</span><span class="option-icon" style="width: 18px;">${icon.pin}</span>`;
-    pinEl.setAttribute('onclick', `closeDropdown('dropdown-${data._id}');pinPost('${data._id}');`);
-
+    pinEl.setAttribute('data-id', data._id);
+    pinEl.setAttribute('data-action', 'pin-post');
     const pinned = await loadPinned(storage.get('user'));
     if (pinned && pinned._id === data._id) {
         pinHTML = `<span>Unpin</span><span class="option-icon" style="width: 18px;">${icon.pin}</span>`;
-        pinEl.setAttribute('onclick', `closeDropdown('dropdown-${data._id}');unpinPost('${data._id}');`);
+        pinEl.setAttribute('data-action', 'unpin-post');
     }
 
     pinEl.innerHTML = pinHTML;
