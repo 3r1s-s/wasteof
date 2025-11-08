@@ -1,1 +1,0 @@
-export { icon } from './icons.js';

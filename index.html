@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>worm</title>
-    <link rel="stylesheet" href="css/themes.css">
-    <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="/css/themes.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="https://eris.cafe/fonts.css">
 
-    <link rel="icon" type="image/png" href="images/icon-web.png">
-    <link rel="apple-touch-icon" sizes="256x256" href="images/icon-mobile.png">
+    <link rel="icon" type="image/png" href="/images/icon-web.png">
+    <link rel="apple-touch-icon" sizes="256x256" href="/images/icon-mobile.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -19,16 +19,17 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
 
-    <link rel="manifest" href="assets/manifest-vO8wcRxx.webmanifest">
-  <link rel="stylesheet" crossorigin href="assets/index-mLMpWX8G.css">
+    <link rel="manifest" href="/assets/manifest-vO8wcRxx.webmanifest">
+  <script type="module" crossorigin src="/assets/index-DZlNweY5.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-mLMpWX8G.css">
 </head>
 <body ontouchstart>
     <div class="app">
         <div class="nav"></div>
         <div class="main">
             <div class="titlebar">
-                <span class="title">home</span>
-                <div class="back-button" id="back" onclick="router.back()"></div>
+                <span class="title"></span>
+                <div class="back-button" id="back"></div>
                 <div class="content-mask">
                     <div class="mask-left-outer">
                         <div class="mask-left"></div>
@@ -42,7 +43,7 @@
             <div class="content-width">
                 <div class="content"></div>
             </div>
-            <div class="jump" onclick="jump()"></div>
+            <div class="jump"></div>
         </div>
         <div class="modal-outer">
             <div class="modal">
@@ -72,11 +73,4 @@
         <div class="splash open"></div>
     </div>
 </body>
-<script src="src/scripts/icons.js"></script>
-<script src="src/scripts/haptics.js"></script>
-<script src="src/scripts/api.js"></script>
-<script src="src/scripts/modals.js"></script>
-<script src="src/scripts/image.js"></script>
-<script src="src/scripts/pages.js"></script>
-<script src="src/index.js"></script>
 </html>

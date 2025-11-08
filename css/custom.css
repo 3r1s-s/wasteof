@@ -1,3 +1,7 @@
+input::placeholder {
+    user-select: none;
+}
+
 /* Login */
 
 .login-modal {
@@ -942,6 +946,7 @@
 /* Pin */
 
 .pin-indicator {
+    pointer-events: none;
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
@@ -978,11 +983,23 @@
     transform: scale(0.99);
 }
 
+/* Icon */
+
+.app-icon {
+    border-radius: 30px;
+    overflow: hidden;
+}
+
 /* Squircles */
 
 @supports (corner-shape: superellipse(2)) {
     .follow-button {
         corner-shape: superellipse(1.5);
         border-radius: 2.5rem;
+    }
+
+    .app-icon {
+        border-radius: 5rem;
+        corner-shape: superellipse(1.5);
     }
 }
