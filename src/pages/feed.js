@@ -3,6 +3,7 @@ import { title, content, backButton } from "../index.js";
 import { activeTab, toTop } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
 import { getFeed } from "../scripts/api.js";
+import { newPost } from "../scripts/page-helpers.js";
 
 export function feedPage() {
     title.innerText = 'Feed';
@@ -12,7 +13,7 @@ export function feedPage() {
 
     if (storage.get('session')) {
         content.innerHTML = `
-            <div class="post newpost" id="newPost" onclick="newPost()">
+            <div class="post newpost" id="newPost">
                 <div class="pfp-container">
                 <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');" onclick=""></div>
                 </div>
@@ -28,6 +29,12 @@ export function feedPage() {
         getFeed();
     } else {
         content.innerHTML = `<span class="no-feed">Login to see your feed!</span>`
+    }
+
+    if (storage.get('session')) {
+        document.querySelector('#newPost').addEventListener('click', () => {
+            newPost();
+        });
     }
     
     backButton.classList.remove('active');

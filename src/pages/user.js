@@ -41,7 +41,7 @@ export function userPage(params) {
         <div class="profile-posts">
         <div class="content-center" id="loading"><span class="loader animate">${icon.loader}</span></div>
         </div>
-        <div class="load-more hide" id="load-more" data-pageno="1" onclick="loadMoreUserPosts('${params.username}')"><span>Load more</span></div>
+        <div class="load-more hide button" id="load-more" data-pageno="1" data-id="${params.username}" data-action="load-more-user-posts"><span>Load more</span></div>
     `;
     
     loadUserInfo(params.username);

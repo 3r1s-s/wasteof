@@ -7,17 +7,18 @@ import { postPage } from './pages/post.js';
 import { notificationsPage } from './pages/notifications.js';
 import { settingsPage } from './pages/settings.js';
 import { applyTheme } from './scripts/theme.js';
-import { openModal, closeModal } from "./scripts/modals.js";
+import { openModal, closeModal, closeAlert } from "./scripts/modals.js";
 
 import { storage, settings } from './scripts/storage.js';
 import { icon } from './scripts/icons.js';
 
-import { notificationBadge, checkWom } from './scripts/api.js';
-import { newPost } from './scripts/page-helpers.js';
+import { notificationBadge, checkWom, lovePost, markAsRead, loadMoreUserPosts } from './scripts/api.js';
+import { newPost, newComment, newRepost, pfpModal, bannerModal, logoutModal, saveBio } from './scripts/page-helpers.js';
+import { toTop, jump } from "./scripts/utils.js";
 
 export const URL = 'http://localhost:8000';
 export const dropdowns = new Map();
-export const version = '1.0.0';
+export const version = '1.0.1';
 
 export const app = document.querySelector('.app');
 export const nav = document.querySelector('.nav');
@@ -101,6 +102,9 @@ document.querySelector('.nav-profile')?.addEventListener('click', () => router.n
 splash.innerHTML = `<div class="splash-logo">${icon.wom}</div>`
 
 backButton.innerHTML = icon.back;
+backButton.addEventListener('click', () => {
+    history.back();
+});
 
 content.innerHTML = `
 <div class="content-center">
@@ -109,6 +113,9 @@ content.innerHTML = `
 `
 
 document.querySelector('.jump').innerHTML = icon.up;
+document.querySelector('.jump').addEventListener('click', () => {
+    jump();
+});
 
 app.addEventListener('scroll', () => {
     if (app.scrollTop > 100) {
@@ -150,9 +157,11 @@ document.addEventListener('keydown', (e) => {
 
         if (e.key === 'Escape' && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            // if notifs amount > 0
-            // add badge to favicon too
-            // markAsRead();
+            if (notifications > 0) {
+                setNotifications(0);
+                notificationBadge();
+                markAsRead();
+            }
         }
 
         if (e.key === ',' && (e.ctrlKey || e.metaKey)) {
@@ -169,6 +178,63 @@ document.addEventListener('keydown', (e) => {
             e.preventDefault();
             toggleCmdPalette(true);
         }
+    }
+});
+
+document.addEventListener('click', (e) => {
+    const post = e.target.closest('.post.unfocused');
+    if (!post || e.target.closest('.post-info-item, .context, .dropdown, .button')) return;
+    router.navigate(`/posts/${post.id}`);
+});
+
+document.addEventListener('click', (e) => {
+    const button = e.target.closest('.button[data-action]');
+    if (!button) return;
+
+    e.stopPropagation();
+
+    const action = button.dataset.action;
+    const id = button.dataset.id;
+
+    switch (action) {
+        case 'love':
+        lovePost(id);
+        break;
+
+        case 'repost':
+        newRepost(id);
+        break;
+
+        case 'comment':
+        newComment(id, null);
+        break;
+
+        case 'profile':
+        router.navigate(`/users/${id}`);
+        break;
+
+        case 'change-pfp':
+        pfpModal();
+        break;
+
+        case 'change-banner':
+        bannerModal();
+        break;
+
+        case 'save-bio':
+        saveBio();
+        break;
+
+        case 'logout':
+        logoutModal();
+        break;
+
+        case 'load-more-user-posts':
+        loadMoreUserPosts(id);
+        break;
+
+        default:
+        console.warn('Unknown post action:', action);
     }
 });
 

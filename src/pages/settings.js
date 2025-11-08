@@ -56,7 +56,7 @@ export function settingsPage() {
         <div class="section profile">
             <div class="sec-in">
                 <span class="sec-in-title">Profile Picture</span>
-                <div class="pfp-section" onclick="pfpModal()">
+                <div class="pfp-section button" data-action="change-pfp">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
                     <div class="pfp-edit">
                         <span class="edit"><span class="edit-icon">${icon.edit}</span></span>
@@ -65,7 +65,7 @@ export function settingsPage() {
             </div>
             <div class="sec-in">
                 <span class="sec-in-title">Banner</span>
-                <div class="banner-section" onclick="bannerModal()">
+                <div class="banner-section button" data-action="change-banner">
                     <img class="banner" src="https://api.wasteof.money/users/${storage.get('user')}/banner">
                     <div class="pfp-edit">
                         <span class="edit"><span class="edit-icon">${icon.edit}</span></span> Change Banner</span>
@@ -77,7 +77,7 @@ export function settingsPage() {
             <div class="sec-in">
                 <span class="sec-in-title">About Me</span>
                 <textarea class="about-me" placeholder="Write a little about you" id="about-me" disabled></textarea>
-                <button class="section-button fit" onclick="saveBio()" id="save-bio">Save</button>
+                <button class="section-button fit button" id="save-bio" data-action="save-bio">Save</button>
             </div>
         </div>
         <div class="section disabled">
@@ -96,7 +96,7 @@ export function settingsPage() {
         <h3>Account</h3>
         <div class="section">
             <span class="title" style="padding: 0 0.5rem">Log Out</span>
-            <div class="options"><button class="section-button" onclick="logoutModal();">Log Out</button></div>
+            <div class="options"><button class="section-button button" data-action="logout">Log Out</button></div>
         </div>
         <div class="footer">
             <span>Change other account settings at <a href="https://wasteof.money/settings" target="_blank">wasteof.money/settings</a></span>

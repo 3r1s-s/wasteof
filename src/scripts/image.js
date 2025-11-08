@@ -1,4 +1,5 @@
-// Cropper
+import { uploadPfp, uploadBanner } from "./api.js";
+import { closeModal } from "./modals.js";
 
 let cropperState = {
     scale: 1,
@@ -10,7 +11,7 @@ let cropperState = {
     imageData: null
 };
 
-function initializeCropper(imageData) {
+export function initializeCropper(imageData) {
 
     cropperState = {
         scale: 1,
@@ -67,7 +68,7 @@ function updateCropperTransform() {
     img.style.transform = `translate(${cropperState.posX}px, ${cropperState.posY}px) scale(${cropperState.scale})`;
 }
 
-async function saveCroppedPfp() {
+export async function saveCroppedPfp() {
     const img = new Image();
     img.src = cropperState.imageData;
     await new Promise(resolve => img.onload = resolve);
@@ -102,7 +103,7 @@ async function saveCroppedPfp() {
     closeModal();
 }
 
-function saveBanner() {
+export function saveBanner() {
     const img = document.getElementById('crop-image banner');
     
     uploadBanner(img.src);

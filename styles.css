@@ -96,6 +96,12 @@ a:hover {
     text-decoration: underline;
 }
 
+button {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
 .app {
     display: flex;
     flex-direction: column;
@@ -852,7 +858,7 @@ span.logo>svg {
 .modal-body {
     display: flex;
     flex-direction: column;
-    min-height: 100%;
+    /* min-height: 100%; */
 }
 
 .modal-subheader {
@@ -1178,6 +1184,7 @@ span.logo>svg {
 }
 
 .form-input:focus+label,
+.form-input:not(:placeholder-shown)+label,
 .form-input.filled+label,
 .form.always-active label {
     top: -10px;
@@ -1654,7 +1661,7 @@ span.dot {
 
         display: flex;
         flex-direction: row;
-        height: 76px;
+        height: 63px;
         padding-bottom: env(safe-area-inset-bottom);
         width: 100%;
         z-index: 100;
@@ -1681,5 +1688,30 @@ span.dot {
     .modal {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+    }
+
+    .content {
+        padding: calc(0px + var(--titlebar-height)) 0 calc(1rem + 63px) 0;
+    }
+
+    .jump {
+        bottom: calc(1rem + 63px);
+        right: 1rem;
+    }
+
+    .post {
+        padding: 0.8rem 1rem;
+    }
+
+    .content {
+        padding: calc(0px + var(--titlebar-height) + env(--safe-area-inset-top)) 0 calc(1rem + 63px) 0;
+    }
+
+    .titlebar {
+        padding-top: env(--safe-area-inset-top);
+    }
+
+    .content-mask {
+        top: env(--safe-area-inset-top);
     }
 }

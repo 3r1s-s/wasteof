@@ -1,19 +1,24 @@
-import { loadUserSettings, sendPost, fetchPost, deletePost } from "./api.js";
+import { loadUserSettings, sendPost, fetchPost, 
+    deletePost, loadCommentPreview, sendComment, loadRepostPreview, setBio,
+    logout, login } from "./api.js";
 import { storage } from "./storage.js";
 import { openModal, closeModal, openAlert, closeAlert } from "./modals.js";
 import { icon } from "./icons.js";
 import { app, postImages } from "../index.js";
+import { dropdownListeners, uploadImage } from "./utils.js"
+import { initializeCropper, saveCroppedPfp, saveBanner } from "./image.js";
+
 
 export function loginModal() {
     openModal({
         body: `
         <div class="login-modal">
-            <img src="/images/icon-web.png" style="width: 100px; height: 100px; user-select: none;">
+            <img src="/images/icon-safari.png" style="width: 100px; height: 100px; user-select: none;" class="app-icon">
             <span class="wordmark">wasteof</span>
             <span class="login-title">Log in to your account</span>
             <div class="login-inputs blue">
-                <div class="form larger"><input class="form-input" id="user" type="text" autocomplete=""><label for="user">Username</label></div>
-                <div class="form larger"><input class="form-input" id="pass" type="password" autocomplete=""><label for="pass">Password</label></div>
+                <div class="form larger"><input class="form-input" id="user" type="text" autocomplete="username" placeholder=""><label for="user">Username</label></div>
+                <div class="form larger"><input class="form-input" id="pass" type="password" autocomplete="none" placeholder=""><label for="pass">Password</label></div>
             </div>
             <span class="signup">Or <a href="https://wasteof.money/join">Sign up</a></span>
         </div>
@@ -21,11 +26,15 @@ export function loginModal() {
         fill: false,
         buttons: [
             { text: "Cancel", action: closeModal },
-            { text: "Login", action: login(document.getElementById('user').value, document.getElementById('pass').value).then(() => closeModal()), highlight: `true` }
+            { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value);closeModal() }, highlight: `true` }
         ],
         center: true,
         small: true
     })
+}
+
+export function logoutModal() {
+    openAlert({title: 'Log out?', message: 'Are you sure you want to log out?', buttons: [{text: 'OK', action: () => { logout() }},{text: 'Cancel', action: () => closeAlert()}], center: true})
 }
 
 export async function myInfo() {
@@ -41,7 +50,7 @@ export async function myInfo() {
     document.getElementById('about-me').disabled = false;
 } 
 
-async function saveBio() {
+export async function saveBio() {
     document.getElementById('about-me').disabled = true;
     document.getElementById('save-bio').disabled = true;
 
@@ -50,7 +59,6 @@ async function saveBio() {
     myInfo();
 
     document.getElementById('save-bio').disabled = false;
-    tooltip({icon: icon.check, title: 'Saved!'});
 }
 
 export function newPost() {
@@ -149,7 +157,7 @@ function removeImage(no) {
     document.querySelector(`.newpost-attachment[data-no="${no}"]`).remove();
 }
 
-function newRepost(id) {
+export function newRepost(id) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -157,9 +165,9 @@ function newRepost(id) {
 
     openModal({
         post: true,
-        buttons: [{text: 'Post', action: sendModalPost(id)}],
+        buttons: [{text: 'Post', action: () => { sendModalRepost(id) }}],
         body: `
-            <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+            <div class="modal-close">${icon.cross}</div>
             <div class="create-post">
                 <div class="pfp-container">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
@@ -169,8 +177,12 @@ function newRepost(id) {
                         <div class="post-title">${storage.get('user')}</div>
                     </div>
                     <div class="post-content">
-                        <textarea placeholder="What do you think about this post?" id="post-content" class="post-input"></textarea>
+                        <textarea placeholder="What do you think about this post?" id="post-content" class="post-input" style="height: 24px;"></textarea>
                     </div>
+                    <div class="post-options">
+                        <span class="post-option" id="append-image">${icon.attachment}</span>
+                    </div>    
+                    <div class="newpost-attachments"></div>
                     <div class="post-repost" id="post-repost"></div>
                 </div>
             </div>
@@ -184,7 +196,7 @@ function newRepost(id) {
     const input = document.querySelector('.post-input');
 
     input.addEventListener('input', () => {
-        input.style.height = 'auto';
+        input.style.height = `24px`;
         input.style.height = `${input.scrollHeight}px`;
     });
 
@@ -196,7 +208,7 @@ function newRepost(id) {
     });
 }
 
-function newComment(id, parentid) {
+export function newComment(id, parent, postid) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -204,9 +216,9 @@ function newComment(id, parentid) {
 
     openModal({
         post: true,
-        buttons: [{text: 'Post', action: `sendModalComment('${id}','${parentid}');closeModal();`}],
+        buttons: [{text: 'Post', action: () => sendModalComment(id, parent, postid)}],
         body: `
-            <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+            <div class="modal-close">${icon.cross}</div>
             <div class="replying-to">
                 <div class="content-center" id="preview-loading" style="padding:0.25rem;">
                 <span class="loader animate">${icon.loader}</span>
@@ -228,7 +240,7 @@ function newComment(id, parentid) {
         `
     });
 
-    loadCommentPreview(id, parentid);
+    loadCommentPreview(id, parent, postid);
 
     document.querySelector('.post-input').focus();
 
@@ -242,7 +254,7 @@ function newComment(id, parentid) {
     input.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
             e.preventDefault();
-            sendModalComment(id,`${parentid}`);
+            sendModalComment(id, parent, postid);
         }
     });
 }
@@ -261,55 +273,59 @@ function sendModalRepost(id) {
     closeModal();
 }
 
-function sendModalComment(id, parentid) {
+function sendModalComment(commentid, parent, postid) {
     if (document.querySelector('.post-input').value.trim() !== '') {
-        if (parentid !== 'null') { //idk why it thinks its a string but whatev it works
-            sendComment(parentid, document.querySelector('.post-input').value.trim(), id);
+        if (postid) {
+            sendComment(postid, document.querySelector('.post-input').value.trim(), commentid);
         } else {
-            sendComment(id, document.querySelector('.post-input').value.trim(), null);
+            sendComment(postid, document.querySelector('.post-input').value.trim(), null);
         }
     }
-}
-
-function logoutModal() {
-    openAlert({title: 'Log out?', message: 'Are you sure you want to log out?', buttons: [{text: 'OK', action: 'logout()'},{text: 'Cancel', action: 'closeAlert()'}], center: true})
 }
 
 export function deletePostModal(id) {
     openAlert({title: 'Delete?', message: 'Are you sure you want to delete this post?', buttons: [{text: 'OK',   action: () => { deletePost(id);closeAlert(); }}, {text: 'Cancel', action: closeAlert}], center: true})
 }
 
-function pfpModal() {
+export function pfpModal() {
     openModal({
         small: true,
         mx: 400,
         my: 300,
         buttons: [],
         body: `
-            <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+            <div class="modal-close">${icon.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
-            <div class="upload-image" style="margin: auto;" onclick="editPfpModal()">
+            <div class="upload-image" style="margin: auto;">
                 ${icon.attachment}
                 <span>Upload Image</span>
             </div>
         `
     });
+
+    document.querySelector('.upload-image').addEventListener('click', () => {
+        editPfpModal();
+    });
 }
 
-function bannerModal() {
+export function bannerModal() {
     openModal({
         small: true,
         mx: 400,
         my: 300,
         buttons: [],
         body: `
-            <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+            <div class="modal-close">${icon.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
-            <div class="upload-image" style="margin: auto;" onclick="editBannerModal()">
+            <div class="upload-image" style="margin: auto;">
                 ${icon.attachment}
                 <span>Upload Image</span>
             </div>
         `
+    });
+
+    document.querySelector('.upload-image').addEventListener('click', () => {
+        editBannerModal();
     });
 }
 
@@ -323,11 +339,11 @@ async function editPfpModal() {
                 mx: 400,
                 my: 500,
                 buttons: [
-                    {text: 'Cancel', action: 'closeModal()'},
-                    {text: 'Save', action: 'saveCroppedPfp()', highlight: true}
+                    {text: 'Cancel', action: closeModal},
+                    {text: 'Save', action: saveCroppedPfp, highlight: true}
                 ],
                 body: `
-                    <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+                    <div class="modal-close">${icon.cross}</div>
                     <h3 class="modal-center-title">Adjust Profile Picture</h3>
                     <div class="image-cropper">
                         <div class="crop-container">
@@ -364,10 +380,10 @@ async function editBannerModal() {
                 my: 300,
                 buttons: [
                     {text: 'Cancel', action: 'closeModal()'},
-                    {text: 'Save', action: 'saveBanner()', highlight: true}
+                    {text: 'Save', action: () => saveBanner(), highlight: true}
                 ],
                 body: `
-                    <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+                    <div class="modal-close">${icon.cross}</div>
                     <h3 class="modal-center-title">Preview Banner</h3>
                     <div class="banner-section">
                         <img src="${imageData}" id="crop-image banner" class="banner-crop" draggable="false">
@@ -389,28 +405,12 @@ export function reportModal(id) {
             {text: 'Report', action: `sendReportModal('${id}')`, highlight: true}
         ],
         body: `
-            <div class="modal-close" onclick="closeModal()">${icon.cross}</div>
+            <div class="modal-close">${icon.cross}</div>
             <h3 class="modal-center-title">Report Post</h3>
             <div class="post-report" id="post-repost"></div>
-                <div class="context-outer" id="report-options" style="margin-top:0.5rem;">
-                    <div class="context" onclick="openDropdown('report-options')" data-dropdown="report-options">
-                    <span class="value" id="report-reason">Spam</span>
-                    <span class="arrow right">${icon.arrow}</span>
-                    </div>
-                    <div class="dropdown center" style="width: 340px" id="report-options">
-                        <div class="option" onclick="setReportReason('Spam');">Spam</div>
-                        <div class="option" onclick="setReportReason('Harassment or abuse towards others');">Harassment or abuse towards others</div>
-                        <div class="option" onclick="setReportReason('Rude, vulgar or offensive language');">Rude, vulgar or offensive language</div>
-                        <div class="option" onclick="setReportReason('NSFW (sexual, alcohol, violence, gore, etc.)');">NSFW (sexual, alcohol, violence, gore, etc.)</div>
-                        <div class="option" onclick="setReportReason('Scams, hacks, phishing or other malicious content');">Scams, hacks, phishing or other malicious content</div>
-                        <div class="option" onclick="setReportReason('Threatening violence or real world harm');">Threatening violence or real world harm</div>
-                        <div class="option" onclick="setReportReason('Illegal activity');">Illegal activity</div>
-                        <div class="option" onclick="setReportReason('Self-harm/suicide');">Self-harm/suicide</div>
-                        <div class="option" onclick="setReportReason('This person is too young to use wasteof');">This person is too young to use wasteof</div>
-                        <div class="option" onclick="setReportReason('Other');">Other</div>
-                    </div>
-                </div>
-        `
+
+            </div>
+            `
     });
 
     loadRepostPreview(id);

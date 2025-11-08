@@ -5,6 +5,8 @@ import { icon } from './icons.js';
 import { openAlert, closeAlert, loggingIn, closeModal, tooltip } from './modals.js';
 import { router } from './router.js';
 import { settingsPage } from '../pages/settings.js';
+import { haptic } from './haptics.js';
+import { newComment, loginModal } from './page-helpers.js';
 
 export const postCache = {}; // { id: { data: {...}, comments: [...] } }
 export const loveCache = {}; // { id: true/false }
@@ -43,7 +45,8 @@ export const manageCache = (() => {
     };
 })();
 
-function login(user, pass) {
+export function login(user, pass) {
+    loggingIn(false);
     fetch('https://api.wasteof.money/session', {
         method: 'POST',
         headers: {
@@ -78,7 +81,7 @@ function login(user, pass) {
     });
 }
 
-function logout() {
+export function logout() {
     storage.delete('token');
     storage.delete('user');
     storage.delete('session');
@@ -188,7 +191,7 @@ export function createPost(data, isRepost, focused) {
             <div class="post focused" id="${data._id}">
                 <div class="post-container">
                     <div class="big-post-header">
-                        <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="router.navigate('/users/${data.poster.name}')"></div>
+                        <div class="pfp button" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" data-action="profile" data-id="${data.poster.name}"></div>
                         <div class="post-header">
                             <div class="post-title">${data.poster.name}</div>
                             <span class="post-date">${timeAgo(data.time)}</span>
@@ -199,15 +202,15 @@ export function createPost(data, isRepost, focused) {
                         ${repost || ''}
                     </div>
                     <div class="post-info">
-                        <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}" onclick="event.stopPropagation();lovePost(&quot;${data._id}&quot;);">
+                        <div class="post-loves post-info-item button ${manageCache.love(data._id) ? 'loved' : ''}" data-action="love" data-id="${data._id}">
                             <span class="icon">${icon.love}</span>
                             <span class="count">${data.loves}</span>
                         </div>
-                        <div class="post-reposts post-info-item" onclick="event.stopPropagation();newRepost('${data._id}');">
+                        <div class="post-reposts post-info-item button" data-action="repost" data-id="${data._id}">
                                 <span class="icon">${icon.repost}</span>
                                 <span class="count">${data.reposts}</span>
                         </div>
-                        <div class="post-reposts post-info-item" onclick="event.stopPropagation();newComment('${data._id}', null);">
+                        <div class="post-reposts post-info-item button" data-action="comment" data-id="${data._id}">
                             <span class="icon">${icon.comment}</span>
                             <span class="count">${data.comments}</span>
                         </div>
@@ -227,7 +230,7 @@ export function createPost(data, isRepost, focused) {
         post = `
             <div class="post repost unfocused clickable" id="${data._id}" data-post-id="${data._id}">
             <div class="pfp-container">
-                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="event.stopPropagation();router.navigate('/users/${data.poster.name}')"></div>
+                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');"></div>
             </div>
             <div class="post-container">
                 <div class="post-header">
@@ -244,7 +247,7 @@ export function createPost(data, isRepost, focused) {
     post = `
         <div class="post ${isRepost ? 'repost' : ''} ${data.pinned ? 'pinned' : ''} unfocused" id="${data._id}">
         <div class="pfp-container">
-            <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="event.stopPropagation();router.navigate('/users/${data.poster.name}')"></div>
+            <div class="pfp button" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" data-action="profile" data-id="${data.poster.name}"></div>
         </div>
         <div class="post-container">
             <div class="post-header">
@@ -257,15 +260,15 @@ export function createPost(data, isRepost, focused) {
             </div>
             ${!isRepost ? `
                 <div class="post-info">
-                    <div class="post-loves post-info-item ${manageCache.love(data._id) ? 'loved' : ''}" onclick="event.stopPropagation();lovePost(&quot;${data._id}&quot;);">
+                    <div class="post-loves post-info-item button ${manageCache.love(data._id) ? 'loved' : ''}" data-action="love" data-id="${data._id}">
                         <span class="icon">${icon.love}</span>
                         <span class="count">${data.loves}</span>
                     </div>
-                    <div class="post-reposts post-info-item" onclick="event.stopPropagation();newRepost('${data._id}');">
+                    <div class="post-reposts post-info-item button" data-action="repost" data-id="${data._id}">
                             <span class="icon">${icon.repost}</span>
                             <span class="count">${data.reposts}</span>
                     </div>
-                    <div class="post-reposts post-info-item" onclick="event.stopPropagation();newComment('${data._id}', null);">
+                    <div class="post-reposts post-info-item button" data-action="comment" data-id="${data._id}">
                         <span class="icon">${icon.comment}</span>
                         <span class="count">${data.comments}</span>
                     </div>
@@ -297,20 +300,7 @@ export async function getTrending() {
 
     const exploreContainer = document.querySelector('.explore-posts');
     data.posts.forEach(post => {
-        const temp = document.createElement('div');
-        temp.innerHTML = createPost(post).trim();
-
-        const postElement = temp.firstChild;
-        postElement.addEventListener('click', () => {
-            event.stopPropagation();
-            router.navigate('/posts/' + post._id);
-        });
-
-        postElement.ondragstart = () => {
-            return false;
-        };
-
-        exploreContainer.appendChild(postElement);
+        exploreContainer.insertAdjacentHTML('beforeend', createPost(post).trim());
     });
 
 
@@ -323,7 +313,20 @@ export async function getTrending() {
 
     document.querySelector('.explore-users').innerHTML = '';
     data2.forEach(data => {
-        document.querySelector('.explore-users').innerHTML += createNameplate(data.name, true);
+        const temp = document.createElement('div');
+        temp.innerHTML = createNameplate(data.name, true).trim();
+
+        const userElement = temp.firstChild;
+        userElement.addEventListener('click', () => {
+            event.stopPropagation();
+            router.navigate('/users/' + data.name);
+        });
+
+        userElement.ondragstart = () => {
+            return false;
+        };
+
+        document.querySelector('.explore-users').appendChild(userElement);
     })
 }
 
@@ -347,7 +350,7 @@ export async function getSearch(query) {
 
     document.querySelector('.explore-posts').innerHTML = '';
     data.results.forEach(post => {
-        document.querySelector('.explore-posts').innerHTML += createPost(post);
+        document.querySelector('.explore-posts').insertAdjacentHTML('beforeend', createPost(post).trim());
     });
 
     const res2 = await fetch('https://api.wasteof.money/search/users?q=' + query + '&page=1');
@@ -382,20 +385,7 @@ export async function getFeed() {
         document.getElementById('loading').remove();
 
         data.posts.forEach(post => {
-            const temp = document.createElement('div');
-            temp.innerHTML = createPost(post).trim();
-
-            const postElement = temp.firstChild;
-            postElement.addEventListener('click', () => {
-                event.stopPropagation();
-                router.navigate('/posts/' + post._id);
-            });
-
-            postElement.ondragstart = () => {
-                return false;
-            };
-
-            content.appendChild(postElement);
+            content.insertAdjacentHTML('beforeend', createPost(post).trim());
         });
     }
 }
@@ -416,7 +406,7 @@ export async function fetchPostPage(id) {
 }
 
 
-async function lovePost(id) {
+export async function lovePost(id) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -499,7 +489,7 @@ export async function deletePost(id) {
     tooltip({icon: icon.check, title: 'Deleted!'});
 }
 
-async function setBio(newBio) {
+export async function setBio(newBio) {
     if (!storage.get('session')) {
         return;
     }
@@ -510,10 +500,14 @@ async function setBio(newBio) {
             'Content-Type': 'application/json',
             authorization: `${storage.get('token')}`
         },
-        body: JSON.stringify({content: newBio})
+        body: JSON.stringify({bio: newBio})
+    }).then(res => res.json()).then(data => {
+        if (data.error) {
+            openAlert({title: 'Error', message: data.error});
+        } else {
+            tooltip({icon: icon.check, title: 'Updated!'});
+        }
     });
-
-    tooltip({icon: icon.check, title: 'Updated!'});
 }
 
 export async function postContext(data) {
@@ -558,7 +552,7 @@ export function notificationBadge() {
 
 function createNameplate(user, small) {
     return `
-        <div class="nameplate ${small ? 'small' : ''}" style="--image: url('https://api.wasteof.money/users/${user}/banner');" onclick="router.navigate('/users/${user}')">
+        <div class="nameplate ${small ? 'small' : ''}" style="--image: url('https://api.wasteof.money/users/${user}/banner');">
             <div class="pfp-container">
                 <div class="pfp" style="--image: url('https://api.wasteof.money/users/${user}/picture');"></div>
             </div>
@@ -586,20 +580,7 @@ export async function loadUserPosts(user) {
 
         if (document.querySelector('.profile-posts')) {
             data.posts.forEach(post => {
-                const temp = document.createElement('div');
-                temp.innerHTML = createPost(post).trim();
-
-                const postElement = temp.firstChild;
-                postElement.addEventListener('click', () => {
-                    event.stopPropagation();
-                    router.navigate('/posts/' + post._id);
-                });
-
-                postElement.ondragstart = () => {
-                    return false;
-                };
-
-                document.querySelector('.profile-posts').appendChild(postElement);
+                document.querySelector('.profile-posts').insertAdjacentHTML('beforeend', createPost(post).trim());
             });
         }
         await Promise.all(data.pinned.map(post => loadPost(post)));
@@ -610,21 +591,7 @@ export async function loadUserPosts(user) {
 
         document.getElementById('loading').remove();
         if (data.pinned.length !== 0) {
-            document.querySelector('.profile-pinned')
-            const temp = document.createElement('div');
-            temp.innerHTML = createPost(data.pinned[0]).trim();
-
-            const postElement = temp.firstChild;
-            postElement.addEventListener('click', event => {
-                event.stopPropagation();
-                router.navigate('/posts/' + data.pinned[0]._id);
-            });
-
-            postElement.ondragstart = () => {
-                return false;
-            };
-
-            document.querySelector('.profile-pinned').appendChild(postElement);
+            document.querySelector('.profile-pinned').insertAdjacentHTML('beforeend', createPost(data.pinned[0]).trim());
 
             const pinEl = document.createElement('span');
             pinEl.classList.add('pin-indicator');
@@ -695,7 +662,9 @@ export async function loadUserInfo(user) {
         if (user === storage.get('user')) {
             document.querySelector('.follow-button').innerText = 'Settings';
             document.querySelector('.follow-button').classList.remove('following');
-            document.querySelector('.follow-button').addEventListener('click', settingsPage);
+            document.querySelector('.follow-button').addEventListener('click', () => {
+                router.navigate('/settings');
+            });
             document.querySelector('.follow-button').removeEventListener('click', toggleFollowButton);
         }
 
@@ -773,7 +742,14 @@ export async function loadNotifications() {
     } else {
         unreadData.unread.forEach(message => {
             mark.push(message._id);
-            document.querySelector('.unread').innerHTML += createNotification(message);
+            const temp = document.createElement('div');
+            temp.innerHTML = createNotification(message);
+            const node = temp.firstElementChild;
+            node.addEventListener('click', e => {
+                e.stopPropagation();
+                openNotification(message);
+            });
+            document.querySelector('.unread').append(node);
         });
     }
 
@@ -790,7 +766,14 @@ export async function loadNotifications() {
     }
 
     readData.read.forEach(message => {
-        document.querySelector('.read').innerHTML += createNotification(message);
+        const temp = document.createElement('div');
+        temp.innerHTML = createNotification(message);
+        const node = temp.firstElementChild;
+        node.addEventListener('click', e => {
+            e.stopPropagation();
+            openNotification(message);
+        });
+        document.querySelector('.read').append(node);
     });
 
     await fetch('https://api.wasteof.money/messages/mark/read', {
@@ -807,7 +790,7 @@ export async function loadNotifications() {
     notificationBadge();
 }
 
-async function markAsRead() {
+export async function markAsRead() {
     let mark = [];
 
     const unreadRes = await fetch('https://api.wasteof.money/messages/unread', {
@@ -863,7 +846,7 @@ function createNotification(data) {
         `
     } else if (data.type === 'comment_reply') {
     post = `
-        <div class="notification" onclick="router.navigate('/posts/${data.data.comment.post}') ">
+        <div class="notification">
             <div class="notification-icon">
                 <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
             </div>
@@ -877,7 +860,7 @@ function createNotification(data) {
     `;
     } else if (data.type === 'comment') {
         post = `
-            <div class="notification" onclick="router.navigate('/posts/${data.data.comment.post}') ">
+            <div class="notification">
                 <div class="notification-icon">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
                 </div>
@@ -892,7 +875,7 @@ function createNotification(data) {
     } else if (data.type === 'post_mention') {
         notifPost = createPost(data.data.post, true);
         post = `
-            <div class="notification" onclick="router.navigate('/posts/${data.data.post}') ">
+            <div class="notification">
                 <div class="notification-icon">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
                 </div>
@@ -906,7 +889,7 @@ function createNotification(data) {
         `
     } else {
         post = `
-            <div class="notification" onclick="router.navigate('/users/${data.data.actor.name}') ">
+            <div class="notification">
                 <div class="notification-icon">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
                 </div>
@@ -920,6 +903,20 @@ function createNotification(data) {
     return post;
 }
 
+function openNotification(data) {
+    if (data.type === 'follow') {
+        router.navigate('/users/' + data.data.actor.name);
+    } else if (data.type === 'repost') {
+        router.navigate('/posts/' + data.data.post);
+    } else if (data.type === 'comment') {
+        router.navigate('/posts/' + data.data.comment.post);
+    } else if (data.type === 'comment_reply') {
+        router.navigate('/posts/' + data.data.comment.post);
+    } else if (data.type === 'post_mention') {
+        router.navigate('/posts/' + data.data.post);
+    }
+}
+
 // Comments
 
 export async function loadPostComments(postId) {
@@ -928,8 +925,20 @@ export async function loadPostComments(postId) {
         .then(data => {
             data.comments.forEach(comment => {
                 manageCache.comment(postId, comment);
-                document.querySelector('.post-replies').innerHTML += createComment(comment);
+                document.querySelector('.post-replies').insertAdjacentHTML('beforeend', createComment(comment));
             });
+
+            document.querySelector('.post-replies').querySelectorAll('.show-replies').forEach(el => {
+                el.addEventListener('click', () => {
+                    toggleReplies(el.dataset.repliesToggleId);
+                })
+            })
+
+            document.querySelector('.post-replies').querySelectorAll('.reply-button').forEach(el => {
+                el.addEventListener('click', () => {
+                    newComment(el.dataset.commentId, el.dataset.parentId, el.dataset.postId);
+                })
+            })
 
             document.getElementById('loading').remove();
         }).catch(err => {
@@ -940,9 +949,9 @@ export async function loadPostComments(postId) {
 function createComment(data) {
     let post;
     post = `
-        <div class="post" id="${data._id}" onclick="">
+        <div class="post" id="${data._id}">
         <div class="pfp-container">
-            <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" onclick="router.navigate('/users/${data.poster.name}')"></div>
+            <div class="pfp button" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" data-action="profile" data-id="${data.poster.name}"></div>
         </div>
         <div class="post-container">
             <div class="post-header">
@@ -951,8 +960,8 @@ function createComment(data) {
             </div>
             <div class="post-content" onclick="">${data.content}</div>
             <div class="comment-reply-buttons">
-                ${data.hasReplies ? `<span class="show-replies" onclick="toggleReplies('${data._id}')" data-replies-toggle-id="${data._id}"><div class="show-replies-arrow">${icon.arrow}</div><div id="show-replies">Show replies</div></span>` : ''}
-                <span class="reply-button" onclick="newComment('${data._id}', '${data.post}')">Reply</span>
+                ${data.hasReplies ? `<span class="show-replies" data-replies-toggle-id="${data._id}"><div class="show-replies-arrow">${icon.arrow}</div><div id="show-replies">Show replies</div></span>` : ''}
+                <span class="reply-button" data-comment-id="${data._id}" data-post-id="${data.post}" data-parent-id="${data.parent}">Reply</span>
             </div>
             <div class="comment-replies" data-comment-id="${data._id}"></div>
         </div>
@@ -961,7 +970,7 @@ function createComment(data) {
     return post;
 }
 
-async function loadCommentPreview(id, parentid) {
+export async function loadCommentPreview(id, parentid) {
     fetch(`https://api.wasteof.money/${parentid ? 'comments' : 'posts'}/${id}`)
         .then(res => res.json())
         .then(data => {
@@ -994,7 +1003,7 @@ function createCommentPreview(data) {
     return post;
 }
 
-async function loadRepostPreview(id) {
+export async function loadRepostPreview(id) {
     fetchPost(id).then(post => {
         document.getElementById('post-repost').innerHTML = createPost(post.data, true);
     })
@@ -1036,7 +1045,7 @@ function imgHtml() {
     return html;
 }
 
-async function sendComment(postId, content, parentid) {
+export async function sendComment(postId, content, parentid) {
     if (!storage.get('session')) {
         loginModal();
         return;
@@ -1069,10 +1078,10 @@ async function sendComment(postId, content, parentid) {
 
 function toggleReplies(id) {
     document.querySelector(`[data-replies-toggle-id="${id}"]`).classList.toggle('open');
-    document.querySelector(`[data-comment-id="${id}"]`).classList.toggle('open');
+    document.querySelector(`.comment-replies[data-comment-id="${id}"]`).classList.toggle('open');
 
-    if (document.querySelector(`[data-comment-id="${id}"]`).classList.contains('open')) {
-        document.querySelector(`[data-comment-id="${id}"]`).innerHTML = `<div class="content-center" id="loading-replies" data-replies-loading-id="${id}"><span class="loader animate">${icon.loader}</span></div>`;
+    if (document.querySelector(`.comment-replies[data-comment-id="${id}"]`).classList.contains('open')) {
+        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML = `<div class="content-center" id="loading-replies" data-replies-loading-id="${id}"><span class="loader animate">${icon.loader}</span></div>`;
         loadReplies(id);
     }
 
@@ -1089,8 +1098,20 @@ async function loadReplies(id) {
     .then(data => {
         data.comments.forEach(comment => {
             manageCache.comment(id, comment);
-            document.querySelector(`[data-comment-id="${id}"]`).innerHTML += createComment(comment);
+            document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML += createComment(comment);
         });
+
+        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.show-replies').forEach(el => {
+            el.addEventListener('click', () => {
+                toggleReplies(el.dataset.repliesToggleId);
+            })
+        })
+
+        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.reply-button').forEach(el => {
+            el.addEventListener('click', () => {
+                newComment(el.dataset.commentId, el.dataset.parentId, el.dataset.postId);
+            })
+        })
 
         document.querySelector(`[data-replies-loading-id="${id}"]`).remove();
     })
@@ -1165,7 +1186,7 @@ async function profileColor(color) {
     userColor();
 }
 
-async function uploadPfp(dataUrl) {
+export async function uploadPfp(dataUrl) {
     const blob = await (await fetch(dataUrl)).blob();
 
     const formData = new FormData();
@@ -1186,7 +1207,7 @@ async function uploadPfp(dataUrl) {
     }
 }
 
-async function uploadBanner(dataUrl) {
+export async function uploadBanner(dataUrl) {
     const blob = await (await fetch(dataUrl)).blob();
 
     const formData = new FormData();

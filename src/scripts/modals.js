@@ -137,6 +137,10 @@ export function openModal(data) {
             modal.style.transition = '';
         }
     });
+
+    modal.querySelectorAll('.modal-close').forEach(button => {
+        button.addEventListener('click', closeModal);
+    })
 }
 
 export function closeModal() {

@@ -103,13 +103,13 @@ export function activeTab(id) {
 }
 
 export function dropdownListeners() {
-    const context = content.querySelector('.context');
+    const context = content.querySelectorAll('.context');
     if (context) {
-        context.addEventListener('click', (e) => {
+        context.forEach(context => context.addEventListener('click', (e) => {
             e.stopPropagation();
             const dropdownId = context.dataset.dropdown;
             openDropdown(dropdownId);
-        });
+        }));
     }
 
     document.querySelectorAll('.dropdown .option').forEach(option => {
