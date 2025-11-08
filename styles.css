@@ -1665,8 +1665,10 @@ span.dot {
         padding-bottom: env(safe-area-inset-bottom);
         width: 100%;
         z-index: 100;
+        box-sizing: border-box;
 
         background-color: var(--app-100);
+        border-top: 1px solid var(--app-300);
     }
 
     .nav-items {
@@ -1710,6 +1712,11 @@ span.dot {
     .content {
         padding-top: 0;
         padding-bottom: calc(63px);
+        border: none;
+    }
+
+    .mask-left, .mask-right {
+        display: none;
     }
 
     .jump {

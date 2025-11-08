@@ -278,7 +278,7 @@ function sendModalComment(commentid, parent, postid) {
         if (postid) {
             sendComment(postid, document.querySelector('.post-input').value.trim(), commentid);
         } else {
-            sendComment(postid, document.querySelector('.post-input').value.trim(), null);
+            sendComment(commentid, document.querySelector('.post-input').value.trim(), null);
         }
     }
 }
