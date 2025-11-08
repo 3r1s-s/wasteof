@@ -53,14 +53,14 @@ export function login(user, pass) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: user,
+            username: user.toLowerCase(),
             password: pass
         })
     }).then(res => res.json()).then(data => {
         if (data.token) {
             console.log("Logged in!");
             storage.set('token', data.token);
-            storage.set('user', user);
+            storage.set('user', user.toLowerCase());
             storage.set('session', true);
 
             closeAlert();
