@@ -1,3 +1,5 @@
+const BASE_PATH = '/wasteof';
+
 export const router = (() => {
     const routes = [];
 
@@ -10,7 +12,7 @@ export const router = (() => {
             })
             .replace(/\//g, '\\/');
 
-        const regex = new RegExp(`^${regexPath}$`);
+        const regex = new RegExp(`^${BASE_PATH}${regexPath}$`);
         routes.push({ regex, paramNames, renderFn });
     }
 
@@ -29,9 +31,13 @@ export const router = (() => {
     }
 
     function navigate(path, push = true) {
-        const [pathname, queryString] = path.split('?');
+        if (!path.startsWith(BASE_PATH)) {
+            path = BASE_PATH + (path.startsWith('/') ? '' : '/') + path;
+        }
 
+        const [pathname, queryString] = path.split('?');
         const result = match(pathname);
+
         if (result) {
             if (push) history.pushState({}, '', path);
             result.renderFn(result.params);
@@ -45,7 +51,7 @@ export const router = (() => {
     }
 
     function location() {
-        return window.location.pathname;
+        return window.location.pathname.replace(BASE_PATH, '') || '/';
     }
 
     window.addEventListener('popstate', () => {
