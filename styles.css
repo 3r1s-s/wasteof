@@ -1704,14 +1704,14 @@ span.dot {
     }
 
     .content {
-        padding: calc(0px + var(--titlebar-height) + env(--safe-area-inset-top)) 0 calc(1rem + 63px) 0;
+        padding: calc(var(--titlebar-height) + env(--safe-area-inset-top)) 0 calc(1rem + 63px + env(--safe-area-inset-bottom)) 0;
     }
 
     .titlebar {
         padding-top: env(--safe-area-inset-top);
     }
 
-    .content-mask {
-        top: env(--safe-area-inset-top);
+    .mask-left-outer, .mask-right-outer {
+        padding-top: env(--safe-area-inset-top);
     }
 }
