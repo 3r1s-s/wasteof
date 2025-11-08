@@ -1700,10 +1700,11 @@ span.dot {
     }
 
     .content-width {
-        padding-top: 1rem;
+        padding-top: 64px;
     }
 
     .content {
+        padding-top: 0;
         padding-bottom: calc(63px + env(safe-area-inset-bottom));
     }
 
