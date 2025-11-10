@@ -71,6 +71,10 @@ export function openModal(data) {
             modal.classList.add("post-modal");
         }
 
+        if (data.login) {
+            modal.classList.add("login-modal-colors");
+        }
+
         const optionsContainer = document.querySelector('.modal-options');
 
         optionsContainer.innerHTML = '';
@@ -154,7 +158,9 @@ export function closeModal() {
     setTimeout(() => {
         modalOuter.style.visibility = "hidden";
         modal.classList.remove("small");
+        // custom
         modal.classList.remove("post-modal");
+        modal.classList.remove("login-modal-colors");
         modalInner.innerHTML = ``;
         document.querySelector(".modal-options").innerHTML = ``;
     }, 500);

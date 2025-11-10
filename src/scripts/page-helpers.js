@@ -13,7 +13,8 @@ export function loginModal() {
     openModal({
         body: `
         <div class="login-modal">
-            <img src="/images/icon-safari.png" style="width: 100px; height: 100px; user-select: none;" class="app-icon">
+            <img src="/images/coolwave.png" class="login-banner">
+            <img src="/images/icon-blue.png" style="width: 100px; height: 100px; user-select: none;" class="app-icon">
             <span class="wordmark">wasteof</span>
             <span class="login-title">Log in to your account</span>
             <div class="login-inputs blue">
@@ -30,7 +31,8 @@ export function loginModal() {
             { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value);closeModal() }, highlight: `true` }
         ],
         center: true,
-        small: true, my: 420
+        small: true, my: 420,
+        login: true
     })
 }
 

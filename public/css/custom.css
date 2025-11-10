@@ -28,6 +28,14 @@ input::placeholder {
     gap: 12px;
 }
 
+.login-banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+}
+
 /* Nameplates/Explore */
 
 .explore-users {
@@ -988,6 +996,18 @@ input::placeholder {
 .app-icon {
     border-radius: 30px;
     overflow: hidden;
+    filter: drop-shadow(0px 4px 8px #00000045);
+}
+
+/* Other 2 */
+
+.modal.modal.login-modal-colors {
+    border: none;
+    box-shadow: inset 0 0 0 3px #ffffff25;
+}
+
+.modal.login-modal-colors::after {
+    background-color: #ffffff69;
 }
 
 /* Squircles */
