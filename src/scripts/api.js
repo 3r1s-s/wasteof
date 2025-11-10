@@ -751,10 +751,12 @@ export async function loadNotifications() {
             const temp = document.createElement('div');
             temp.innerHTML = createNotification(message);
             const node = temp.firstElementChild;
-            node.addEventListener('click', e => {
-                e.stopPropagation();
-                openNotification(message);
-            });
+            if (!message.post) {                
+                node.addEventListener('click', e => {
+                    e.stopPropagation();
+                    openNotification(message);
+                });
+            }
             document.querySelector('.unread').append(node);
         });
     }
@@ -775,10 +777,14 @@ export async function loadNotifications() {
         const temp = document.createElement('div');
         temp.innerHTML = createNotification(message);
         const node = temp.firstElementChild;
-        node.addEventListener('click', e => {
-            e.stopPropagation();
-            openNotification(message);
-        });
+        if (message.type === 'repost' && !message.data.post) {
+
+        } else {
+            node.addEventListener('click', e => {
+                e.stopPropagation();
+                openNotification(message);
+            });
+        }
         document.querySelector('.read').append(node);
     });
 
@@ -913,7 +919,7 @@ function openNotification(data) {
     if (data.type === 'follow') {
         router.navigate('/users/' + data.data.actor.name);
     } else if (data.type === 'repost') {
-        router.navigate('/posts/' + data.data.post);
+        router.navigate('/posts/' + data.data.post._id);
     } else if (data.type === 'comment') {
         router.navigate('/posts/' + data.data.comment.post);
     } else if (data.type === 'comment_reply') {

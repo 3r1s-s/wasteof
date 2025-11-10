@@ -1660,7 +1660,7 @@ span.dot {
     }
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1000px) {
     .nav {
         position: fixed;
         left: 0;
@@ -1708,7 +1708,9 @@ span.dot {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
+}
 
+@media only screen and (max-width: 600px) {
     .app {
         height: calc(100vh - 63px - env(safe-area-inset-bottom))
     }
