@@ -4,6 +4,7 @@ import { activeTab, toTop } from "../scripts/utils.js"
 import { loadUserInfo, loadUserPosts, followButton, loadMoreUserPosts } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
 import { router } from "../scripts/router.js";
+import { loginModal } from "../scripts/page-helpers.js";
 
 export function userPage(params) {
     title.innerText = `@${params.username}`;

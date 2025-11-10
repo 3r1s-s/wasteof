@@ -1,4 +1,4 @@
-const BASE_PATH = '/wasteof';
+const BASE_PATH = '';
 
 export const router = (() => {
     const routes = [];

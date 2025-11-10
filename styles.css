@@ -102,6 +102,14 @@ button {
     font-weight: 500;
 }
 
+small {
+    text-align: left;
+    font-size: 0.75rem;
+    opacity: 0.6;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 .app {
     display: flex;
     flex-direction: column;

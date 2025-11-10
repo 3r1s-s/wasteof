@@ -21,6 +21,7 @@ export function loginModal() {
                 <div class="form larger"><input class="form-input" id="pass" type="password" autocomplete="none" placeholder=""><label for="pass">Password</label></div>
             </div>
             <span class="signup">Or <a href="https://wasteof.money/join">Sign up</a></span>
+            <small style="width: 100%;">This is an unofficial client btw.</small>
         </div>
         `,
         fill: false,
@@ -29,7 +30,7 @@ export function loginModal() {
             { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value);closeModal() }, highlight: `true` }
         ],
         center: true,
-        small: true
+        small: true, my: 420
     })
 }
 
