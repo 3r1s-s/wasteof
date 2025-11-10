@@ -31,7 +31,7 @@ export function loginModal() {
             { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value);closeModal() }, highlight: `true` }
         ],
         center: true,
-        small: true, my: 420,
+        small: true, my: 445,
         login: true
     })
 }
