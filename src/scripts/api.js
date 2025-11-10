@@ -136,6 +136,12 @@ function loadPost(data) {
 }
 
 export function createPost(data, isRepost, focused) {
+    if (!data) return `
+        <div class="post">
+            <div class="post-content"><p style="font-style: italic;padding-top: 4px;">this post was deleted :(</p></div>
+        </div>
+    `;
+
     let post;
     let repost;
 
@@ -143,7 +149,7 @@ export function createPost(data, isRepost, focused) {
         repost = createPost(data.repost, true);
     }
 
-    if (data.repost === null) {
+    if (data && data.repost === null) {
         repost = `
         <div class="post repost">
             <div class="post-content"><p style="font-style: italic;padding-top: 4px;">this post was deleted :(</p></div>
