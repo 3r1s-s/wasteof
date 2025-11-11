@@ -534,7 +534,7 @@ export async function postContext(data) {
 
 export function notificationBadge() {
     if (storage.get('session') === true) {
-        fetch('https://api.wasteof.money/messages/unread', {
+        fetch('https://api.wasteof.money/messages/count', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -543,10 +543,10 @@ export function notificationBadge() {
         }).then(res => res.json()).then(data => {
             const notifBadge = document.querySelector('.notification-badge');
 
-            notifBadge.textContent = data.unread.length;
-            setNotifications(data.unread.length);
+            notifBadge.textContent = data.count;
+            setNotifications(data.count);
 
-            if (data.unread.length > 0) {
+            if (data.count > 0) {
                 notifBadge.classList.add('active');
             } else {
                 notifBadge.classList.remove('active');

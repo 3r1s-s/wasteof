@@ -47,6 +47,11 @@
     --app-dark-purple: #5f5bff;
     --app-dark-orange: #c86f33;
 
+    .post-content mark {
+        color: rgb(88, 81, 11);
+        background-color: rgb(255, 248, 111);
+    }
+
     .content, .profile-info.bottom {
         border-color: var(--app-600);
     }
