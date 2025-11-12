@@ -43,6 +43,8 @@
     --app-dark-orange: #c86f33;
 
     --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    --specular-highlight: -.5px -.5px 1px #ffffff52 inset, 1px 1px .5px #ffffff52 inset, 0 4px 24px #0000003d;
 }
 
 body {
@@ -1717,7 +1719,7 @@ span.dot {
     bottom: -2px;
     right: 0;
     width: 100%;
-    height: 80px;
+    height: calc(63px + 10px);
     pointer-events: none;
     z-index: 2;
     opacity: 0;
@@ -1794,7 +1796,8 @@ span.dot {
         position: fixed;
         left: 10px;
         top: unset;
-        bottom: calc(10px + env(safe-area-inset-bottom));
+        /* bottom: calc(10px + env(safe-area-inset-bottom)); */
+        bottom: 10px;
 
         display: flex;
         flex-direction: row;
@@ -1852,7 +1855,7 @@ span.dot {
     .nav-item.active::before {
         opacity: 1;
         transform: scale(1);
-        background-color: #5151518b;
+        background-color: #a2a2a240;
     }
 
     .modal {
@@ -1872,7 +1875,7 @@ span.dot {
 
     .content {
         padding-top: 0;
-        padding-bottom: calc(63px + 10px + env(safe-area-inset-bottom));
+        padding-bottom: calc(63px + 10px);
         border: none;
     }
 
@@ -1881,8 +1884,13 @@ span.dot {
     }
 
     .jump {
-        bottom: calc(1rem + 63px + 10px + env(safe-area-inset-bottom));
+        bottom: calc(1rem + 63px + 10px);
         right: 1rem;
+        border: none;
+        box-shadow: var(--specular-highlight);
+        background-color: #1c1c1cb6;
+        backdrop-filter: blur(3px) saturate(2);
+        -webkit-backdrop-filter: blur(3px) saturate(2);
     }
 
     .post {
@@ -1895,5 +1903,29 @@ span.dot {
 
     .mask-left-outer, .mask-right-outer {
         padding-top: env(--safe-area-inset-top);
+    }
+
+    .light {
+        .nav {
+            background-color: #eeeeee3d;
+            box-shadow: inset 0 0 1px 1px #ffffffc1, 0 4px 24px #0000003d;
+            backdrop-filter: blur(3px) saturate(2);
+            -webkit-backdrop-filter: blur(3px) saturate(2);
+        }
+
+        .jump {
+            background-color: #ffffffc2;
+        }
+
+        .edge-scroll-effect-soft>.gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 11;
+            background: linear-gradient(transparent 0%, #fff 100%);
+            opacity: 0.8;
+        }
     }
 }
