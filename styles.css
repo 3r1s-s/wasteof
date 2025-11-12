@@ -1719,7 +1719,7 @@ span.dot {
     bottom: -2px;
     right: 0;
     width: 100%;
-    height: calc(63px + 10px);
+    height: calc(63px + 18px);
     pointer-events: none;
     z-index: 2;
     opacity: 0;
@@ -1794,15 +1794,15 @@ span.dot {
 @media only screen and (max-width: 1000px) {
     .nav {
         position: fixed;
-        left: 10px;
+        left: 24px;
         top: unset;
         /* bottom: calc(10px + env(safe-area-inset-bottom)); */
-        bottom: 10px;
+        bottom: 18px;
 
         display: flex;
         flex-direction: row;
         height: 63px;
-        width: calc(100% - 20px);
+        width: calc(100% - 48px);
         z-index: 100;
         box-sizing: border-box;
 
@@ -1874,8 +1874,8 @@ span.dot {
     }
 
     .content {
-        padding-top: 0;
-        padding-bottom: calc(63px + 10px);
+        padding-top: var(--titlebar-height);
+        padding-bottom: calc(63px + 18px);
         border: none;
     }
 
@@ -1884,7 +1884,7 @@ span.dot {
     }
 
     .jump {
-        bottom: calc(1rem + 63px + 10px);
+        bottom: calc(1rem + 63px + 18px);
         right: 1rem;
         border: none;
         box-shadow: var(--specular-highlight);
