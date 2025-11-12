@@ -96,7 +96,13 @@ export function newPost() {
         `
     });
 
-    document.querySelector('.post-input').focus();
+    if (window.innerWidth < 1000) {
+        setTimeout(() => {
+            document.querySelector('.post-input').focus();
+        }, 500);
+    } else {
+        document.querySelector('.post-input').focus();
+    }
 
     const input = document.querySelector('.post-input');
     const close = document.querySelector('.modal-close');
