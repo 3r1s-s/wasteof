@@ -1870,7 +1870,7 @@ span.dot {
 
 @media only screen and (max-width: 1000px) {
     .content-width {
-        padding-top: var(--titlebar-height);
+        /* padding-top: var(--titlebar-height); */
     }
 
     .content {
@@ -1903,6 +1903,10 @@ span.dot {
 
     .mask-left-outer, .mask-right-outer {
         padding-top: env(--safe-area-inset-top);
+    }
+
+    .profile.section {
+        flex-direction: column;
     }
 
     .light {
