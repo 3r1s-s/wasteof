@@ -1640,6 +1640,55 @@ span.dot {
     display: inline-block;
 }
 
+.key {
+    padding: 2px 5px;
+    font-size: 12px;
+    background: var(--app-400);
+    border-radius: 3px;
+    box-shadow: 0 0 1px var(--app-text);
+    border-bottom: 3px solid var(--app-200);
+    min-width: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.key:active {
+    margin-top: 3px;
+    border-bottom: none;
+}
+
+.row {
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.shr-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    min-width: 200px;
+
+    background-color: var(--app-300);
+    border-radius: 8px;
+}
+
+.shr-card h3 {
+    margin:0;
+    font-size: 1rem;
+}
+
+.shr-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
 /* Squircles */
 
 @supports (corner-shape: superellipse(2)) {

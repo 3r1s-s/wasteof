@@ -171,7 +171,45 @@ document.addEventListener('keydown', (e) => {
 
         if (e.key === '/' && (e.ctrlKey || e.metaKey)) {
             e.preventDefault();
-            openModal({ title: 'Keyboard shortcuts', body: `hi` });
+            openModal({ title: 'Keyboard shortcuts', body: `
+                <div class="shr-cards">
+                    <div class="shr-card">
+                        <h3>Keyboard shortcuts</h3>
+                        <div class="row">
+                            <span class="key">⌘</span>
+                            <span class="key">/</span>
+                        </div>
+                    </div>
+                    <div class="shr-card">
+                        <h3>Settings</h3>
+                        <div class="row">
+                            <span class="key">⌘</span>
+                            <span class="key">,</span>
+                        </div>
+                    </div>
+                    <div class="shr-card">
+                        <h3>New Post</h3>
+                        <div class="row">
+                            <span class="key">shift</span>
+                            <span class="key">N</span>
+                        </div>
+                    </div>
+                    <div class="shr-card">
+                        <h3>Command palette</h3>
+                        <div class="row">
+                            <span class="key">⌘</span>
+                            <span class="key">K</span>
+                        </div>
+                    </div>
+                    <div class="shr-card">
+                        <h3>Mark all as read</h3>
+                        <div class="row">
+                            <span class="key">⌘</span>
+                            <span class="key">esc</span>
+                        </div>
+                    </div>
+                </div>
+            `});
         }
 
         if (e.key === 'k' && (e.ctrlKey || e.metaKey)) {
