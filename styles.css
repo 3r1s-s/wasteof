@@ -1709,23 +1709,108 @@ span.dot {
     }
 }
 
+/* Edge Scroll Effect Soft */
+
+.edge-scroll-effect-soft {
+    position: fixed;
+    left: 0;
+    bottom: -2px;
+    right: 0;
+    width: 100%;
+    height: 80px;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0;
+}
+
+.show.edge-scroll-effect-soft {
+    opacity: 1;
+}
+
+.edge-scroll-effect-soft>.blur-filter {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(1) {
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    mask: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 40%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(2) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 10%, rgba(0, 0, 0, 1) 20%, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 0) 50%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(3) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 15%, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 60%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(4) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 20%, rgba(0, 0, 0, 1) 40%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0) 70%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(5) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0) 90%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(6) {
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 1) 80%);
+}
+
+.edge-scroll-effect-soft>.blur-filter:nth-child(7) {
+    z-index: 10;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    mask: linear-gradient(rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, 1) 100%)
+}
+
+.edge-scroll-effect-soft>.gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    background: linear-gradient(transparent 0%, #000 100%);
+    opacity: 0.8;
+}
+
 @media only screen and (max-width: 1000px) {
     .nav {
         position: fixed;
-        left: 0;
+        left: 10px;
         top: unset;
-        bottom: 0;
+        bottom: calc(10px + env(safe-area-inset-bottom));
 
         display: flex;
         flex-direction: row;
         height: 63px;
-        padding-bottom: env(safe-area-inset-bottom);
-        width: 100%;
+        width: calc(100% - 20px);
         z-index: 100;
         box-sizing: border-box;
 
-        background-color: var(--app-100);
-        border-top: 1px solid var(--app-300);
+        background-color: #1c1c1cb6;
+        border-top: none;
+        box-shadow: -.5px -.5px 1px #ffffff52 inset, 1px 1px .5px #ffffff52 inset, 0 4px 24px #0000003d;
+        border-radius: 100px;
+        backdrop-filter: blur(3px) saturate(2);
+        -webkit-backdrop-filter: blur(3px) saturate(2);
+        -webkit-user-select: none;
+        user-select: none;
     }
 
     .nav-items {
@@ -1733,8 +1818,8 @@ span.dot {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
-        padding: 0.5rem;
+        gap: 0.15rem;
+        padding: 0.5rem 0.4rem;
         width: 100%;
         max-width: 600px;
         margin: 0 auto;
@@ -1744,33 +1829,50 @@ span.dot {
         display: none;
     }
 
+    .nav-item::before {
+        border-radius: 100px;
+    }
+
+    .nav-item:hover::before, .nav-item:active {
+        opacity: 0;
+        background-color: auto;
+        border-radius: 100px;
+        corner-shape: unset;
+    }
+
+    .nav-item:hover, .nav-item:active {
+        opacity: 0.6;
+    }
+
+
     .nav-item.active {
         opacity: 1;
     }
-
+    
     .nav-item.active::before {
         opacity: 1;
         transform: scale(1);
+        background-color: #5151518b;
     }
-    
+
     .modal {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
     }
+
+    .edge-scroll-effect-soft {
+        opacity: 1;
+    }
 }
 
 @media only screen and (max-width: 600px) {
-    .app {
-        height: calc(100vh - 63px - env(safe-area-inset-bottom))
-    }
-
     .content-width {
         padding-top: var(--titlebar-height);
     }
 
     .content {
         padding-top: 0;
-        padding-bottom: calc(63px);
+        padding-bottom: calc(63px + 10px + env(safe-area-inset-bottom));
         border: none;
     }
 
@@ -1779,7 +1881,7 @@ span.dot {
     }
 
     .jump {
-        bottom: calc(1rem + 63px + env(safe-area-inset-bottom));
+        bottom: calc(1rem + 63px + 10px + env(safe-area-inset-bottom));
         right: 1rem;
     }
 
