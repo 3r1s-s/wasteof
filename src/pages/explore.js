@@ -1,10 +1,11 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, backButton } from "../index.js";
-import { activeTab, toTop } from "../scripts/utils.js"
+import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getTrending } from "../scripts/api.js";
 import { router } from "../scripts/router.js";
 
 export function explorePage() {
+    setTranslucentTitle(false);
     title.innerText = 'Explore';
     content.dataset.page = 'explore';
     activeTab('nav-explore');

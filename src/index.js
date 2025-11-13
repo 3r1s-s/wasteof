@@ -120,8 +120,16 @@ document.querySelector('.jump').addEventListener('click', () => {
 app.addEventListener('scroll', () => {
     if (app.scrollTop > 100) {
         document.querySelector('.jump').classList.add('active');
+
+        if (document.querySelector('.title[data-canhide=true]')) {
+            document.querySelector('.title').classList.remove('hide');
+        }
     } else {
         document.querySelector('.jump').classList.remove('active');
+
+        if (document.querySelector('.title[data-canhide=true]')) {
+            document.querySelector('.title').classList.add('hide');
+        }
     }
 });
 

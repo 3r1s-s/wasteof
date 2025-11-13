@@ -1,12 +1,13 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, backButton } from "../index.js";
-import { activeTab, toTop } from "../scripts/utils.js"
+import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadUserInfo, loadUserPosts, followButton, loadMoreUserPosts } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
 import { router } from "../scripts/router.js";
 import { loginModal } from "../scripts/page-helpers.js";
 
 export function userPage(params) {
+    setTranslucentTitle(true);
     title.innerText = `@${params.username}`;
     content.dataset.page = 'user';
     toTop();

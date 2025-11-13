@@ -37,7 +37,7 @@ export function loginModal() {
 }
 
 export function logoutModal() {
-    openAlert({title: 'Log out?', message: 'Are you sure you want to log out?',center: true, buttons: [{text: 'OK', action: () => { logout() }},{text: 'Cancel', action: () => closeAlert()}]})
+    openAlert({title: 'Log out?', message: 'Are you sure you want to log out?',center:true, buttons: [{text: 'OK', action: () => { logout() }},{text: 'Cancel', action: () => closeAlert()}]})
 }
 
 export async function myInfo() {

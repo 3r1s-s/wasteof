@@ -1,4 +1,4 @@
-import { app, dropdowns, content } from "../index.js";
+import { app, dropdowns, content, title } from "../index.js";
 import { manageCache, postContext, pinPost, unpinPost } from "./api.js";
 import { themeName, setTheme } from "./theme.js";
 import { reportModal, deletePostModal } from "./page-helpers.js";
@@ -109,6 +109,11 @@ export function dropdownListeners() {
         context.forEach(context => context.addEventListener('click', (e) => {
             e.stopPropagation();
             const dropdownId = context.dataset.dropdown;
+            if (!dropdownId) return;
+            if (document.getElementById(dropdownId).classList.contains('open')) {
+                closeDropdown(dropdownId);
+                return;
+            }
             openDropdown(dropdownId);
         }));
     }
@@ -240,4 +245,20 @@ export function repostListener() {
             if (id) router.navigate(`/posts/${id}`);
         });
     });
+}
+
+export function resetTitle() {
+    title.classList.remove('hide');
+}
+
+export function setTranslucentTitle(e) {
+    title.dataset.canhide = e;
+    title.style = `transition: none;`;
+    title.classList.remove('hide');
+    if (e) {
+        title.classList.add('hide');
+    }
+    setTimeout(() => {
+        title.style = ``;
+    }, 10);
 }

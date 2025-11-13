@@ -1,11 +1,12 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, backButton } from "../index.js";
-import { activeTab, toTop, updateContext, dropdownListeners, repostListener } from "../scripts/utils.js"
+import { activeTab, toTop, updateContext, dropdownListeners, repostListener, setTranslucentTitle } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
 import { manageCache, fetchPostPage, createPost, loadPostComments } from "../scripts/api.js";
 import { newComment } from "../scripts/page-helpers.js";
 
 export function postPage(params) {
+    setTranslucentTitle(false);
     title.innerText = `Post`;
     content.dataset.page = 'post';
     toTop();

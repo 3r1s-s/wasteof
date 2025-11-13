@@ -1,6 +1,6 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, version } from "../index.js";
-import { activeTab, toTop, openDropdown, dropdownListeners, closeDropdown } from "../scripts/utils.js"
+import { activeTab, toTop, openDropdown, dropdownListeners, closeDropdown, resetTitle, setTranslucentTitle } from "../scripts/utils.js"
 import { settings, storage } from "../scripts/storage.js";
 import { openModal, closeModal } from "../scripts/modals.js";
 import { loginModal, myInfo } from "../scripts/page-helpers.js";
@@ -12,7 +12,9 @@ export function settingsPage() {
         return;
     }
 
+    setTranslucentTitle(true);
     title.innerText = 'Settings';
+
     content.dataset.page = 'settings';
     toTop();
     activeTab();

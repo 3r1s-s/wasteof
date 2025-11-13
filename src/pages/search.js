@@ -1,6 +1,6 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, backButton } from "../index.js";
-import { activeTab, toTop } from "../scripts/utils.js"
+import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getSearch } from "../scripts/api.js";
 import { router } from "../scripts/router.js";
 
@@ -8,6 +8,7 @@ export function searchPage(q) {
     const params = new URLSearchParams(window.location.search);
     const query = params.get('q') || '';
 
+    setTranslucentTitle(false);
     title.innerText = 'Search';
     content.dataset.page = 'search';
     activeTab('nav-explore');

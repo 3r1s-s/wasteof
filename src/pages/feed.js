@@ -1,11 +1,12 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, backButton } from "../index.js";
-import { activeTab, toTop } from "../scripts/utils.js"
+import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
 import { getFeed } from "../scripts/api.js";
 import { newPost } from "../scripts/page-helpers.js";
 
 export function feedPage() {
+    setTranslucentTitle(false);
     title.innerText = 'Feed';
     content.dataset.page = 'feed';
     toTop();
