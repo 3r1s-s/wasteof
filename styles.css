@@ -1887,7 +1887,6 @@ span.dot {
 /* Mobile */
 
 @media only screen and (max-width: 800px) {
-
     html,
     body {
         overscroll-behavior: none;
@@ -1944,6 +1943,7 @@ span.dot {
     .nav-item::before {
         border-radius: 100px;
         corner-shape: unset;
+        box-shadow: none;
     }
 
     .nav-item:hover::before {
