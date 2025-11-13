@@ -1972,6 +1972,7 @@ span.dot {
     .modal {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
+        box-shadow: inset 0 1px 0 1px #ffffff4b !important;
     }
 
     .titlebar .edge-scroll-effect-soft {
