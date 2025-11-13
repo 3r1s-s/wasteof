@@ -178,6 +178,10 @@
     --app-700: #707070;
     --app-800: #838383;
     --app-900: #959595;
+
+    .follow-button {
+        color: #000;
+    }
 }
 
 .liquid-glass.black {
