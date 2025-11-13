@@ -132,7 +132,9 @@ window.addEventListener('DOMContentLoaded', () => {
         settings.set('theme', 'system');
     }
     applyTheme();
-
+    if (settings.get('glass')) {
+        document.body.classList.add('liquid-glass');
+    }
     notificationBadge();
 
     setTimeout(() => {

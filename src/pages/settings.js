@@ -1,7 +1,7 @@
 import { icon } from "../scripts/icons.js";
 import { title, content, version } from "../index.js";
 import { activeTab, toTop, openDropdown, dropdownListeners, closeDropdown } from "../scripts/utils.js"
-import { storage } from "../scripts/storage.js";
+import { settings, storage } from "../scripts/storage.js";
 import { openModal, closeModal } from "../scripts/modals.js";
 import { loginModal, myInfo } from "../scripts/page-helpers.js";
 import { themeName, setTheme } from "../scripts/theme.js";
@@ -48,6 +48,21 @@ export function settingsPage() {
                         <div class="option" data-action="set-theme" data-value="system">System</div>
                         <div class="option" data-action="set-theme" data-value="light">Light</div>
                         <div class="option" data-action="set-theme" data-value="dark">Dark</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <span class="title" style="padding: 0 0.5rem">Glass Effects</span>
+            <div class="options">
+                <div class="context-outer" id="glass">
+                    <div class="context" data-dropdown="glass">
+                    <span class="value">${settings.get('glass') ? 'On' : 'Off'}</span>
+                    <span class="arrow">${icon.arrow}</span>
+                    </div>
+                    <div class="dropdown">
+                        <div class="option" data-action="set-glass" data-value="true">On</div>
+                        <div class="option" data-action="set-glass" data-value="false">Off</div>
                     </div>
                 </div>
             </div>

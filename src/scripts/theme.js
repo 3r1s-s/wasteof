@@ -29,7 +29,7 @@ export function applyTheme() {
     }
 
     if (content.dataset.page === 'settings') {
-        document.querySelector('.value').innerText = themeName();
+        document.querySelector('#theme .value').innerText = themeName();
     }
 }
 

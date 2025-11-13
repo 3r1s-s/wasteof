@@ -3,6 +3,7 @@ import { manageCache, postContext, pinPost, unpinPost } from "./api.js";
 import { themeName, setTheme } from "./theme.js";
 import { reportModal, deletePostModal } from "./page-helpers.js";
 import { router } from "./router.js";
+import { settings } from "./storage.js";
 
 export function timeAgo(tstamp) {
     const currentTime = Date.now();
@@ -155,6 +156,19 @@ export function dropdownListeners() {
 
                 case 'report-post':
                 reportModal(id);
+                break;
+
+                case 'set-glass':
+                const boolValue = value === 'true';
+                settings.set('glass', boolValue);
+                if (content.dataset.page === 'settings') {
+                    document.querySelector('#glass .value').innerText = boolValue ? 'On' : 'Off';
+                    if (boolValue) {
+                        document.body.classList.add('liquid-glass');
+                    } else {
+                        document.body.classList.remove('liquid-glass');
+                    }
+                }
                 break;
 
                 default:
