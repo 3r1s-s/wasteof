@@ -2000,10 +2000,6 @@ span.dot {
         border: none;
     }
 
-    .content[data-page="user"] {
-        padding-top: 0;
-    }
-
     .mask-left,
     .mask-right {
         display: none;
@@ -2080,6 +2076,10 @@ span.dot {
 
         .title {
             text-shadow: 0 0 8px #00000066;
+        }
+
+        .content[data-page="user"] {
+            padding-top: 0;
         }
 
         .content-mask {
