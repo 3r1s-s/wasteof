@@ -395,6 +395,19 @@ span.logo>svg {
     padding: 2rem 1rem;
 }
 
+#loading.floating {
+    position: absolute;
+    top: calc(env(safe-area-inset-top) + var(--titlebar-height) + 5px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--app-200);
+    border: 1px solid var(--app-300);
+    box-shadow: 0 2px 8px #00000034;
+    border-radius: 100px;
+    padding: 0.5rem;
+    z-index: 100;
+}
+
 /* Post */
 
 .post {
@@ -1796,9 +1809,10 @@ span.dot {
     opacity: 0.8;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 800px) {
     html, body {
         overscroll-behavior: none;
+        background-color: var(--app-200);
     }
     
     .nav {
@@ -1963,7 +1977,7 @@ span.dot {
     }
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 800px) {
     .content-width {
         /* padding-top: var(--titlebar-height); */
     }

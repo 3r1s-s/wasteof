@@ -17,7 +17,7 @@ export function notificationsPage() {
     activeTab('nav-notifications');
 
     content.innerHTML = `
-        <div class="content-center" id="loading">
+        <div class="floating" id="loading">
             <span class="loader animate">${icon.loader}</span>
         </div>
         <div class="unread"></div>
