@@ -835,8 +835,11 @@ const notificationTypes = {
     'comment': 'commented on your post',
     'comment_reply': 'replied to your comment',
     'post_mention': 'mentioned you in a post',
+    'comment_mention': 'mentioned you in a comment',
     'admin_notification': 'Admin notification',
-    'wall_comment_reply': 'replied to your wall comment'
+    'wall_comment': 'commented on your wall post',
+    'wall_comment_reply': 'replied to your wall comment',
+    'wall_comment_mention': 'mentioned you in a wall comment'
 }
 
 function createNotification(data) {
@@ -901,6 +904,21 @@ function createNotification(data) {
                 </div>
             </div>
         `
+    } else if (data.type === 'comment_mention') {
+        notifPost = createPost(data.data.post, true);
+        post = `
+            <div class="notification">
+                <div class="notification-icon">
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
+                </div>
+                <div class="notification-content">
+                    <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
+                    <div class="notification-post">
+                        ${notifPost}
+                    </div>
+                </div>
+            </div>
+        `
     } else if (data.type === 'admin_notification') {
         post = `
             <div class="notification">
@@ -909,12 +927,12 @@ function createNotification(data) {
                 <div class="notification-content">
                     <span class="notification-title">${notificationTypes[data.type]}</span>
                     <div class="notification-post">
-                        ${notifPost}
+                        ${data.data.content}
                     </div>
                 </div>
             </div>
         `
-    } else if (data.type === 'wall_comment_reply') {
+    } else if (data.type === 'wall_comment_reply' || data.type === 'wall_comment_mention' || data.type === 'wall_comment') {
         post = `
             <div class="notification">
                 <div class="notification-icon">
