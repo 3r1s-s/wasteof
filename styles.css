@@ -1792,6 +1792,10 @@ span.dot {
 }
 
 @media only screen and (max-width: 1000px) {
+    html, body {
+        overscroll-behavior: none;
+    }
+    
     .nav {
         position: fixed;
         left: 24px;
@@ -1874,7 +1878,7 @@ span.dot {
     }
 
     .content {
-        padding-top: var(--titlebar-height);
+        padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
         padding-bottom: calc(63px + 18px);
         border: none;
     }
@@ -1898,11 +1902,15 @@ span.dot {
     }
 
     .titlebar {
-        padding-top: env(--safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
     }
 
     .mask-left-outer, .mask-right-outer {
-        padding-top: env(--safe-area-inset-top);
+        padding-top: env(safe-area-inset-top);
+    }
+
+    .mask-border {
+        top: calc(var(--titlebar-height) + env(safe-area-inset-top));
     }
 
     .profile.section {
