@@ -1817,6 +1817,11 @@ span.dot {
         user-select: none;
     }
 
+    .light .nav {
+        background-color: var(--app-100);
+        border: 2px solid var(--app-700);
+    }
+
     .nav-items {
         display: flex;
         flex-direction: row;
@@ -1871,7 +1876,7 @@ span.dot {
     .liquid-glass {
         .nav {
             background-color: #1c1c1cb6;
-            border-top: none;
+            border: none;
             box-shadow: -.5px -.5px 1px #ffffff52 inset, 1px 1px .5px #ffffff52 inset, 0 4px 24px #0000003d;
             border-radius: 100px;
             backdrop-filter: blur(3px) saturate(2);
@@ -1898,6 +1903,10 @@ span.dot {
 
         .titlebar {
             background: transparent;
+        }
+
+        .title {
+            text-shadow: 0 0 8px #00000066;
         }
 
         .content-mask {
@@ -1973,7 +1982,7 @@ span.dot {
         flex-direction: column;
     }
 
-    .light {
+    .light.liquid-glass {
         .nav {
             background-color: #eeeeee3d;
             box-shadow: inset 0 0 1px 1px #ffffffc1, 0 4px 24px #0000003d;
@@ -1994,6 +2003,10 @@ span.dot {
             z-index: 11;
             background: linear-gradient(transparent 0%, #fff 100%);
             opacity: 0.8;
+        }
+
+        .title {
+            text-shadow: none;
         }
     }
 }
