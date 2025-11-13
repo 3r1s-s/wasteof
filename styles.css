@@ -1830,14 +1830,12 @@ span.dot {
     }
 
     .modal {
-        background: #3636364f;
         backdrop-filter: blur(15px) saturate(1.5);
         box-shadow: var(--specular-highlight);
         border: none;
     }
 
     .alert {
-        background: #3636364f;
         backdrop-filter: blur(15px) saturate(1.5);
         box-shadow: var(--specular-highlight);
         border: none;
