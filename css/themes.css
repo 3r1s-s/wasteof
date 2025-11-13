@@ -12,7 +12,6 @@
     --profile-fuchsia: #D946EF;
     --profile-pink: #EC4899;
     --profile-gray: #6B7280;
-
 }
 
 .light {
@@ -166,5 +165,46 @@
     .jump:active {
         border-color: var(--app-700);
         box-shadow: 0 2px 5px #00000066;
+    }
+}
+
+.black {
+    --app-100: #000;
+    --app-200: #121212;
+    --app-300: #242424;
+    --app-400: #373737;
+    --app-500: #4a4a4a;
+    --app-600: #5d5d5d;
+    --app-700: #707070;
+    --app-800: #838383;
+    --app-900: #959595;
+}
+
+.liquid-glass.black {
+    --app-100: #000;
+    --app-200: rgba(90, 90, 90, 0.2);
+    --app-300: rgba(90, 90, 90, 0.25);
+    --app-400: rgba(90, 90, 90, 0.3);
+    --app-500: rgba(90, 90, 90, 0.35);
+    --app-600: rgba(90, 90, 90, 0.4);
+    --app-700: rgba(90, 90, 90, 0.45);
+    --app-800: rgba(90, 90, 90, 0.5);
+    --app-900: rgba(90, 90, 90, 0.55);
+
+    --app-text: #fff;
+
+    .modal-outer.open, .alert-outer.open {
+        background-color: #0000007c;
+    }
+
+    .modal, .alert {
+        background-color: rgba(4, 4, 4, 0.6);
+        color: var(--app-text);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .liquid-glass.black {
+        --app-200: #000;
     }
 }
