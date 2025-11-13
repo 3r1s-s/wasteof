@@ -470,6 +470,11 @@ span.logo>svg {
     font-size: 1.1rem;
 }
 
+.focused .post-title:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .repost .post-title {
     font-size: 1rem;
 }
@@ -1929,6 +1934,32 @@ span.dot {
             backdrop-filter: blur(3px) saturate(2);
             -webkit-backdrop-filter: blur(3px) saturate(2);
         }
+
+        /* .modal {
+            background: #3636364f;
+            backdrop-filter: blur(15px) saturate(1.5);
+            box-shadow: var(--specular-highlight);
+        }
+
+        .alert {
+            background: #3636364f;
+            backdrop-filter: blur(15px) saturate(1.5);
+            box-shadow: var(--specular-highlight);
+            border: none;
+        }
+
+        .dropdown {
+            background: #3636364f;
+            backdrop-filter: blur(15px) saturate(1.5);
+            box-shadow: var(--specular-highlight);
+            border: none;
+            padding: 0.5rem;
+            border-radius: 20px;
+        }
+
+        .post-input {
+            background: transparent;
+        } */
     }
 }
 
@@ -2008,5 +2039,11 @@ span.dot {
         .title {
             text-shadow: none;
         }
+
+        /* .modal, .alert, .dropdown {
+            background: #ffffffcf;
+            backdrop-filter: blur(3px) saturate(2);
+            -webkit-backdrop-filter: blur(3px) saturate(2);
+        } */
     }
 }

@@ -199,7 +199,7 @@ export function createPost(data, isRepost, focused) {
                     <div class="big-post-header">
                         <div class="pfp button" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" data-action="profile" data-id="${data.poster.name}"></div>
                         <div class="post-header">
-                            <div class="post-title">${data.poster.name}</div>
+                            <div class="post-title button" data-action="profile" data-id="${data.poster.name}">${data.poster.name}</div>
                             <span class="post-date">${timeAgo(data.time)}</span>
                         </div>
                     </div>
@@ -834,7 +834,9 @@ const notificationTypes = {
     'repost': 'reposted your post',
     'comment': 'commented on your post',
     'comment_reply': 'replied to your comment',
-    'post_mention': 'mentioned you in a post'
+    'post_mention': 'mentioned you in a post',
+    'admin_notification': 'Admin notification',
+    'wall_comment_reply': 'replied to your wall comment'
 }
 
 function createNotification(data) {
@@ -846,7 +848,7 @@ function createNotification(data) {
         post = `
             <div class="notification">
                 <div class="notification-icon">
-                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
                 </div>
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
@@ -860,7 +862,7 @@ function createNotification(data) {
     post = `
         <div class="notification">
             <div class="notification-icon">
-                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
+                <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
             </div>
             <div class="notification-content">
                 <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
@@ -874,7 +876,7 @@ function createNotification(data) {
         post = `
             <div class="notification">
                 <div class="notification-icon">
-                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
                 </div>
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
@@ -889,7 +891,7 @@ function createNotification(data) {
         post = `
             <div class="notification">
                 <div class="notification-icon">
-                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
                 </div>
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
@@ -899,11 +901,38 @@ function createNotification(data) {
                 </div>
             </div>
         `
+    } else if (data.type === 'admin_notification') {
+        post = `
+            <div class="notification">
+                <div class="notification-icon">
+                </div>
+                <div class="notification-content">
+                    <span class="notification-title">${notificationTypes[data.type]}</span>
+                    <div class="notification-post">
+                        ${notifPost}
+                    </div>
+                </div>
+            </div>
+        `
+    } else if (data.type === 'wall_comment_reply') {
+        post = `
+            <div class="notification">
+                <div class="notification-icon">
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
+                </div>
+                <div class="notification-content">
+                    <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
+                    <div class="notification-post">
+                        ${data.data.comment.content || '<p style="font-style: italic">but the comment was deleted :(</p>'}
+                    </div>
+                </div>
+            </div>
+        `
     } else {
         post = `
             <div class="notification">
                 <div class="notification-icon">
-                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');"></div>
+                    <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
                 </div>
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
@@ -926,6 +955,8 @@ function openNotification(data) {
         router.navigate('/posts/' + data.data.comment.post);
     } else if (data.type === 'post_mention') {
         router.navigate('/posts/' + data.data.post);
+    } else if (data.type === 'wall_comment_reply') {
+        // do nothing because the wall stinks
     }
 }
 
