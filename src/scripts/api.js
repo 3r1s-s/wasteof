@@ -302,7 +302,7 @@ export async function getTrending() {
         return;
     }
 
-    document.getElementById('loading').remove();
+    document.getElementById('loading')?.remove();
 
     const exploreContainer = document.querySelector('.explore-posts');
     data.posts.forEach(post => {
@@ -388,7 +388,7 @@ export async function getFeed() {
             return;
         }
 
-        document.getElementById('loading').remove();
+        document.getElementById('loading')?.remove();
 
         data.posts.forEach(post => {
             content.insertAdjacentHTML('beforeend', createPost(post).trim());
@@ -595,7 +595,7 @@ export async function loadUserPosts(user) {
             return;
         }
 
-        document.getElementById('loading').remove();
+        document.getElementById('loading')?.remove();
         if (data.pinned.length !== 0) {
             document.querySelector('.profile-pinned').insertAdjacentHTML('beforeend', createPost(data.pinned[0]).trim());
 
@@ -636,7 +636,7 @@ export async function loadMoreUserPosts(user) {
         if (!data.last) {
             document.querySelector('.load-more').classList.remove('hide');
         }
-        document.getElementById('loading').remove();
+        document.getElementById('loading')?.remove();
     } catch (err) {
         openAlert({title: 'Error', message: err.message});
         console.error(err);
@@ -797,7 +797,7 @@ export async function loadNotifications() {
         body: JSON.stringify({ messages: mark })
     });
 
-    document.getElementById('loading').remove();
+    document.getElementById('loading')?.remove();
 
     notificationBadge();
 }
@@ -1001,7 +1001,7 @@ export async function loadPostComments(postId) {
                 })
             })
 
-            document.getElementById('loading').remove();
+            document.getElementById('loading')?.remove();
         }).catch(err => {
             openAlert({title: 'Error', message: err.message});
         });
