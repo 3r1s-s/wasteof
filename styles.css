@@ -1966,6 +1966,7 @@ span.dot {
         transform: scale(1);
         background-color: var(--app-300);
         transition: background-color 0.2s var(--transition-function), transform 0.2s var(--transition-function);
+        box-shadow: none;
     }
 
     .modal {
