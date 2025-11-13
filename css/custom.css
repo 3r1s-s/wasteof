@@ -1038,4 +1038,8 @@ input::placeholder {
     .banner {
         height: 200px;
     }
+
+    .liquid-glass .banner {
+        height: calc(120px + var(--titlebar-height) + env(safe-area-inset-top));
+    }
 }
