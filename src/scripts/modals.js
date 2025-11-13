@@ -222,6 +222,10 @@ export function openAlert(data) {
             modalInner.append(inputElement);
         }
 
+        if (data.center) {
+            modal.classList.add("center");
+        }
+
         if (data.id) {
             modal.id = data.id;
         } else {

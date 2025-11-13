@@ -48,6 +48,7 @@ export function settingsPage() {
                         <div class="option" data-action="set-theme" data-value="system">System</div>
                         <div class="option" data-action="set-theme" data-value="light">Light</div>
                         <div class="option" data-action="set-theme" data-value="dark">Dark</div>
+                        <div class="option" data-action="set-theme" data-value="black">Black</div>
                     </div>
                 </div>
             </div>

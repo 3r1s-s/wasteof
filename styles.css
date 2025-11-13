@@ -1088,6 +1088,7 @@ span.logo>svg {
 
 .center .alert-options {
     justify-content: center;
+    flex-direction: column;
 }
 
 .center .modal-button {
@@ -1698,7 +1699,7 @@ span.dot {
 }
 
 .shr-card h3 {
-    margin:0;
+    margin: 0;
     font-size: 1rem;
 }
 
@@ -1712,7 +1713,7 @@ span.dot {
 /* Squircles */
 
 @supports (corner-shape: superellipse(2)) {
-    .nav-item:hover::before {
+    .nav-item::before {
         corner-shape: superellipse(2);
         border-radius: 20px;
     }
@@ -1809,12 +1810,96 @@ span.dot {
     opacity: 0.8;
 }
 
+/* Liquid Glass */
+
+.liquid-glass {
+    .nav-item::before {
+        box-shadow: var(--specular-highlight);
+    }
+
+    .jump {
+        border: none;
+        box-shadow: var(--specular-highlight);
+        background-color: #1c1c1cb6;
+        backdrop-filter: blur(3px) saturate(2);
+        -webkit-backdrop-filter: blur(3px) saturate(2);
+    }
+
+    .jump.active {
+        border: none;
+    }
+
+    .modal {
+        background: #3636364f;
+        backdrop-filter: blur(15px) saturate(1.5);
+        box-shadow: var(--specular-highlight);
+        border: none;
+    }
+
+    .alert {
+        background: #3636364f;
+        backdrop-filter: blur(15px) saturate(1.5);
+        box-shadow: var(--specular-highlight);
+        border: none;
+    }
+
+    .dropdown {
+        background: #3636364f;
+        backdrop-filter: blur(15px) saturate(1.5);
+        box-shadow: var(--specular-highlight);
+        border: none;
+        padding: 0.5rem;
+        border-radius: 20px;
+    }
+
+    .post-input {
+        background: transparent;
+    }
+}
+
+.light.liquid-glass {
+    .jump {
+        background-color: #ffffffc2;
+    }
+
+    .edge-scroll-effect-soft>.gradient {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 11;
+        background: linear-gradient(transparent 0%, #fff 100%);
+        opacity: 0.8;
+    }
+
+    .title {
+        text-shadow: none;
+    }
+
+    .modal,
+    .alert,
+    .dropdown {
+        background: #ffffffcf;
+        backdrop-filter: blur(3px) saturate(2);
+        -webkit-backdrop-filter: blur(3px) saturate(2);
+    }
+}
+
+/* Mobile */
+
 @media only screen and (max-width: 800px) {
-    html, body {
+
+    html,
+    body {
         overscroll-behavior: none;
         background-color: var(--app-200);
     }
-    
+
+    .black {
+        background-color: var(--app-100);
+    }
+
     .nav {
         position: fixed;
         left: 24px;
@@ -1853,29 +1938,31 @@ span.dot {
         margin: 0 auto;
     }
 
-    .nav-logo, .nav-profile {
+    .nav-logo,
+    .nav-profile {
         display: none;
     }
 
     .nav-item::before {
         border-radius: 100px;
-    }
-
-    .nav-item:hover::before, .nav-item:active {
-        opacity: 0;
-        background-color: auto;
-        border-radius: 100px;
         corner-shape: unset;
     }
 
-    .nav-item:hover, .nav-item:active {
+    .nav-item:hover::before {
+        opacity: 0;
+        background-color: auto;
+        border-radius: 100px;
+    }
+
+    .nav-item:hover,
+    .nav-item:active {
         opacity: 0.6;
     }
 
     .nav-item.active {
         opacity: 1;
     }
-    
+
     .nav-item.active::before {
         opacity: 1;
         transform: scale(1);
@@ -1892,103 +1979,14 @@ span.dot {
         display: none;
     }
 
-    .liquid-glass {
-        .nav {
-            background-color: #1c1c1cb6;
-            border: none;
-            box-shadow: -.5px -.5px 1px #ffffff52 inset, 1px 1px .5px #ffffff52 inset, 0 4px 24px #0000003d;
-            border-radius: 100px;
-            backdrop-filter: blur(3px) saturate(2);
-            -webkit-backdrop-filter: blur(3px) saturate(2);
-        }
-        
-        .edge-scroll-effect-soft {
-            opacity: 1;
-        }
-
-        .nav-item.active::before {
-            background-color: #a2a2a240;
-        }
-
-        .nav-item:active {
-            transform: scale(1.25);
-            background-color: transparent;
-            box-shadow: var(--specular-highlight);
-        }
-
-        .nav-item:active::before {
-            background-color: transparent;
-        }
-
-        .titlebar {
-            background: transparent;
-        }
-
-        .title {
-            text-shadow: 0 0 8px #00000066;
-        }
-
-        .content-mask {
-            display: none;
-        }
-
-        .titlebar .edge-scroll-effect-soft {
-            z-index: -1;
-            transform: rotate(180deg);
-            height: 100%;
-            top: 0;
-            opacity: 1;
-            display: block;
-        }
-
-        .jump {
-            border: none;
-            box-shadow: var(--specular-highlight);
-            background-color: #1c1c1cb6;
-            backdrop-filter: blur(3px) saturate(2);
-            -webkit-backdrop-filter: blur(3px) saturate(2);
-        }
-
-        /* .modal {
-            background: #3636364f;
-            backdrop-filter: blur(15px) saturate(1.5);
-            box-shadow: var(--specular-highlight);
-        }
-
-        .alert {
-            background: #3636364f;
-            backdrop-filter: blur(15px) saturate(1.5);
-            box-shadow: var(--specular-highlight);
-            border: none;
-        }
-
-        .dropdown {
-            background: #3636364f;
-            backdrop-filter: blur(15px) saturate(1.5);
-            box-shadow: var(--specular-highlight);
-            border: none;
-            padding: 0.5rem;
-            border-radius: 20px;
-        }
-
-        .post-input {
-            background: transparent;
-        } */
-    }
-}
-
-@media only screen and (max-width: 800px) {
-    .content-width {
-        /* padding-top: var(--titlebar-height); */
-    }
-
     .content {
         padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
         padding-bottom: calc(63px + 18px);
         border: none;
     }
 
-    .mask-left, .mask-right {
+    .mask-left,
+    .mask-right {
         display: none;
     }
 
@@ -2015,7 +2013,8 @@ span.dot {
         padding-top: env(safe-area-inset-top);
     }
 
-    .mask-left-outer, .mask-right-outer {
+    .mask-left-outer,
+    .mask-right-outer {
         padding-top: env(safe-area-inset-top);
     }
 
@@ -2027,6 +2026,57 @@ span.dot {
         flex-direction: column;
     }
 
+    .liquid-glass {
+        .nav {
+            background-color: #1c1c1cb6;
+            border: none;
+            box-shadow: -.5px -.5px 1px #ffffff52 inset, 1px 1px .5px #ffffff52 inset, 0 4px 24px #0000003d;
+            border-radius: 100px;
+            backdrop-filter: blur(3px) saturate(2);
+            -webkit-backdrop-filter: blur(3px) saturate(2);
+        }
+
+        .edge-scroll-effect-soft {
+            opacity: 1;
+        }
+
+        .nav-item.active::before {
+            background-color: #a2a2a240;
+        }
+
+        .nav-item:active {
+            transform: scale(1.25);
+            background-color: transparent;
+            box-shadow: var(--specular-highlight);
+            border-radius: 100px;
+        }
+
+        .nav-item:active::before {
+            background-color: transparent;
+        }
+
+        .titlebar {
+            background: transparent;
+        }
+
+        .title {
+            text-shadow: 0 0 8px #00000066;
+        }
+
+        .content-mask {
+            display: none;
+        }
+
+        .titlebar .edge-scroll-effect-soft {
+            z-index: -1;
+            transform: rotate(180deg);
+            height: 100%;
+            top: 0;
+            opacity: 1;
+            display: block;
+        }
+    }
+
     .light.liquid-glass {
         .nav {
             background-color: #eeeeee3d;
@@ -2034,30 +2084,5 @@ span.dot {
             backdrop-filter: blur(3px) saturate(2);
             -webkit-backdrop-filter: blur(3px) saturate(2);
         }
-
-        .jump {
-            background-color: #ffffffc2;
-        }
-
-        .edge-scroll-effect-soft>.gradient {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 11;
-            background: linear-gradient(transparent 0%, #fff 100%);
-            opacity: 0.8;
-        }
-
-        .title {
-            text-shadow: none;
-        }
-
-        /* .modal, .alert, .dropdown {
-            background: #ffffffcf;
-            backdrop-filter: blur(3px) saturate(2);
-            -webkit-backdrop-filter: blur(3px) saturate(2);
-        } */
     }
 }
