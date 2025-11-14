@@ -208,7 +208,7 @@
 }
 
 @media screen and (max-width: 600px) {
-    .liquid-glass.black {
+    .black {
         --app-200: #000;
     }
 }
