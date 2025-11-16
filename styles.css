@@ -285,8 +285,6 @@ span.logo>svg {
 
 .title.hide {
     opacity: 0;
-    filter: blur(10px);
-    transform: translateY(15px);
 }
 
 .content-mask {
@@ -1868,6 +1866,12 @@ span.dot {
 
     .post-input {
         background: transparent;
+    }
+
+    .title.hide {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(15px);
     }
 }
 
