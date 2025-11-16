@@ -1867,12 +1867,6 @@ span.dot {
     .post-input {
         background: transparent;
     }
-
-    .title.hide {
-        opacity: 0;
-        filter: blur(10px);
-        transform: translateY(15px);
-    }
 }
 
 .light.liquid-glass {
@@ -2099,6 +2093,12 @@ span.dot {
             top: 0;
             opacity: 1;
             display: block;
+        }
+
+        .title.hide {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(15px);
         }
     }
 
