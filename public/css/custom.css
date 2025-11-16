@@ -889,6 +889,7 @@ input::placeholder {
 
 .more .context {
     width: 20px;
+    min-width: 0;
     background: transparent;
     padding: 0;
 }
@@ -1008,6 +1009,31 @@ input::placeholder {
 
 .modal.login-modal-colors::after {
     background-color: #ffffff69;
+}
+
+/* Shortcuts */
+
+.shr-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    min-width: 200px;
+
+    background-color: var(--app-600);
+    border-radius: 8px;
+}
+
+.shr-card h3 {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.shr-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 /* Squircles */

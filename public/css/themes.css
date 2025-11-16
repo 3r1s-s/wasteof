@@ -182,6 +182,10 @@
     .follow-button {
         color: #000;
     }
+
+    .modal, .post-input {
+        background-color: var(--app-300);
+    }
 }
 
 .liquid-glass.black {

@@ -215,6 +215,10 @@ export function newRepost(id) {
             sendModalRepost(id);
         }
     });
+
+    document.getElementById('append-image').addEventListener('click', () => {
+        appendImageAlert();
+    });
 }
 
 export function newComment(id, parent, postid) {
