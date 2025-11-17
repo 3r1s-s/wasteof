@@ -1110,7 +1110,7 @@ function postHtml(post) {
     let html = '';
     const lines = post.split('\n');
     lines.forEach(line => {
-        html += `<p>${sanitize(line)}</p>`;
+        html += `<p>${line}</p>`;
     });
     return html;
 }
@@ -1344,6 +1344,18 @@ function formatPost(html) {
                     child.replaceWith(...temp.childNodes);
                 }
             } else {
+                if (child.nodeType === Node.ELEMENT_NODE && child.tagName === 'IMG') {
+                    const src = child.getAttribute('src');
+                    child.getAttributeNames().forEach(attr => {
+                        if (attr !== 'src') child.removeAttribute(attr);
+                    });
+
+                    if (src && src.startsWith('javascript:')) {
+                        child.remove();
+                        continue;
+                    }
+                }
+
                 walk(child);
             }
         }
