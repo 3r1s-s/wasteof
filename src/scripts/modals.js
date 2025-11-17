@@ -224,6 +224,8 @@ export function openAlert(data) {
 
         if (data.center) {
             modal.classList.add("center");
+        } else {
+            modal.classList.remove("center");
         }
 
         if (data.id) {
