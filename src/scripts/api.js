@@ -1325,19 +1325,43 @@ export async function checkWom() {
 }
 
 function formatPost(html) {
-    const urlRegex = /(https?:\/\/[^\s<]+)/g;
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, "text/html");
 
-    html = html.replace(urlRegex, url => {
-        return `<a href="${url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${url}</a>`;
-    });
+    walk(doc.body);
 
-    const mentionRegex = /@([a-zA-Z0-9_]+)/g;
+    return doc.body.innerHTML;
 
-    html = html.replace(mentionRegex, (_, name) => {
-        return `<span class="mention button" data-action="profile" data-id="${name}">@${name}</span>`;
-    });
+    function walk(node) {
+        for (let child of Array.from(node.childNodes)) {
+            if (child.nodeType === Node.TEXT_NODE) {
+                const replaced = formatText(child.textContent);
 
-    return html;
+                if (replaced !== child.textContent) {
+                    const temp = document.createElement("span");
+                    temp.innerHTML = replaced;
+
+                    child.replaceWith(...temp.childNodes);
+                }
+            } else {
+                walk(child);
+            }
+        }
+    }
+
+    function formatText(text) {
+        // URLs
+        text = text.replace(/(https?:\/\/[^\s<]+)/g, url =>
+            `<a href="${url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${url}</a>`
+        );
+
+        // @mentions
+        text = text.replace(/@([a-zA-Z0-9_]+)/g, (_, name) =>
+            `<span class="mention button" data-action="profile" data-id="${name}">@${name}</span>`
+        );
+
+        return text;
+    }
 }
 
 // Ping Notifications
