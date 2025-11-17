@@ -203,7 +203,7 @@ export function createPost(data, isRepost, focused) {
                             <span class="post-date">${timeAgo(data.time)}</span>
                         </div>
                     </div>
-                    <div class="post-content" onclick="">${data.content}</div>
+                    <div class="post-content" onclick="">${formatPost(data.content)}</div>
                     <div class="post-repost">
                         ${repost || ''}
                     </div>
@@ -260,7 +260,7 @@ export function createPost(data, isRepost, focused) {
                 <div class="post-title">${data.poster.name}</div>
                 <span class="post-date">${timeAgo(data.time)}</span>
             </div>
-            <div class="post-content" onclick="">${data.content}</div>
+            <div class="post-content" onclick="">${formatPost(data.content)}</div>
             <div class="post-repost">
                 ${repost || ''}
             </div>
@@ -1083,7 +1083,7 @@ export async function sendPost(content, repost) {
             'Content-Type': 'application/json',
             authorization: `${storage.get('token')}`
         },
-        body: JSON.stringify({ post: `<p>${sanitize(content)}</p>${imgHtml()}`, repost: repost })
+        body: JSON.stringify({ post: `${postHtml(sanitize(content))}${imgHtml()}`, repost: repost })
     });
 
     closeAlert();
@@ -1102,6 +1102,15 @@ function imgHtml() {
     let html = '';
     postImages.return().forEach(img => {
         html += `<img src="${img}">`;
+    });
+    return html;
+}
+
+function postHtml(post) {
+    let html = '';
+    const lines = post.split('\n');
+    lines.forEach(line => {
+        html += `<p>${sanitize(line)}</p>`;
     });
     return html;
 }
@@ -1313,6 +1322,22 @@ export async function checkWom() {
             splash.classList.add('hidden');
         }, 200);
     }
+}
+
+function formatPost(html) {
+    const urlRegex = /(https?:\/\/[^\s<]+)/g;
+
+    html = html.replace(urlRegex, url => {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">${url}</a>`;
+    });
+
+    const mentionRegex = /@([a-zA-Z0-9_]+)/g;
+
+    html = html.replace(mentionRegex, (_, name) => {
+        return `<span class="mention button" data-action="profile" data-id="${name}">@${name}</span>`;
+    });
+
+    return html;
 }
 
 // Ping Notifications

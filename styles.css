@@ -509,6 +509,15 @@ span.logo>svg {
     font-size: 1rem;
 }
 
+.mention {
+    font-weight: 500;
+}
+
+.mention:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
 .post-date {
     opacity: 0.8;
     font-size: 0.8rem;

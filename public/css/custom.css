@@ -487,6 +487,7 @@ input::placeholder {
     width: 96px;
     height: 96px;
     border-radius: 8px;
+    background-color: var(--app-200);
     background-image: var(--image);
     background-size: cover;
     background-position: center;
