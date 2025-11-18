@@ -399,7 +399,7 @@ span.logo>svg {
 }
 
 .action-button:active, .back-button:active {
-    transform: scale(0.98);
+    transform: scale(0.9);
 }
 
 /* Main/Content */

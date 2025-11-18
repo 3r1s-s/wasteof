@@ -216,10 +216,10 @@
         --app-200: #000 !important;
 
         .back-button, .action-button {
-            background-color: #0000003b !important;
+            background-color: #0000006d !important;
             border: 1px solid #ffffff2d !important;
-            backdrop-filter: blur(2px);
-            -webkit-backdrop-filter: blur(2px);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
         }
     }
 }
