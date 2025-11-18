@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content, backButton } from "../index.js";
+import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, toTop, updateContext, dropdownListeners, repostListener, setTranslucentTitle } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
 import { manageCache, fetchPostPage, createPost, loadPostComments } from "../scripts/api.js";
@@ -10,6 +10,8 @@ export function postPage(params) {
     title.innerText = `Post`;
     content.dataset.page = 'post';
     toTop();
+
+    actionButton.hide();
 
     let newReplyDiv = `
         <div class="post newpost" id="newReply" data-id="${params.id}">

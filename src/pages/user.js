@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content, backButton } from "../index.js";
+import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadUserInfo, loadUserPosts, followButton, loadMoreUserPosts } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
@@ -11,6 +11,8 @@ export function userPage(params) {
     title.innerText = `@${params.username}`;
     content.dataset.page = 'user';
     toTop();
+
+    actionButton.hide();
 
     content.innerHTML = `
     <div class="profile">

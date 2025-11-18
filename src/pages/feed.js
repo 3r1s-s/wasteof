@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content, backButton } from "../index.js";
+import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
 import { getFeed } from "../scripts/api.js";
@@ -11,6 +11,8 @@ export function feedPage() {
     content.dataset.page = 'feed';
     toTop();
     activeTab('nav-feed');
+
+    actionButton.hide();
 
     if (storage.get('session')) {
         content.innerHTML = `

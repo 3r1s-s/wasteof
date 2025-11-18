@@ -371,6 +371,37 @@ span.logo>svg {
     display: flex;
 }
 
+.action-button {
+    position: absolute;
+    right: 1rem;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    background-color: var(--app-200);
+    border: 1px solid var(--app-300);
+    border-radius: 100px;
+    cursor: pointer;
+    transition: background-color 0.2s var(--transition-function);
+    user-select: none;
+    -webkit-user-select: none;
+
+    font-size: 0.8rem;
+    padding-inline: 1rem;
+    font-weight: 500;
+    box-sizing: content-box;
+}
+
+.action-button.active {
+    display: flex;
+}
+
+.action-button:active, .back-button:active {
+    transform: scale(0.98);
+}
+
 /* Main/Content */
 
 .main {
@@ -711,6 +742,70 @@ span.logo>svg {
     color: var(--app-red);
     fill: currentColor;
     stroke: currentColor;
+}
+
+/* Toggle */
+
+.switch {
+    background-color: var(--app-500);
+    border-radius: 16px;
+    width: 52px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    position: relative;
+}
+
+.switch.selected {
+    background-color: #B8C4FF;
+}
+
+.switch .handle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--app-900);
+    
+    margin-inline-start: 0;
+    margin-inline-end: calc(52px - 32px);
+    
+    transition: margin 300ms cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    width 250ms cubic-bezier(0.2, 0, 0, 1),
+    height 250ms cubic-bezier(0.2, 0, 0, 1);
+    
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.switch.selected .handle {
+    background-color: #5F7AFF;
+    margin-inline-start: calc(52px - 32px);
+    margin-inline-end: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.switch:active .handle {
+    width: 28px;
+    height: 28px;
+}
+
+.switch input {
+    appearance: none;
+    height: max(100%, var(--md-switch-touch-target-size, 48px));
+    outline: none;
+    margin: 0px;
+    position: absolute;
+    width: max(100%, var(--md-switch-touch-target-size, 48px));
+    z-index: 1;
+    cursor: inherit;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Loaders */

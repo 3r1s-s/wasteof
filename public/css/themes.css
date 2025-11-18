@@ -214,5 +214,12 @@
 @media screen and (max-width: 600px) {
     .black, .liquid-glass.black {
         --app-200: #000 !important;
+
+        .back-button, .action-button {
+            background-color: #0000003b !important;
+            border: 1px solid #ffffff2d !important;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
     }
 }

@@ -24,8 +24,28 @@ export const app = document.querySelector('.app');
 export const nav = document.querySelector('.nav');
 export const content = document.querySelector('.content');
 export const title = document.querySelector('.title');
-export const backButton = document.querySelector('#back');
 export const splash = document.querySelector('.splash');
+
+export const backButton = document.querySelector('#back');
+export const actionButton = (() => {
+    function show() {
+        document.querySelector('.action-button').classList.add('active');
+    }
+
+    function hide() {
+        document.querySelector('.action-button').classList.remove('active');
+    }
+
+    function text(t) {
+        document.querySelector('.action-button').innerText = t;
+    }
+
+    function action(a) {
+        document.querySelector('.action-button').dataset.action = a;
+    }
+
+    return { show, hide, action, text };
+})();
 
 export let notifications = 0;
 export function setNotifications(v) {
@@ -281,8 +301,27 @@ document.addEventListener('click', (e) => {
         loadMoreUserPosts(id);
         break;
 
+        case 'mark-as-read':
+        markAsRead();
+        break;
+
         default:
         console.warn('Unknown post action:', action);
+    }
+});
+
+document.body.addEventListener('change', (e) => {
+    const checkbox = e.target;
+    if (!checkbox.matches('.switch input[type="checkbox"]')) return;
+
+    const wrapper = checkbox.closest('.switch');
+    const isOn = checkbox.checked;
+
+    wrapper.classList.toggle('selected', isOn);
+
+    const s = checkbox.dataset.setting;
+    if (s) {
+        settings.set(s, isOn);
     }
 });
 

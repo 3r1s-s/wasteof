@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content, backButton } from "../index.js";
+import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getTrending } from "../scripts/api.js";
 import { router } from "../scripts/router.js";
@@ -10,6 +10,8 @@ export function explorePage() {
     content.dataset.page = 'explore';
     activeTab('nav-explore');
     toTop();
+
+    actionButton.hide();
 
     content.innerHTML = `
         <div class="explore">

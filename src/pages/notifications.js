@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content } from "../index.js";
+import { title, content, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadNotifications } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
@@ -16,6 +16,10 @@ export function notificationsPage() {
     content.dataset.page = 'notifications';
     toTop();
     activeTab('nav-notifications');
+
+    actionButton.show();
+    actionButton.text('Mark as Read');
+    actionButton.action('mark-as-read');
 
     content.innerHTML = `
         <div class="floating" id="loading">

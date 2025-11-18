@@ -1,5 +1,5 @@
 import { icon } from "../scripts/icons.js";
-import { title, content, version } from "../index.js";
+import { title, content, version, actionButton } from "../index.js";
 import { activeTab, toTop, openDropdown, dropdownListeners, closeDropdown, resetTitle, setTranslucentTitle } from "../scripts/utils.js"
 import { settings, storage } from "../scripts/storage.js";
 import { openModal, closeModal } from "../scripts/modals.js";
@@ -11,6 +11,8 @@ export function settingsPage() {
         loginModal();
         return;
     }
+
+    actionButton.hide();
 
     setTranslucentTitle(true);
     title.innerText = 'Settings';
@@ -108,6 +110,16 @@ export function settingsPage() {
                     <div class="dropdown bottom">
                         ${colorsDropdown}
                     </div>
+                </div>
+            </div>
+        </div>
+        <h3>Notifications</h3>
+        <div class="section">
+            <span class="title" style="padding: 0 0.5rem">Auto mark as read</span>
+            <div class="options">
+                <div class="switch ${settings.get('autoread') ? 'selected' : ''}" id="autoread">
+                    <input type="checkbox" name="autoread" id="switch" role="switch" data-setting="autoread" ${settings.get('autoread') ? 'checked' : ''}>
+                    <span class="handle"></span>
                 </div>
             </div>
         </div>

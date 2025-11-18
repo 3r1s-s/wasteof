@@ -1,4 +1,4 @@
-import { storage } from './storage.js';
+import { storage, settings } from './storage.js';
 import { setNotifications, notificationsIcon, content, splash, postImages, backButton } from '../index.js';
 import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener } from './utils.js';
 import { icon } from './icons.js';
@@ -788,14 +788,16 @@ export async function loadNotifications() {
         document.querySelector('.read').append(node);
     });
 
-    await fetch('https://api.wasteof.money/messages/mark/read', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            authorization: `${storage.get('token')}`,
-        },
-        body: JSON.stringify({ messages: mark })
-    });
+    if (settings.get('autoread') === true) {
+        await fetch('https://api.wasteof.money/messages/mark/read', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `${storage.get('token')}`,
+            },
+            body: JSON.stringify({ messages: mark })
+        });
+    }
 
     document.getElementById('loading')?.remove();
 
