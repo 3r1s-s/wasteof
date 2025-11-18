@@ -884,7 +884,7 @@ function createNotification(data) {
                 <div class="notification-content">
                     <span class="notification-title">${data.data.actor.name} ${notificationTypes[data.type]}</span>
                     <div class="notification-post post-content">
-                        ${data.data.comment.content || '<p style="font-style: italic">but the comment was deleted :(</p>'}
+                        ${data?.data?.comment?.content || '<p style="font-style: italic">but the comment was deleted :(</p>'}
                     </div>
                 </div>
             </div>
