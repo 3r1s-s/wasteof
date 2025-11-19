@@ -295,6 +295,26 @@ export function loggingIn(g) {
     modalOuter.classList.add("open");
 }
 
+export function workingAlert(g) {
+    const modalOuter = document.querySelector(".alert-outer");
+    const modalInner = document.querySelector(".alert-inner");
+    const modal = document.querySelector(".alert");
+
+    haptic();
+
+    document.querySelector(".alert-options").style.display = "flex";
+
+    modalInner.innerHTML = `
+    <span class="alert-header">${g ? g : 'Logging in...'}</span>
+    `;
+
+    modal.classList.add("center");
+    modal.classList.add("logging-in");
+
+    modalOuter.style.visibility = "visible";
+    modalOuter.classList.add("open");
+}
+
 function openImage(url) {
     const modalOuter = document.querySelector(".view-image-outer");
     const modalInner = document.querySelector(".view-image-inner");

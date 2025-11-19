@@ -796,6 +796,7 @@ span.logo>svg {
 
 .switch input {
     appearance: none;
+    opacity: 0;
     height: max(100%, var(--md-switch-touch-target-size, 48px));
     outline: none;
     margin: 0px;
