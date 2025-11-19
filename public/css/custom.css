@@ -581,6 +581,17 @@ input::placeholder {
     margin-bottom: 0.75rem;
 }
 
+.section-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+}
+
+.section-label .title {
+    padding: 0 0.5rem;
+}
+
 .profile.section {
     justify-content: start;
     gap: 1rem;

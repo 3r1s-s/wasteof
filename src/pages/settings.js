@@ -58,19 +58,13 @@ export function settingsPage() {
             </div>
         </div>
         <div class="section">
-            <span class="title" style="padding: 0 0.5rem">Glass Effects</span>
-            <div class="options">
-                <div class="context-outer" id="glass">
-                    <div class="context" data-dropdown="glass">
-                    <span class="value">${settings.get('glass') ? 'On' : 'Off'}</span>
-                    <span class="arrow">${icon.arrow}</span>
-                    </div>
-                    <div class="dropdown">
-                        <div class="option" data-action="set-glass" data-value="true">On</div>
-                        <div class="option" data-action="set-glass" data-value="false">Off</div>
-                    </div>
+            <label for="switch-glass" class="section-label">
+            <span class="title">Glass Effects</span>
+                <div class="switch ${settings.get('glass') ? 'selected' : ''}" id="glass">
+                    <input type="checkbox" name="glass" id="switch-glass" role="switch" data-setting="glass" ${settings.get('glass') ? 'checked' : ''}>
+                    <span class="handle"></span>
                 </div>
-            </div>
+            </label>
         </div>
         <h3>Profile</h3>
         <div class="section profile">
@@ -115,13 +109,13 @@ export function settingsPage() {
         </div>
         <h3>Notifications</h3>
         <div class="section">
-            <span class="title" style="padding: 0 0.5rem">Auto mark as read</span>
-            <div class="options">
+            <label for="switch-notif" class="section-label">
+            <span class="title">Auto mark as read</span>
                 <div class="switch ${settings.get('autoread') ? 'selected' : ''}" id="autoread">
-                    <input type="checkbox" name="autoread" id="switch" role="switch" data-setting="autoread" ${settings.get('autoread') ? 'checked' : ''}>
+                    <input type="checkbox" name="autoread" id="switch-notif" role="switch" data-setting="autoread" ${settings.get('autoread') ? 'checked' : ''}>
                     <span class="handle"></span>
                 </div>
-            </div>
+            </label>
         </div>
         <h3>Account</h3>
         <div class="section">

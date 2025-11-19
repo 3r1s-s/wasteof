@@ -15,6 +15,7 @@ import { icon } from './scripts/icons.js';
 import { notificationBadge, checkWom, lovePost, markAsRead, loadMoreUserPosts } from './scripts/api.js';
 import { newPost, newComment, newRepost, pfpModal, bannerModal, logoutModal, saveBio } from './scripts/page-helpers.js';
 import { toTop, jump } from "./scripts/utils.js";
+import { haptic } from "./scripts/haptics.js";
 
 export const URL = 'http://localhost:8000';
 export const dropdowns = new Map();
@@ -318,9 +319,21 @@ document.body.addEventListener('change', (e) => {
     const isOn = checkbox.checked;
 
     wrapper.classList.toggle('selected', isOn);
+    haptic();
 
     const s = checkbox.dataset.setting;
-    if (s) {
+    if (!s) return;
+    switch (s) {
+        case 'glass':
+        settings.set(s, isOn);
+        if (isOn) {
+            document.body.classList.add('liquid-glass');
+        } else {
+            document.body.classList.remove('liquid-glass');
+        }
+        break;
+
+        default:
         settings.set(s, isOn);
     }
 });
