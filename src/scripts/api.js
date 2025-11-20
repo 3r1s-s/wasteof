@@ -171,6 +171,12 @@ export function createPost(data, isRepost, focused) {
                 <span class="option-icon">${icon.edit}</span>
             </div>
             <div class="option" 
+                data-action="w-link-post" 
+                data-id="${data._id}">
+                <span>View on wasteof.money</span>
+                <span class="option-icon" style="width: 24px;height: 24px;">${icon.reply}</span>
+            </div>
+            <div class="option" 
                 data-action="delete-post" 
                 data-id="${data._id}">
                 <span>Delete</span>
