@@ -159,6 +159,10 @@ export function dropdownListeners() {
                 unpinPost(id);
                 break;
 
+                case 'w-link-post':
+                window.open(`https://wasteof.money/posts/${id}`, '_blank');
+                break;
+
                 case 'report-post':
                 reportModal(id);
                 break;

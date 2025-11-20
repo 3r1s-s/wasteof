@@ -1517,6 +1517,7 @@ span.logo>svg {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
     transition: background 0.1s var(--transition-function);
 }
 
@@ -1524,6 +1525,10 @@ span.logo>svg {
     background: var(--app-700);
     cursor: pointer;
     transition: none;
+}
+
+.option span {
+    text-wrap: nowrap;
 }
 
 .modal .context {
