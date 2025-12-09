@@ -223,7 +223,7 @@ input::placeholder {
 }
 
 #bio {
-  line-height: 1.2;
+    line-height: 1.2;
 }
 
 .follow-button {
@@ -321,10 +321,10 @@ input::placeholder {
 /* Post */
 
 .big-post-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
 }
 
 .logging-in .alert-options {
@@ -480,7 +480,15 @@ input::placeholder {
     display: flex;
     flex-direction: row;
     gap: 5px;
+    padding-bottom: 0.25rem;
     overflow-x: scroll;
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.newpost-attachments::-webkit-scrollbar {
+    display: none;
 }
 
 .newpost-attachment {
@@ -566,7 +574,8 @@ input::placeholder {
     font-weight: 600;
 }
 
-.settings h1, .settings h3 {
+.settings h1,
+.settings h3 {
     user-select: none;
     -webkit-user-select: none;
 }
@@ -693,7 +702,8 @@ input::placeholder {
     transition: opacity 0.2s var(--transition-function);
 }
 
-.pfp-section:hover .pfp-edit, .banner-section:hover .pfp-edit {
+.pfp-section:hover .pfp-edit,
+.banner-section:hover .pfp-edit {
     opacity: 1;
 }
 
@@ -822,7 +832,7 @@ input::placeholder {
 
 .avatar-overlay {
     border: 5px solid var(--app-white);
-    box-shadow: 0 0 0 9999px rgba(47,49,54,.6);
+    box-shadow: 0 0 0 9999px rgba(47, 49, 54, .6);
     box-sizing: border-box;
     pointer-events: none;
     position: absolute;
@@ -855,11 +865,11 @@ input::placeholder {
     margin-bottom: 0.75rem;
 }
 
-.footer > span {
+.footer>span {
     padding: 0.5rem;
 }
 
-.footer > span.center {
+.footer>span.center {
     text-align: center;
 }
 
