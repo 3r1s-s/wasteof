@@ -72,12 +72,12 @@ export function login(user, pass) {
         } else if (data.error) {
             closeAlert();
             setTimeout(() => {
-                openAlert({title: 'Error', message: data.error});
+                openAlert({ title: 'Error', message: data.error });
             }, 500);
         }
     }).catch(error => {
         closeAlert();
-        openAlert({title: 'Error', message: error.error});
+        openAlert({ title: 'Error', message: error.error });
     });
 }
 
@@ -102,7 +102,7 @@ export async function fetchPost(id) {
         }).then(res => res.json()).then(data => {
             manageCache.add(id, data);
         }).catch(err => {
-            openAlert({title: 'Error', message: err.message});
+            openAlert({ title: 'Error', message: err.message });
         });
     }
 
@@ -118,7 +118,7 @@ export async function fetchPost(id) {
                 if (err.name !== "AbortError") {
                     console.error(err);
                 } else {
-                    openAlert({title: 'Error', message: err.message});
+                    openAlert({ title: 'Error', message: err.message });
                 }
             });
         }
@@ -141,6 +141,14 @@ export function createPost(data, isRepost, focused) {
             <div class="post-content"><p style="font-style: italic;padding-top: 4px;">this post was deleted :(</p></div>
         </div>
     `;
+
+    if (data.error) {
+        return `
+            <div class="post">
+                <div class="post-content"><p style="font-style: italic;padding-top: 4px;">post not found :(</p></div>
+            </div>
+        `;
+    }
 
     let post;
     let repost;
@@ -204,7 +212,7 @@ export function createPost(data, isRepost, focused) {
             </div>
         `}
         `;
-    
+
         post = `
             <div class="post focused" id="${data._id}">
                 <div class="post-container">
@@ -262,7 +270,7 @@ export function createPost(data, isRepost, focused) {
             </div>
         `;
     } else {
-    post = `
+        post = `
         <div class="post ${isRepost ? 'repost' : ''} ${data.pinned ? 'pinned' : ''} unfocused" id="${data._id}">
         <div class="pfp-container">
             <div class="pfp button" style="--image: url('https://api.wasteof.money/users/${data.poster.name}/picture');" data-action="profile" data-id="${data.poster.name}"></div>
@@ -390,7 +398,7 @@ export async function getFeed() {
         const data = await res.json();
 
         if (data.error) {
-            openAlert({title: 'Error', message: data.error});
+            openAlert({ title: 'Error', message: data.error });
             return;
         }
 
@@ -411,7 +419,7 @@ export async function getFeed() {
 export async function fetchPostPage(id) {
     let post = await fetchPost(id);
 
-    if (document.querySelector('.post-view')) {   
+    if (document.querySelector('.post-view')) {
         document.querySelector('.post-view').innerHTML = createPost(post.data, false, true);
     }
 
@@ -467,7 +475,7 @@ export async function pinPost(id) {
         }
     });
 
-    tooltip({icon: icon.check, title: 'Pinned!'});
+    tooltip({ icon: icon.check, title: 'Pinned!' });
 
     updateContext(id);
 }
@@ -486,7 +494,7 @@ export async function unpinPost(id) {
         }
     });
 
-    tooltip({icon: icon.check, title: 'Unpinned!'});
+    tooltip({ icon: icon.check, title: 'Unpinned!' });
 
     updateContext(id);
 }
@@ -504,7 +512,7 @@ export async function deletePost(id) {
         }
     });
 
-    tooltip({icon: icon.check, title: 'Deleted!'});
+    tooltip({ icon: icon.check, title: 'Deleted!' });
 }
 
 export async function setBio(newBio) {
@@ -518,12 +526,12 @@ export async function setBio(newBio) {
             'Content-Type': 'application/json',
             authorization: `${storage.get('token')}`
         },
-        body: JSON.stringify({bio: newBio})
+        body: JSON.stringify({ bio: newBio })
     }).then(res => res.json()).then(data => {
         if (data.error) {
-            openAlert({title: 'Error', message: data.error});
+            openAlert({ title: 'Error', message: data.error });
         } else {
-            tooltip({icon: icon.check, title: 'Updated!'});
+            tooltip({ icon: icon.check, title: 'Updated!' });
         }
     });
 }
@@ -621,13 +629,13 @@ export async function loadUserPosts(user) {
             document.querySelector('.load-more').classList.remove('hide');
         }
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
         console.error(err);
     }
 }
 
 export async function loadMoreUserPosts(user) {
-// https://api.wasteof.money/users/eris/posts?page=2
+    // https://api.wasteof.money/users/eris/posts?page=2
     document.querySelector('.load-more').classList.add('hide');
     document.querySelector('.profile-posts').innerHTML += `
         <div class="load-more-loading" id="loading"><span class="loader animate">${icon.loader}</span></div>
@@ -650,7 +658,7 @@ export async function loadMoreUserPosts(user) {
         }
         document.getElementById('loading')?.remove();
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
         console.error(err);
     }
 }
@@ -658,7 +666,7 @@ export async function loadMoreUserPosts(user) {
 export async function loadUserInfo(user) {
     try {
         const following = await fetch(`https://api.wasteof.money/users/${user}/followers/${storage.get('user')}`).then(res => res.json());
-        
+
         if (following.error) {
             console.log(following.error);
             if (following.error === 'no to user found') {
@@ -701,7 +709,7 @@ export async function loadUserInfo(user) {
             document.getElementById('profile-picture').classList.add('online');
         }
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
     }
 }
 
@@ -712,7 +720,7 @@ export async function loadUserSettings(user) {
 
         return data;
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
     }
 }
 
@@ -723,7 +731,7 @@ export async function loadUserColor(user) {
 
         return data.color;
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
     }
 }
 
@@ -734,7 +742,7 @@ export async function loadPinned(user) {
 
         return data.pinned[0];
     } catch (err) {
-        openAlert({title: 'Error', message: err.message});
+        openAlert({ title: 'Error', message: err.message });
     }
 }
 
@@ -763,7 +771,7 @@ export async function loadNotifications() {
             const temp = document.createElement('div');
             temp.innerHTML = createNotification(message);
             const node = temp.firstElementChild;
-            if (!message.post) {                
+            if (!message.post) {
                 node.addEventListener('click', e => {
                     e.stopPropagation();
                     openNotification(message);
@@ -840,7 +848,7 @@ export async function markAsRead() {
         body: JSON.stringify({ messages: mark })
     });
 
-    tooltip({icon: icon.check, title: 'Marked as read!'});
+    tooltip({ icon: icon.check, title: 'Marked as read!' });
 }
 
 const notificationTypes = {
@@ -876,7 +884,7 @@ function createNotification(data) {
             </div>
         `
     } else if (data.type === 'comment_reply') {
-    post = `
+        post = `
         <div class="notification">
             <div class="notification-icon">
                 <div class="pfp" style="--image: url('https://api.wasteof.money/users/${data.data.actor.name}/picture');" data-action="profile" data-id="${data.data.actor.name}"></div>
@@ -980,13 +988,14 @@ function openNotification(data) {
     if (data.type === 'follow') {
         router.navigate('/users/' + data.data.actor.name);
     } else if (data.type === 'repost') {
+        console.log(data.data.post._id);
         router.navigate('/posts/' + data.data.post._id);
     } else if (data.type === 'comment') {
         router.navigate('/posts/' + data.data.comment.post);
     } else if (data.type === 'comment_reply') {
         router.navigate('/posts/' + data.data.comment.post);
     } else if (data.type === 'post_mention') {
-        router.navigate('/posts/' + data.data.post);
+        router.navigate('/posts/' + data.data.post._id);
     } else if (data.type === 'wall_comment_reply') {
         // do nothing because the wall stinks
     }
@@ -1017,7 +1026,7 @@ export async function loadPostComments(postId) {
 
             document.getElementById('loading')?.remove();
         }).catch(err => {
-            openAlert({title: 'Error', message: err.message});
+            openAlert({ title: 'Error', message: err.message });
         });
 }
 
@@ -1055,7 +1064,7 @@ export async function loadCommentPreview(id, parentid) {
 
             document.querySelector('.reply-input').placeholder = 'Reply to ' + data.poster.name;
         }).catch(err => {
-            openAlert({title: 'Error', message: err.message});
+            openAlert({ title: 'Error', message: err.message });
         });
 }
 
@@ -1104,11 +1113,11 @@ export async function sendPost(content, repost) {
     closeModal();
 
     postImages.clear
-    
+
     if (postRes.ok) {
-        tooltip({icon: icon.check, title: 'Posted!'});
+        tooltip({ icon: icon.check, title: 'Posted!' });
     } else {
-        tooltip({icon: icon.cross, title: 'Error'});    
+        tooltip({ icon: icon.cross, title: 'Error' });
     }
 }
 
@@ -1149,14 +1158,14 @@ export async function sendComment(postId, content, parentid) {
 
     closeAlert();
     closeModal();
-    
+
     if (commentRes.ok) {
-        tooltip({icon: icon.check, title: 'Commented!'});
+        tooltip({ icon: icon.check, title: 'Commented!' });
         if (router.location === `/posts/${postId}`) {
             router.navigate(`/posts/${postId}`);
         }
     } else {
-        tooltip({icon: icon.cross, title: 'Error'});    
+        tooltip({ icon: icon.cross, title: 'Error' });
     }
 }
 
@@ -1178,27 +1187,27 @@ function toggleReplies(id) {
 
 async function loadReplies(id) {
     fetch(`https://api.wasteof.money/comments/${id}/replies`)
-    .then(res => res.json())
-    .then(data => {
-        data.comments.forEach(comment => {
-            manageCache.comment(id, comment);
-            document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML += createComment(comment);
-        });
+        .then(res => res.json())
+        .then(data => {
+            data.comments.forEach(comment => {
+                manageCache.comment(id, comment);
+                document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML += createComment(comment);
+            });
 
-        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.show-replies').forEach(el => {
-            el.addEventListener('click', () => {
-                toggleReplies(el.dataset.repliesToggleId);
+            document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.show-replies').forEach(el => {
+                el.addEventListener('click', () => {
+                    toggleReplies(el.dataset.repliesToggleId);
+                })
             })
-        })
 
-        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.reply-button').forEach(el => {
-            el.addEventListener('click', () => {
-                newComment(el.dataset.commentId, el.dataset.parentId, el.dataset.postId);
+            document.querySelector(`.comment-replies[data-comment-id="${id}"]`).querySelectorAll('.reply-button').forEach(el => {
+                el.addEventListener('click', () => {
+                    newComment(el.dataset.commentId, el.dataset.parentId, el.dataset.postId);
+                })
             })
-        })
 
-        document.querySelector(`[data-replies-loading-id="${id}"]`).remove();
-    })
+            document.querySelector(`[data-replies-loading-id="${id}"]`).remove();
+        })
 }
 
 async function follow(user) {
@@ -1230,7 +1239,7 @@ export async function followButton(user) {
         document.querySelector('.follow-button').classList.remove('following');
     }
 }
-    
+
 function toggleFollowButton(user) {
     if (document.querySelector('.follow-button').classList.contains('following')) {
         document.querySelector('.follow-button').innerText = 'Follow';
@@ -1266,7 +1275,7 @@ async function profileColor(color) {
         },
         body: JSON.stringify({ color })
     });
-    
+
     userColor();
 }
 
@@ -1287,7 +1296,7 @@ export async function uploadPfp(dataUrl) {
     if (!response.ok) {
         console.error('Upload failed:', await response.text());
     } else {
-        tooltip({icon: icon.check, title: 'Uploaded!'});
+        tooltip({ icon: icon.check, title: 'Uploaded!' });
     }
 }
 
@@ -1308,7 +1317,7 @@ export async function uploadBanner(dataUrl) {
     if (!response.ok) {
         console.error('Upload failed:', await response.text());
     } else {
-        tooltip({icon: icon.check, title: 'Uploaded!'});
+        tooltip({ icon: icon.check, title: 'Uploaded!' });
     }
 }
 
@@ -1321,9 +1330,9 @@ async function reportPost(id, reason) {
         },
         body: JSON.stringify({ reason: reason, type: "none" })
     });
-    
+
     if (postRes.ok) {
-        tooltip({icon: icon.check, title: 'Report sent!'});
+        tooltip({ icon: icon.check, title: 'Report sent!' });
     }
 }
 

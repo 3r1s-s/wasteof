@@ -932,7 +932,7 @@ input::placeholder {
 
 .replying-to {
     max-height: 300px;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .load-more {
