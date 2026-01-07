@@ -694,6 +694,9 @@ export async function loadUserInfo(user) {
             document.querySelector('.follow-button').removeEventListener('click', toggleFollowButton);
         }
 
+        document.querySelector('.follow-button').style.opacity = '1';
+
+
         const res = await fetch('https://api.wasteof.money/users/' + user);
         const data = await res.json();
         if (content.dataset.page !== 'user') {
@@ -1221,33 +1224,24 @@ async function follow(user) {
 }
 
 export async function followButton(user) {
-    if (user === storage.get('user')) {
-        return;
-    }
+    const btn = document.querySelector('.follow-button');
+    if (!btn || user === storage.get('user')) return;
+
     try {
-        const following = await fetch(`https://api.wasteof.money/users/${user}/followers/${storage.get('user')}`).then(res => res.json());
-        if (following) {
-            document.querySelector('.follow-button').innerText = 'Unfollow';
-            document.querySelector('.follow-button').classList.add('following');
-        } else {
-            document.querySelector('.follow-button').innerText = 'Follow';
-            document.querySelector('.follow-button').classList.remove('following');
-        }
-        document.querySelector('.follow-button').addEventListener('click', toggleFollowButton.bind(null, user));
-    } catch (error) {
-        document.querySelector('.follow-button').innerText = 'Follow';
-        document.querySelector('.follow-button').classList.remove('following');
+        const isFollowing = await fetch(`https://api.wasteof.money/users/${user}/followers/${storage.get('user')}`).then(res => res.json());
+        btn.innerText = isFollowing ? 'Unfollow' : 'Follow';
+        btn.classList.toggle('following', !!isFollowing);
+        btn.onclick = () => toggleFollowButton(user);
+    } catch {
+        btn.innerText = 'Follow';
+        btn.classList.remove('following');
     }
 }
 
 function toggleFollowButton(user) {
-    if (document.querySelector('.follow-button').classList.contains('following')) {
-        document.querySelector('.follow-button').innerText = 'Follow';
-        document.querySelector('.follow-button').classList.remove('following');
-    } else {
-        document.querySelector('.follow-button').innerText = 'Unfollow';
-        document.querySelector('.follow-button').classList.add('following');
-    }
+    const btn = document.querySelector('.follow-button');
+    const isFollowing = btn.classList.toggle('following');
+    btn.innerText = isFollowing ? 'Unfollow' : 'Follow';
     follow(user);
 }
 

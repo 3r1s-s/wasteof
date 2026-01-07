@@ -27,7 +27,7 @@ export function userPage(params) {
                 </div>
             </div>
             <div class="profile-section right" style="margin-top: calc(10% + 5px);">
-                <button class="follow-button" id="follow-button">Follow</button>
+                <button class="follow-button" id="follow-button" style="opacity: 0;">Follow</button>
             </div>
         </div>
         <div class="profile-info more">
@@ -47,12 +47,12 @@ export function userPage(params) {
         </div>
         <div class="load-more hide button" id="load-more" data-pageno="1" data-id="${params.username}" data-action="load-more-user-posts"><span>Load more</span></div>
     `;
-    
+
     loadUserInfo(params.username);
     loadUserPosts(params.username);
 
     followButton(params.username);
-    
+
     backButton.classList.add('active');
 }
 
@@ -61,8 +61,8 @@ export function myProfile() {
         loginModal();
         return;
     }
-    
+
     activeTab('nav-profile');
-    
+
     router.navigate(`/users/${storage.get('user')}`);
 }
