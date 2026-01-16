@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +19,8 @@
     <!-- Removed until apple gets their browser together -->
     <meta name="theme-color" content="#0f0f14">
     <meta name="background-color" content="#0f0f14">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
 
@@ -28,7 +30,7 @@
     <meta property="og:image:width" content="800">
     <meta property="og:image:height" content="450">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://wasteof.eris.cafe"> 
+    <meta property="og:url" content="https://wasteof.eris.cafe">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="3r1s_s">
@@ -42,6 +44,7 @@
 
     <link rel="manifest" href="manifest.webmanifest">
 </head>
+
 <body ontouchstart>
     <div class="app">
         <div class="nav"></div>
@@ -55,6 +58,7 @@
             <div class="blur-filter"></div>
             <div class="gradient"></div>
         </div>
+        <eui-tab-bar id="tab-bar"></eui-tab-bar>
         <div class="main">
             <div class="titlebar">
                 <span class="title"></span>
@@ -83,12 +87,13 @@
             <div class="content-width">
                 <div class="content"></div>
             </div>
+            <div class="newpost-float"></div>
             <div class="jump"></div>
         </div>
         <div class="alert-outer">
             <div class="alert">
                 <div class="alert-inner">
-                    
+
                 </div>
                 <div class="alert-options">
                 </div>
@@ -97,7 +102,7 @@
         <div class="modal-outer">
             <div class="modal">
                 <div class="modal-inner">
-                    
+
                 </div>
                 <div class="modal-options">
                 </div>
@@ -106,7 +111,8 @@
         <div class="command-palette-outer">
             <div class="command-palette">
                 <div class="text-input" style="height: 64px;font-size: 1.2rem;">
-                    <input type="text" placeholder="Search" autocomplete="off" class="command-palette-input" name="cmd palette">
+                    <input type="text" placeholder="Search" autocomplete="off" class="command-palette-input"
+                        name="cmd palette">
                 </div>
             </div>
         </div>
@@ -114,4 +120,5 @@
     </div>
 </body>
 <script type="module" src="src/index.js"></script>
+
 </html>

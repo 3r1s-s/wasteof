@@ -1088,7 +1088,7 @@ input::placeholder {
         height: 200px;
     }
 
-    .liquid-glass .profile .banner {
+    .profile .banner {
         height: calc(120px + var(--titlebar-height) + env(safe-area-inset-top));
     }
 }

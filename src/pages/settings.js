@@ -1,4 +1,4 @@
-import { icon } from "../scripts/icons.js";
+import { iconC } from "../scripts/icons.js";
 import { title, content, version, actionButton } from "../index.js";
 import { activeTab, toTop, openDropdown, dropdownListeners, closeDropdown, resetTitle, setTranslucentTitle } from "../scripts/utils.js"
 import { settings, storage } from "../scripts/storage.js";
@@ -46,7 +46,7 @@ export function settingsPage() {
                 <div class="context-outer" id="theme">
                     <div class="context" data-dropdown="theme">
                     <span class="value">${themeName()}</span>
-                    <span class="arrow">${icon.arrow}</span>
+                    <span class="arrow">${iconC.arrow}</span>
                     </div>
                     <div class="dropdown">
                         <div class="option" data-action="set-theme" data-value="system">System</div>
@@ -73,7 +73,7 @@ export function settingsPage() {
                 <div class="pfp-section button" data-action="change-pfp">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
                     <div class="pfp-edit">
-                        <span class="edit"><span class="edit-icon">${icon.edit}</span></span>
+                        <span class="edit"><span class="edit-icon">${iconC.edit}</span></span>
                     </div>
                 </div>
             </div>
@@ -82,7 +82,7 @@ export function settingsPage() {
                 <div class="banner-section button" data-action="change-banner">
                     <img class="banner" src="https://api.wasteof.money/users/${storage.get('user')}/banner">
                     <div class="pfp-edit">
-                        <span class="edit"><span class="edit-icon">${icon.edit}</span></span> Change Banner</span>
+                        <span class="edit"><span class="edit-icon">${iconC.edit}</span></span> Change Banner</span>
                     </div>
                 </div>
             </div>

@@ -8,20 +8,21 @@
 }
 
 :root {
-    --app-text: #F2F3F6;
-    --app-link: #549fff;
-    --app-100: #0f0f14;
-    --app-200: #1a1a1f;
-    --app-300: #27272e;
-    --app-400: #35353b;
-    --app-500: #40404a;
-    --app-600: #4b4b55;
-    --app-700: #575761;
-    --app-800: #62626e;
-    --app-900: #6e6e7b;
+    --app-text: #F2F3F6 !important;
+    --app-link: #549fff !important;
+    --app-100: #0f0f14 !important;
+    --app-200: #1a1a1f !important;
+    --app-300: #27272e !important;
+    --app-400: #35353b !important;
+    --app-500: #40404a !important;
+    --app-600: #4b4b55 !important;
+    --app-700: #575761 !important;
+    --app-800: #62626e !important;
+    --app-900: #6e6e7b !important;
 
-    --titlebar-height: 50px;
-    --content-width: 700px;
+    --titlebar-height: 50px !important;
+    --content-width: 700px !important;
+    --tab-bar-height: 64px !important;
 
     --app-accent: #6366f1;
 
@@ -249,6 +250,10 @@ span.logo>svg {
 
 .notification-badge.active {
     display: flex;
+}
+
+#tab-bar {
+    display: none !important;
 }
 
 /* Titlebar */
@@ -898,6 +903,27 @@ span.logo>svg {
     transform: scale(0.95);
     background-color: var(--app-300);
     border: 1px solid var(--app-500);
+}
+
+/* New post */
+
+.newpost-float {
+    display: none;
+
+    position: fixed;
+    bottom: 2rem;
+    left: 2rem;
+    width: 56px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--app-200);
+    border: 1px solid var(--app-400);
+    border-radius: 100px;
+
+    transition: transform cubic-bezier(0, -.25, 0, 1.5) 0.2s, opacity cubic-bezier(0, -.25, 0, 1) 0.2s;
+
 }
 
 /* Modals */
@@ -2033,18 +2059,22 @@ span.dot {
         /* bottom: calc(10px + env(safe-area-inset-bottom)); */
         bottom: 18px;
 
-        display: flex;
-        flex-direction: row;
+        display: none;
+        /* flex-direction: row;
         height: 63px;
         width: calc(100% - 48px);
         z-index: 100;
         box-sizing: border-box;
         background-color: var(--app-200);
         border: 2px solid var(--app-300);
-        border-radius: 100px;
+        border-radius: 100px; */
 
         -webkit-user-select: none;
         user-select: none;
+    }
+
+    #tab-bar {
+        display: auto !important;
     }
 
     .light .nav {
@@ -2120,8 +2150,8 @@ span.dot {
     }
 
     .jump {
-        bottom: calc(1rem + 63px + 18px);
-        right: 1rem;
+        bottom: calc(1rem + 63px + 0px);
+        left: 1rem;
     }
 
     .jump.active:hover {
@@ -2132,6 +2162,14 @@ span.dot {
 
     .jump.active:active {
         transform: scale(0.95);
+    }
+
+    .newpost-float {
+        display: flex;
+
+        bottom: calc(1rem + 63px + 0px);
+        right: 1rem;
+        left: unset;
     }
 
     .post {

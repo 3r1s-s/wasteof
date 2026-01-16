@@ -15,17 +15,17 @@
 }
 
 .light {
-    --app-text: #0f0f14;
-    --app-link: #1868f2;
-    --app-100: #e9e9ec;
-    --app-200: #FBFBFB;
-    --app-300: #FBFBFB;
-    --app-400: #EFEFF0;
-    --app-500: #eeeeee;
-    --app-600: #d4d4da;
-    --app-700: #dddddd;
-    --app-800: #8c8c91;
-    --app-900: #878798;
+    --app-text: #0f0f14 !important;
+    --app-link: #1868f2 !important;
+    --app-100: #e9e9ec !important;
+    --app-200: #FBFBFB !important;
+    --app-300: #FBFBFB !important;
+    --app-400: #EFEFF0 !important;
+    --app-500: #eeeeee !important;
+    --app-600: #d4d4da !important;
+    --app-700: #dddddd !important;
+    --app-800: #8c8c91 !important;
+    --app-900: #878798 !important;
 
     --app-accent: #6366f1;
 
@@ -51,7 +51,8 @@
         background-color: rgb(255, 248, 111);
     }
 
-    .content, .profile-info.bottom {
+    .content,
+    .profile-info.bottom {
         border-color: var(--app-600);
     }
 
@@ -59,7 +60,8 @@
         background-color: var(--app-600);
     }
 
-    .mask-right, .mask-left {
+    .mask-right,
+    .mask-left {
         border-color: var(--app-600);
     }
 
@@ -67,7 +69,8 @@
         border: 1px solid var(--app-800);
     }
 
-    .modal-outer.open, .alert-outer.open {
+    .modal-outer.open,
+    .alert-outer.open {
         background-color: #9f9fa361;
     }
 
@@ -79,11 +82,15 @@
         border: 1px solid var(--app-600) !important;
     }
 
-    .section, .footer, .empty, .notification {
+    .section,
+    .footer,
+    .empty,
+    .notification {
         box-shadow: 0 2px 2px 0px #0000001a, inset 0 0px 0 1px var(--app-400);
     }
 
-    .modal-outer.open .modal, .alert-outer.open .alert {
+    .modal-outer.open .modal,
+    .alert-outer.open .alert {
         box-shadow: 0 5px 8px #0000001a;
         border-color: var(--app-800);
     }
@@ -112,7 +119,7 @@
     .upload-image:hover {
         background-color: var(--app-200);
     }
-    
+
     .crop-controls input[type="range"] {
         background-color: var(--app-600);
     }
@@ -137,7 +144,8 @@
         border-bottom: 1px solid var(--app-600);
     }
 
-    .section-button, .context {
+    .section-button,
+    .context {
         box-shadow: 0 2px 2px 0px #0000001a, inset 0 0px 0 1px var(--app-700);
     }
 
@@ -153,8 +161,8 @@
         border-color: var(--app-700);
         box-shadow: 0 5px 10px #00000066;
         transition: transform cubic-bezier(0, -.25, 0, 1.5) 0.2s,
-        box-shadow cubic-bezier(0, -.25, 0, 1) 0.2s,
-        opacity cubic-bezier(0, -.25, 0, 1) 0.2s;
+            box-shadow cubic-bezier(0, -.25, 0, 1) 0.2s,
+            opacity cubic-bezier(0, -.25, 0, 1) 0.2s;
     }
 
     .jump:hover {
@@ -183,7 +191,8 @@
         color: #000;
     }
 
-    .modal, .post-input {
+    .modal,
+    .post-input {
         background-color: var(--app-300);
     }
 }
@@ -201,21 +210,26 @@
 
     --app-text: #fff;
 
-    .modal-outer.open, .alert-outer.open {
+    .modal-outer.open,
+    .alert-outer.open {
         background-color: #0000007c;
     }
 
-    .modal, .alert {
+    .modal,
+    .alert {
         background-color: rgba(4, 4, 4, 0.6);
         color: var(--app-text);
     }
 }
 
 @media screen and (max-width: 600px) {
-    .black, .liquid-glass.black {
+
+    .black,
+    .liquid-glass.black {
         --app-200: #000 !important;
 
-        .back-button, .action-button {
+        .back-button,
+        .action-button {
             background-color: #0000006d !important;
             border: 1px solid #ffffff2d !important;
             backdrop-filter: blur(5px);

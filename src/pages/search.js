@@ -1,8 +1,8 @@
-import { icon } from "../scripts/icons.js";
+import { router } from "@3r1s_s/erisui";
+
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getSearch } from "../scripts/api.js";
-import { router } from "../scripts/router.js";
 
 export function searchPage(q) {
     const params = new URLSearchParams(window.location.search);
@@ -64,7 +64,7 @@ export function searchPage(q) {
         </div>
         <div class="explore-posts"></div>
     `
-    
+
     getSearch(query);
     backButton.classList.remove('active');
 

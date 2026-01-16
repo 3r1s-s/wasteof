@@ -1,8 +1,9 @@
-import { icon } from "../scripts/icons.js";
+import { router } from '@3r1s_s/erisui';
+
+import { iconC } from "../scripts/icons.js";
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getTrending } from "../scripts/api.js";
-import { router } from "../scripts/router.js";
 
 export function explorePage() {
     setTranslucentTitle(false);
@@ -17,7 +18,7 @@ export function explorePage() {
         <div class="explore">
             <div class="search">
                 <div class="text-input" style="height: 44px;">
-                    <input type="text" placeholder="Search" autocomplete="off">${icon.search}
+                    <input type="text" placeholder="Search" autocomplete="off">${iconC.search}
                 </div>
             </div>
             <div class="explore-users">
@@ -60,11 +61,11 @@ export function explorePage() {
             </div>
         </div>
         <div class="content-center" id="loading">
-            <span class="loader animate">${icon.loader}</span>
+            <eui-loader></eui-loader>
         </div>
         <div class="explore-posts"></div>
     `
-    
+
     getTrending();
     backButton.classList.remove('active');
 

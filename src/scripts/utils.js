@@ -1,8 +1,9 @@
+import { router } from '@3r1s_s/erisui';
+
 import { app, dropdowns, content, title } from "../index.js";
 import { manageCache, postContext, pinPost, unpinPost } from "./api.js";
 import { themeName, setTheme } from "./theme.js";
 import { reportModal, deletePostModal } from "./page-helpers.js";
-import { router } from "./router.js";
 import { settings } from "./storage.js";
 
 export function timeAgo(tstamp) {
@@ -134,54 +135,54 @@ export function dropdownListeners() {
 
             switch (action) {
                 case 'set-theme':
-                setTheme(value);
-                closeDropdown('theme');
-                break;
+                    setTheme(value);
+                    closeDropdown('theme');
+                    break;
 
                 case 'set-color':
-                profileColor(value);
-                closeDropdown('color');
-                break;
+                    profileColor(value);
+                    closeDropdown('color');
+                    break;
 
                 case 'logout':
-                logoutModal();
-                break;
+                    logoutModal();
+                    break;
 
                 case 'delete-post':
-                deletePostModal(id);
-                break;
+                    deletePostModal(id);
+                    break;
 
                 case 'pin-post':
-                pinPost(id);
-                break;
+                    pinPost(id);
+                    break;
 
                 case 'unpin-post':
-                unpinPost(id);
-                break;
+                    unpinPost(id);
+                    break;
 
                 case 'w-link-post':
-                window.open(`https://wasteof.money/posts/${id}`, '_blank');
-                break;
+                    window.open(`https://wasteof.money/posts/${id}`, '_blank');
+                    break;
 
                 case 'report-post':
-                reportModal(id);
-                break;
+                    reportModal(id);
+                    break;
 
                 case 'set-glass':
-                const boolValue = value === 'true';
-                settings.set('glass', boolValue);
-                if (content.dataset.page === 'settings') {
-                    document.querySelector('#glass .value').innerText = boolValue ? 'On' : 'Off';
-                    if (boolValue) {
-                        document.body.classList.add('liquid-glass');
-                    } else {
-                        document.body.classList.remove('liquid-glass');
+                    const boolValue = value === 'true';
+                    settings.set('glass', boolValue);
+                    if (content.dataset.page === 'settings') {
+                        document.querySelector('#glass .value').innerText = boolValue ? 'On' : 'Off';
+                        if (boolValue) {
+                            document.body.classList.add('liquid-glass');
+                        } else {
+                            document.body.classList.remove('liquid-glass');
+                        }
                     }
-                }
-                break;
+                    break;
 
                 default:
-                console.warn('Unknown dropdown action:', action);
+                    console.warn('Unknown dropdown action:', action);
             }
         });
     });
@@ -231,14 +232,14 @@ export async function updateContext(id) {
 }
 
 export function sanitize(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-    .replace(/`/g, '&#96;')
-    .replace(/'/g, '&#39;');
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;')
+        .replace(/`/g, '&#96;')
+        .replace(/'/g, '&#39;');
 }
 
 export function repostListener() {
