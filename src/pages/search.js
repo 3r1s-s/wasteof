@@ -3,6 +3,7 @@ import { router } from "@3r1s_s/erisui";
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { getSearch } from "../scripts/api.js";
+import { iconC } from "../scripts/icons.js";
 
 export function searchPage(q) {
     const params = new URLSearchParams(window.location.search);
@@ -20,7 +21,7 @@ export function searchPage(q) {
         <div class="explore">
             <div class="search">
                 <div class="text-input" style="height: 44px;">
-                    <input type="text" placeholder="Search" autocomplete="off" value="${query}">${icon.search}
+                    <input type="text" placeholder="Search" autocomplete="off" value="${query}">${iconC.search}
                 </div>
             </div>
             <div class="explore-users">
