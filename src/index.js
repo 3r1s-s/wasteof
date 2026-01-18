@@ -174,6 +174,9 @@ window.addEventListener('DOMContentLoaded', () => {
     if (settings.get('glass')) {
         document.body.classList.add('liquid-glass');
     }
+    if (settings.get('translucent-titlebar')) {
+        document.body.classList.add('translucent-titlebar');
+    }
     notificationBadge();
 
     setTimeout(() => {
@@ -341,6 +344,15 @@ document.body.addEventListener('change', (e) => {
                 document.body.classList.add('liquid-glass');
             } else {
                 document.body.classList.remove('liquid-glass');
+            }
+            break;
+
+        case 'translucent-titlebar':
+            settings.set(s, isOn);
+            if (isOn) {
+                document.body.classList.add('translucent-titlebar');
+            } else {
+                document.body.classList.remove('translucent-titlebar');
             }
             break;
 

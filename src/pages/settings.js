@@ -66,6 +66,15 @@ export function settingsPage() {
                 </div>
             </label>
         </div>
+        <div class="section">
+            <label for="switch-translucent" class="section-label">
+            <span class="title">Translucent Titlebar</span>
+                <div class="switch ${settings.get('translucent-titlebar') ? 'selected' : ''}" id="translucent-titlebar">
+                    <input type="checkbox" name="translucent-titlebar" id="switch-translucent" role="switch" data-setting="translucent-titlebar" ${settings.get('translucent-titlebar') ? 'checked' : ''}>
+                    <span class="handle"></span>
+                </div>
+            </label>
+        </div>
         <h3>Profile</h3>
         <div class="section profile">
             <div class="sec-in">

@@ -2270,3 +2270,53 @@ span.dot {
         }
     }
 }
+
+/* Translucent Titlebar */
+
+.light.translucent-titlebar .edge-scroll-effect-soft>.gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+    background: linear-gradient(transparent 0%, #fff 100%);
+    opacity: 0.8;
+}
+
+.light.translucent-titlebar .title {
+    text-shadow: none;
+}
+
+@media only screen and (max-width: 800px) {
+    /* .translucent-titlebar .edge-scroll-effect-soft {
+        opacity: 1;
+    } */
+
+    .translucent-titlebar .titlebar {
+        background: transparent;
+    }
+
+    .translucent-titlebar .title {
+        text-shadow: 0 0 8px #00000066;
+    }
+
+    .translucent-titlebar .content-mask {
+        display: none;
+    }
+
+    .translucent-titlebar .titlebar .edge-scroll-effect-soft {
+        z-index: -1;
+        transform: rotate(180deg);
+        height: 100%;
+        top: 0;
+        opacity: 1;
+        display: block;
+    }
+
+    .translucent-titlebar .title.hide {
+        opacity: 0;
+        filter: blur(10px);
+        transform: translateY(15px);
+    }
+}
