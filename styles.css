@@ -626,7 +626,7 @@ span.logo>svg {
     border-radius: 8px;
     max-height: 400px;
     object-fit: cover;
-    border: 1px solid #ffffff25;
+    /* border: 1px solid #ffffff25; */
     box-sizing: border-box;
     width: fit-content;
     max-width: 100%;
