@@ -2202,6 +2202,10 @@ span.dot {
         padding: 0.8rem 1rem;
     }
 
+    .post.focused .post-content>img {
+        max-height: 100%;
+    }
+
     .titlebar {
         background-color: var(--app-200);
         padding-top: env(safe-area-inset-top);
