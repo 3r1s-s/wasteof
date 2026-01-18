@@ -2336,6 +2336,10 @@ span.dot {
     }
 
     body:not(.translucent-titlebar):has(.content[data-page="user"]) .titlebar {
-        display: none;
+        background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--app-100) 100%, transparent 20%) 100%);
+    }
+
+    body:not(.translucent-titlebar):has(.content[data-page="user"]) .mask-border {
+        background: transparent;
     }
 }
