@@ -266,7 +266,7 @@ span.logo>svg {
     width: 100%;
     max-width: var(--content-width);
     height: var(--titlebar-height);
-    background-color: var(--app-200);
+    background-color: var(--app-100);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -881,6 +881,7 @@ span.logo>svg {
     height: 42px;
     justify-content: center;
     align-items: center;
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--app-100) 60%, transparent);
 
     background-color: var(--app-200);
     border: 1px solid var(--app-400);
@@ -927,6 +928,7 @@ span.logo>svg {
     background-color: var(--app-200);
     border: 1px solid var(--app-400);
     border-radius: 100px;
+    box-shadow: 0 4px 15px color-mix(in srgb, var(--app-100) 60%, transparent);
 
     transition: transform cubic-bezier(0, -.25, 0, 1.5) 0.2s, opacity cubic-bezier(0, -.25, 0, 1) 0.2s;
 
@@ -2201,6 +2203,7 @@ span.dot {
     }
 
     .titlebar {
+        background-color: var(--app-200);
         padding-top: env(safe-area-inset-top);
     }
 
