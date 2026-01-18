@@ -256,6 +256,10 @@ span.logo>svg {
     display: none !important;
 }
 
+.light #tab-bar {
+    --app-700: #a4a4a8 !important;
+}
+
 /* Titlebar */
 
 .titlebar {
@@ -2225,7 +2229,7 @@ span.dot {
     }
 
     .mask-border {
-        background: transparent;
+        background: transparent !important;
     }
 
     .profile.section {
@@ -2316,7 +2320,7 @@ span.dot {
     } */
 
     .translucent-titlebar .titlebar {
-        background: transparent;
+        background: transparent !important;
     }
 
     .translucent-titlebar .title {

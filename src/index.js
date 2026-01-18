@@ -54,6 +54,7 @@ export const actionButton = (() => {
 export let notifications = 0;
 export function setNotifications(v) {
     notifications = v;
+    tabBar.badge('/notifications', notifications);
 }
 
 export const postImages = (() => {
