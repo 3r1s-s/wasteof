@@ -2074,7 +2074,7 @@ span.dot {
     }
 
     #tab-bar {
-        display: auto !important;
+        display: block !important;
     }
 
     .light .nav {
@@ -2142,6 +2142,7 @@ span.dot {
         padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
         padding-bottom: calc(63px + 18px);
         border: none;
+        width: auto !important;
     }
 
     .mask-left,
