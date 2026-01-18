@@ -2046,6 +2046,11 @@ span.dot {
 
 @media only screen and (max-width: 800px) {
 
+    * {
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
     html,
     body {
         overscroll-behavior: none;
@@ -2135,7 +2140,7 @@ span.dot {
     .modal {
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
-        box-shadow: inset 0 1px 0 1px #ffffff4b !important;
+        /* box-shadow: inset 0 1px 0 1px #ffffff4b !important; */
     }
 
     .titlebar .edge-scroll-effect-soft {
@@ -2181,6 +2186,12 @@ span.dot {
         bottom: calc(1rem + var(--tab-bar-height) + env(safe-area-inset-bottom));
         right: 1rem;
         left: unset;
+        transform: scale(1);
+        transition: transform 0.2s var(--transition-function);
+    }
+
+    .newpost-float:active {
+        transform: scale(0.95);
     }
 
     .post {
@@ -2189,6 +2200,10 @@ span.dot {
 
     .titlebar {
         padding-top: env(safe-area-inset-top);
+    }
+
+    .follow-button.following {
+        background-color: var(--app-100) !important;
     }
 
     .mask-left-outer,
@@ -2318,5 +2333,9 @@ span.dot {
         opacity: 0;
         filter: blur(10px);
         transform: translateY(15px);
+    }
+
+    body:not(.translucent-titlebar):has(.content[data-page="user"]) .titlebar {
+        display: none;
     }
 }
