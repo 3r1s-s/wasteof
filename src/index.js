@@ -22,7 +22,7 @@ import { haptic } from "./scripts/haptics.js";
 
 export const URL = 'http://localhost:8000';
 export const dropdowns = new Map();
-export const version = '1.0.1';
+export const version = '1.1.0';
 
 export const app = document.querySelector('.app');
 export const nav = document.querySelector('.nav');
