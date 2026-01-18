@@ -292,6 +292,8 @@ span.logo>svg {
 
 .title.hide {
     opacity: 0;
+    filter: blur(10px);
+    transform: translateY(15px);
 }
 
 .content-mask {
@@ -2268,12 +2270,6 @@ span.dot {
             opacity: 1;
             display: block;
         }
-
-        .title.hide {
-            opacity: 0;
-            filter: blur(10px);
-            transform: translateY(15px);
-        }
     }
 
     .light.liquid-glass {
@@ -2336,7 +2332,7 @@ span.dot {
     }
 
     body:not(.translucent-titlebar):has(.content[data-page="user"]) .titlebar {
-        background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--app-100) 100%, transparent 20%) 100%);
+        background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--app-100) 100%, transparent 5%) 100%);
     }
 
     body:not(.translucent-titlebar):has(.content[data-page="user"]) .mask-border {
