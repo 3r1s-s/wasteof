@@ -1,4 +1,4 @@
-import { icon } from "../scripts/icons.js";
+import { iconC } from "../scripts/icons.js";
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, toTop, updateContext, dropdownListeners, repostListener, setTranslucentTitle } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
@@ -27,11 +27,11 @@ export function postPage(params) {
 
     content.innerHTML = `
         <div class="post-view">
-            <div class="content-center post-border-bottom" id="loading-post"><span class="loader animate">${icon.loader}</span></div>
+            <div class="content-center post-border-bottom" id="loading-post"><eui-loader></eui-loader></div>
         </div>
         <div class="post-replies">
             ${storage.get('session') ? newReplyDiv : ''}
-            <div class="content-center post-border-top" id="loading"><span class="loader animate">${icon.loader}</span></div>
+            <div class="content-center post-border-top" id="loading"><eui-loader></eui-loader></div>
         </div>
     `;
 
@@ -59,6 +59,6 @@ export function postPage(params) {
     updateContext(params.id);
     repostListener(params.id);
     dropdownListeners();
-    
+
     backButton.classList.add('active');
 }

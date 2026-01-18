@@ -1,9 +1,11 @@
-import { loadUserSettings, sendPost, fetchPost, 
+import {
+    loadUserSettings, sendPost, fetchPost,
     deletePost, loadCommentPreview, sendComment, loadRepostPreview, setBio,
-    logout, login } from "./api.js";
+    logout, login
+} from "./api.js";
 import { storage } from "./storage.js";
 import { openModal, closeModal, openAlert, closeAlert } from "./modals.js";
-import { icon } from "./icons.js";
+import { iconC } from "./icons.js";
 import { app, postImages } from "../index.js";
 import { dropdownListeners, uploadImage } from "./utils.js"
 import { initializeCropper, saveCroppedPfp, saveBanner } from "./image.js";
@@ -28,7 +30,7 @@ export function loginModal() {
         fill: false,
         buttons: [
             { text: "Cancel", action: closeModal },
-            { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value);closeModal() }, highlight: `true` }
+            { text: "Login", action: () => { login(document.getElementById('user').value, document.getElementById('pass').value); closeModal() }, highlight: `true` }
         ],
         center: true,
         small: true, my: 445,
@@ -37,7 +39,7 @@ export function loginModal() {
 }
 
 export function logoutModal() {
-    openAlert({title: 'Log out?', message: 'Are you sure you want to log out?',center:true, buttons: [{text: 'OK', action: () => { logout() }},{text: 'Cancel', action: () => closeAlert()}]})
+    openAlert({ title: 'Log out?', message: 'Are you sure you want to log out?', center: true, buttons: [{ text: 'OK', action: () => { logout() } }, { text: 'Cancel', action: () => closeAlert() }] })
 }
 
 export async function myInfo() {
@@ -51,7 +53,7 @@ export async function myInfo() {
 
     document.getElementById('about-me').value = res.bio;
     document.getElementById('about-me').disabled = false;
-} 
+}
 
 export async function saveBio() {
     document.getElementById('about-me').disabled = true;
@@ -73,9 +75,9 @@ export function newPost() {
     postImages.clear();
     openModal({
         post: true,
-        buttons: [{text: 'Post', action: sendModalPost}],
+        buttons: [{ text: 'Post', action: sendModalPost }],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <div class="create-post" id="create-post">
                 <div class="pfp-container">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
@@ -87,7 +89,7 @@ export function newPost() {
                     <div class="post-content">
                         <textarea placeholder="What's on your mind?" id="post-content" class="post-input" style="height: 24px;"></textarea>
                         <div class="post-options">
-                            <span class="post-option" id="append-image">${icon.attachment}</span>
+                            <span class="post-option" id="append-image">${iconC.attachment}</span>
                         </div>    
                         <div class="newpost-attachments"></div>
                     </div>
@@ -133,7 +135,7 @@ export function appendImageAlert() {
         title: 'Attach an image',
         message: 'Paste the URL of the image you want to attach',
         input: true,
-        buttons: [{text: 'Attach', action: appendImage}, {text: 'Cancel', action: closeAlert}]
+        buttons: [{ text: 'Attach', action: appendImage }, { text: 'Cancel', action: closeAlert }]
     });
 }
 
@@ -145,7 +147,7 @@ export function appendImage() {
         const attachments = document.querySelector('.newpost-attachments');
         attachments.innerHTML += `
             <div class="newpost-attachment" style="--image: url('${response}');" data-no="${postImages.get(response)}">
-                <div class="newpost-remove-attachment" id="remove-image">${icon.cross}</div>
+                <div class="newpost-remove-attachment" id="remove-image">${iconC.cross}</div>
             </div>
         `;
     }
@@ -174,9 +176,9 @@ export function newRepost(id) {
 
     openModal({
         post: true,
-        buttons: [{text: 'Post', action: () => { sendModalRepost(id) }}],
+        buttons: [{ text: 'Post', action: () => { sendModalRepost(id) } }],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <div class="create-post">
                 <div class="pfp-container">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
@@ -189,7 +191,7 @@ export function newRepost(id) {
                         <textarea placeholder="What do you think about this post?" id="post-content" class="post-input" style="height: 24px;"></textarea>
                     </div>
                     <div class="post-options">
-                        <span class="post-option" id="append-image">${icon.attachment}</span>
+                        <span class="post-option" id="append-image">${iconC.attachment}</span>
                     </div>    
                     <div class="newpost-attachments"></div>
                     <div class="post-repost" id="post-repost"></div>
@@ -229,12 +231,12 @@ export function newComment(id, parent, postid) {
 
     openModal({
         post: true,
-        buttons: [{text: 'Post', action: () => sendModalComment(id, parent, postid)}],
+        buttons: [{ text: 'Post', action: () => sendModalComment(id, parent, postid) }],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <div class="replying-to">
                 <div class="content-center" id="preview-loading" style="padding:0.25rem;">
-                <span class="loader animate">${icon.loader}</span>
+                <eui-loader></eui-loader>
                 </div>
             </div>
             <div class="create-post">
@@ -275,7 +277,7 @@ export function newComment(id, parent, postid) {
 function sendModalPost() {
     if (document.querySelector('.post-input').value.trim() !== '') {
         sendPost(document.querySelector('.post-input').value.trim());
-    } else if (postImages.length() > 0){
+    } else if (postImages.length() > 0) {
         sendPost('');
     }
     closeModal();
@@ -297,7 +299,7 @@ function sendModalComment(commentid, parent, postid) {
 }
 
 export function deletePostModal(id) {
-    openAlert({title: 'Delete?', message: 'Are you sure you want to delete this post?', buttons: [{text: 'OK',   action: () => { deletePost(id);closeAlert(); }}, {text: 'Cancel', action: closeAlert}], center: true})
+    openAlert({ title: 'Delete?', message: 'Are you sure you want to delete this post?', buttons: [{ text: 'OK', action: () => { deletePost(id); closeAlert(); } }, { text: 'Cancel', action: closeAlert }], center: true })
 }
 
 export function pfpModal() {
@@ -307,10 +309,10 @@ export function pfpModal() {
         my: 300,
         buttons: [],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
-                ${icon.attachment}
+                ${iconC.attachment}
                 <span>Upload Image</span>
             </div>
         `
@@ -328,10 +330,10 @@ export function bannerModal() {
         my: 300,
         buttons: [],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
-                ${icon.attachment}
+                ${iconC.attachment}
                 <span>Upload Image</span>
             </div>
         `
@@ -346,17 +348,17 @@ async function editPfpModal() {
     try {
         const imageData = await uploadImage();
         closeModal();
-        setTimeout(() => {            
+        setTimeout(() => {
             openModal({
                 small: true,
                 mx: 400,
                 my: 500,
                 buttons: [
-                    {text: 'Cancel', action: closeModal},
-                    {text: 'Save', action: saveCroppedPfp, highlight: true}
+                    { text: 'Cancel', action: closeModal },
+                    { text: 'Save', action: saveCroppedPfp, highlight: true }
                 ],
                 body: `
-                    <div class="modal-close">${icon.cross}</div>
+                    <div class="modal-close">${iconC.cross}</div>
                     <h3 class="modal-center-title">Adjust Profile Picture</h3>
                     <div class="image-cropper">
                         <div class="crop-container">
@@ -373,10 +375,10 @@ async function editPfpModal() {
                     </div>
                 `
             });
-            
+
             initializeCropper(imageData);
         }, 1000);
-        
+
     } catch (err) {
         console.error('Upload canceled or failed:', err);
     }
@@ -386,17 +388,17 @@ async function editBannerModal() {
     try {
         const imageData = await uploadImage();
         closeModal();
-        setTimeout(() => {            
+        setTimeout(() => {
             openModal({
                 small: true,
                 mx: 400,
                 my: 300,
                 buttons: [
-                    {text: 'Cancel', action: 'closeModal()'},
-                    {text: 'Save', action: () => saveBanner(), highlight: true}
+                    { text: 'Cancel', action: 'closeModal()' },
+                    { text: 'Save', action: () => saveBanner(), highlight: true }
                 ],
                 body: `
-                    <div class="modal-close">${icon.cross}</div>
+                    <div class="modal-close">${iconC.cross}</div>
                     <h3 class="modal-center-title">Preview Banner</h3>
                     <div class="banner-section">
                         <img src="${imageData}" id="crop-image banner" class="banner-crop" draggable="false">
@@ -404,7 +406,7 @@ async function editBannerModal() {
                 `
             });
         }, 1000);
-        
+
     } catch (err) {
         console.error('Upload canceled or failed:', err);
     }
@@ -414,11 +416,11 @@ export function reportModal(id) {
     openModal({
         mx: 400,
         buttons: [
-            {text: 'Cancel', action: 'closeModal()'},
-            {text: 'Report', action: `sendReportModal('${id}')`, highlight: true}
+            { text: 'Cancel', action: 'closeModal()' },
+            { text: 'Report', action: `sendReportModal('${id}')`, highlight: true }
         ],
         body: `
-            <div class="modal-close">${icon.cross}</div>
+            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Report Post</h3>
             <div class="post-report" id="post-repost"></div>
 

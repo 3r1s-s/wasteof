@@ -1,4 +1,4 @@
-import { icon } from "../scripts/icons.js";
+import { iconC } from "../scripts/icons.js";
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { storage } from "../scripts/storage.js";
@@ -25,7 +25,7 @@ export function feedPage() {
                 </div>
             </div>
             <div class="content-center post-border-top" id="loading">
-                <span class="loader animate">${icon.loader}</span>
+                <eui-loader></eui-loader>
             </div>
         `;
 
@@ -39,6 +39,6 @@ export function feedPage() {
             newPost();
         });
     }
-    
+
     backButton.classList.remove('active');
 }

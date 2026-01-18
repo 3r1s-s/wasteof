@@ -1,9 +1,10 @@
+import { router } from '@3r1s_s/erisui';
+
 import { storage, settings } from './storage.js';
 import { setNotifications, notificationsIcon, content, splash, postImages, backButton } from '../index.js';
 import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener } from './utils.js';
-import { icon } from './icons.js';
+import { iconC } from './icons.js';
 import { openAlert, closeAlert, loggingIn, closeModal, tooltip } from './modals.js';
-import { router } from './router.js';
 import { settingsPage } from '../pages/settings.js';
 import { haptic } from './haptics.js';
 import { newComment, loginModal } from './page-helpers.js';
@@ -176,39 +177,39 @@ export function createPost(data, isRepost, focused) {
                 data-action="edit-post" 
                 data-id="${data._id}">
                 <span>Edit</span>
-                <span class="option-icon">${icon.edit}</span>
+                <span class="option-icon">${iconC.edit}</span>
             </div>
             <div class="option" 
                 data-action="w-link-post" 
                 data-id="${data._id}">
                 <span>View on wasteof.money</span>
-                <span class="option-icon" style="width: 24px;height: 24px;">${icon.reply}</span>
+                <span class="option-icon" style="width: 24px;height: 24px;">${iconC.reply}</span>
             </div>
             <div class="option" 
                 data-action="delete-post" 
                 data-id="${data._id}">
                 <span>Delete</span>
-                <span class="option-icon">${icon.delete}</span>
+                <span class="option-icon">${iconC.delete}</span>
             </div>
             <div class="option" 
                 data-action="pin-post" 
                 data-id="${data._id}" 
                 id="pin-post">
                 <span>Pin</span>
-                <span class="option-icon" style="width: 18px;">${icon.pin}</span>
+                <span class="option-icon" style="width: 18px;">${iconC.pin}</span>
             </div>
         ` : `
             <div class="option" 
                 data-action="w-link-post" 
                 data-id="${data._id}">
                 <span>View on wasteof.money</span>
-                <span class="option-icon" style="width: 24px;height: 24px;">${icon.reply}</span>
+                <span class="option-icon" style="width: 24px;height: 24px;">${iconC.reply}</span>
             </div>
             <div class="option" 
                 data-action="report-post" 
                 data-id="${data._id}">
                 <span>Report</span>
-                <span class="option-icon">${icon.report}</span>
+                <span class="option-icon">${iconC.report}</span>
             </div>
         `}
         `;
@@ -229,22 +230,22 @@ export function createPost(data, isRepost, focused) {
                     </div>
                     <div class="post-info">
                         <div class="post-loves post-info-item button ${manageCache.love(data._id) ? 'loved' : ''}" data-action="love" data-id="${data._id}">
-                            <span class="icon">${icon.love}</span>
+                            <span class="icon">${iconC.love}</span>
                             <span class="count">${data.loves}</span>
                         </div>
                         <div class="post-reposts post-info-item button" data-action="repost" data-id="${data._id}">
-                                <span class="icon">${icon.repost}</span>
+                                <span class="icon">${iconC.repost}</span>
                                 <span class="count">${data.reposts}</span>
                         </div>
                         <div class="post-reposts post-info-item button" data-action="comment" data-id="${data._id}">
-                            <span class="icon">${icon.comment}</span>
+                            <span class="icon">${iconC.comment}</span>
                             <span class="count">${data.comments}</span>
                         </div>
                     </div>
                 </div>
                 <div class="context-outer more" id="dropdown-${data._id}">
                     <div class="context" data-dropdown="dropdown-${data._id}">
-                    ${icon.more}
+                    ${iconC.more}
                     </div>
                     <div class="dropdown">
                         ${postdropdown}
@@ -287,15 +288,15 @@ export function createPost(data, isRepost, focused) {
             ${!isRepost ? `
                 <div class="post-info">
                     <div class="post-loves post-info-item button ${manageCache.love(data._id) ? 'loved' : ''}" data-action="love" data-id="${data._id}">
-                        <span class="icon">${icon.love}</span>
+                        <span class="icon">${iconC.love}</span>
                         <span class="count">${data.loves}</span>
                     </div>
                     <div class="post-reposts post-info-item button" data-action="repost" data-id="${data._id}">
-                            <span class="icon">${icon.repost}</span>
+                            <span class="icon">${iconC.repost}</span>
                             <span class="count">${data.reposts}</span>
                     </div>
                     <div class="post-reposts post-info-item button" data-action="comment" data-id="${data._id}">
-                        <span class="icon">${icon.comment}</span>
+                        <span class="icon">${iconC.comment}</span>
                         <span class="count">${data.comments}</span>
                     </div>
                 </div>
@@ -358,7 +359,7 @@ export async function getTrending() {
 
 export async function getSearch(query) {
     document.querySelector('.explore-posts').innerHTML = `
-        <div class="content-center" id="loading"><span class="loader animate">${icon.loader}</span></div>
+        <div class="content-center" id="loading"><eui-loader></eui-loader></div>
     `;
 
     const res = await fetch('https://api.wasteof.money/search/posts?q=' + query + '&page=1');
@@ -475,7 +476,7 @@ export async function pinPost(id) {
         }
     });
 
-    tooltip({ icon: icon.check, title: 'Pinned!' });
+    tooltip({ icon: iconC.check, title: 'Pinned!' });
 
     updateContext(id);
 }
@@ -494,7 +495,7 @@ export async function unpinPost(id) {
         }
     });
 
-    tooltip({ icon: icon.check, title: 'Unpinned!' });
+    tooltip({ icon: iconC.check, title: 'Unpinned!' });
 
     updateContext(id);
 }
@@ -512,7 +513,7 @@ export async function deletePost(id) {
         }
     });
 
-    tooltip({ icon: icon.check, title: 'Deleted!' });
+    tooltip({ icon: iconC.check, title: 'Deleted!' });
 }
 
 export async function setBio(newBio) {
@@ -531,7 +532,7 @@ export async function setBio(newBio) {
         if (data.error) {
             openAlert({ title: 'Error', message: data.error });
         } else {
-            tooltip({ icon: icon.check, title: 'Updated!' });
+            tooltip({ icon: iconC.check, title: 'Updated!' });
         }
     });
 }
@@ -540,12 +541,12 @@ export async function postContext(data) {
     const pinEl = document.querySelector(`#dropdown-${data._id} #pin-post`);
     if (!pinEl) return;
 
-    let pinHTML = `<span>Pin</span><span class="option-icon" style="width: 18px;">${icon.pin}</span>`;
+    let pinHTML = `<span>Pin</span><span class="option-icon" style="width: 18px;">${iconC.pin}</span>`;
     pinEl.setAttribute('data-id', data._id);
     pinEl.setAttribute('data-action', 'pin-post');
     const pinned = await loadPinned(storage.get('user'));
     if (pinned && pinned._id === data._id) {
-        pinHTML = `<span>Unpin</span><span class="option-icon" style="width: 18px;">${icon.pin}</span>`;
+        pinHTML = `<span>Unpin</span><span class="option-icon" style="width: 18px;">${iconC.pin}</span>`;
         pinEl.setAttribute('data-action', 'unpin-post');
     }
 
@@ -621,7 +622,7 @@ export async function loadUserPosts(user) {
 
             const pinEl = document.createElement('span');
             pinEl.classList.add('pin-indicator');
-            pinEl.innerHTML = `${icon.pin}`;
+            pinEl.innerHTML = `${iconC.pin}`;
             document.querySelector('.profile-pinned').appendChild(pinEl);
         }
 
@@ -638,7 +639,7 @@ export async function loadMoreUserPosts(user) {
     // https://api.wasteof.money/users/eris/posts?page=2
     document.querySelector('.load-more').classList.add('hide');
     document.querySelector('.profile-posts').innerHTML += `
-        <div class="load-more-loading" id="loading"><span class="loader animate">${icon.loader}</span></div>
+        <div class="load-more-loading" id="loading"><eui-loader></eui-loader></div>
     `;
     let pageno = parseInt(document.querySelector('.load-more').dataset.pageno) + 1;
     document.querySelector('.load-more').dataset.pageno = pageno;
@@ -851,7 +852,7 @@ export async function markAsRead() {
         body: JSON.stringify({ messages: mark })
     });
 
-    tooltip({ icon: icon.check, title: 'Marked as read!' });
+    tooltip({ icon: iconC.check, title: 'Marked as read!' });
 }
 
 const notificationTypes = {
@@ -1047,7 +1048,7 @@ function createComment(data) {
             </div>
             <div class="post-content" onclick="">${data.content}</div>
             <div class="comment-reply-buttons">
-                ${data.hasReplies ? `<span class="show-replies" data-replies-toggle-id="${data._id}"><div class="show-replies-arrow">${icon.arrow}</div><div id="show-replies">Show replies</div></span>` : ''}
+                ${data.hasReplies ? `<span class="show-replies" data-replies-toggle-id="${data._id}"><div class="show-replies-arrow">${iconC.arrow}</div><div id="show-replies">Show replies</div></span>` : ''}
                 <span class="reply-button" data-comment-id="${data._id}" data-post-id="${data.post}" data-parent-id="${data.parent}">Reply</span>
             </div>
             <div class="comment-replies" data-comment-id="${data._id}"></div>
@@ -1118,9 +1119,9 @@ export async function sendPost(content, repost) {
     postImages.clear
 
     if (postRes.ok) {
-        tooltip({ icon: icon.check, title: 'Posted!' });
+        tooltip({ icon: iconC.check, title: 'Posted!' });
     } else {
-        tooltip({ icon: icon.cross, title: 'Error' });
+        tooltip({ icon: iconC.cross, title: 'Error' });
     }
 }
 
@@ -1163,12 +1164,12 @@ export async function sendComment(postId, content, parentid) {
     closeModal();
 
     if (commentRes.ok) {
-        tooltip({ icon: icon.check, title: 'Commented!' });
+        tooltip({ icon: iconC.check, title: 'Commented!' });
         if (router.location === `/posts/${postId}`) {
             router.navigate(`/posts/${postId}`);
         }
     } else {
-        tooltip({ icon: icon.cross, title: 'Error' });
+        tooltip({ icon: iconC.cross, title: 'Error' });
     }
 }
 
@@ -1177,14 +1178,14 @@ function toggleReplies(id) {
     document.querySelector(`.comment-replies[data-comment-id="${id}"]`).classList.toggle('open');
 
     if (document.querySelector(`.comment-replies[data-comment-id="${id}"]`).classList.contains('open')) {
-        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML = `<div class="content-center" id="loading-replies" data-replies-loading-id="${id}"><span class="loader animate">${icon.loader}</span></div>`;
+        document.querySelector(`.comment-replies[data-comment-id="${id}"]`).innerHTML = `<div class="content-center" id="loading-replies" data-replies-loading-id="${id}"><eui-loader></eui-loader></div>`;
         loadReplies(id);
     }
 
     if (document.querySelector(`[data-replies-toggle-id="${id}"]`).classList.contains('open')) {
-        document.querySelector(`[data-replies-toggle-id="${id}"]`).innerHTML = `<div class="show-replies-arrow flip">${icon.arrow}</div><div id="show-replies">Hide replies</div>`;
+        document.querySelector(`[data-replies-toggle-id="${id}"]`).innerHTML = `<div class="show-replies-arrow flip">${iconC.arrow}</div><div id="show-replies">Hide replies</div>`;
     } else {
-        document.querySelector(`[data-replies-toggle-id="${id}"]`).innerHTML = `<div class="show-replies-arrow">${icon.arrow}</div><div id="show-replies">Show replies</div>`;
+        document.querySelector(`[data-replies-toggle-id="${id}"]`).innerHTML = `<div class="show-replies-arrow">${iconC.arrow}</div><div id="show-replies">Show replies</div>`;
     }
 }
 
@@ -1290,7 +1291,7 @@ export async function uploadPfp(dataUrl) {
     if (!response.ok) {
         console.error('Upload failed:', await response.text());
     } else {
-        tooltip({ icon: icon.check, title: 'Uploaded!' });
+        tooltip({ icon: iconC.check, title: 'Uploaded!' });
     }
 }
 
@@ -1311,7 +1312,7 @@ export async function uploadBanner(dataUrl) {
     if (!response.ok) {
         console.error('Upload failed:', await response.text());
     } else {
-        tooltip({ icon: icon.check, title: 'Uploaded!' });
+        tooltip({ icon: iconC.check, title: 'Uploaded!' });
     }
 }
 
@@ -1326,7 +1327,7 @@ async function reportPost(id, reason) {
     });
 
     if (postRes.ok) {
-        tooltip({ icon: icon.check, title: 'Report sent!' });
+        tooltip({ icon: iconC.check, title: 'Report sent!' });
     }
 }
 

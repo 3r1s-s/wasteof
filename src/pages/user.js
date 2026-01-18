@@ -1,9 +1,9 @@
-import { icon } from "../scripts/icons.js";
+import { router } from '@3r1s_s/erisui';
+
 import { title, content, backButton, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadUserInfo, loadUserPosts, followButton, loadMoreUserPosts } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
-import { router } from "../scripts/router.js";
 import { loginModal } from "../scripts/page-helpers.js";
 
 export function userPage(params) {
@@ -43,7 +43,7 @@ export function userPage(params) {
         </div>
         <div class="profile-pinned"></div>
         <div class="profile-posts">
-        <div class="content-center" id="loading"><span class="loader animate">${icon.loader}</span></div>
+        <div class="content-center" id="loading"><eui-loader></eui-loader></div>
         </div>
         <div class="load-more hide button" id="load-more" data-pageno="1" data-id="${params.username}" data-action="load-more-user-posts"><span>Load more</span></div>
     `;

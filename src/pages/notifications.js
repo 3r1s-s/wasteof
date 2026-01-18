@@ -1,4 +1,4 @@
-import { icon } from "../scripts/icons.js";
+import { iconC } from "../scripts/icons.js";
 import { title, content, actionButton } from "../index.js";
 import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadNotifications } from "../scripts/api.js";
@@ -23,7 +23,7 @@ export function notificationsPage() {
 
     content.innerHTML = `
         <div class="floating" id="loading">
-            <span class="loader animate">${icon.loader}</span>
+            <eui-loader></eui-loader>
         </div>
         <div class="unread"></div>
         <hr>
