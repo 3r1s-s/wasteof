@@ -443,6 +443,10 @@ span.logo>svg {
     border-inline: 1px solid var(--app-300);
 }
 
+.content[data-page="user"] {
+    padding-top: 0;
+}
+
 .content-center {
     display: flex;
     flex-direction: column;
@@ -2141,7 +2145,7 @@ span.dot {
     .content {
         background-color: var(--app-100);
         padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
-        padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom));
+        padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom) + 58px + 2rem);
         border: none;
         width: auto !important;
     }
@@ -2235,10 +2239,6 @@ span.dot {
 
         .title {
             text-shadow: 0 0 8px #00000066;
-        }
-
-        .content[data-page="user"] {
-            padding-top: 0;
         }
 
         .content-mask {
