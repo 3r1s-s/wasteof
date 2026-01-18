@@ -445,10 +445,6 @@ span.logo>svg {
     border-inline: 1px solid var(--app-300);
 }
 
-.content[data-page="user"] {
-    padding-top: 0;
-}
-
 .content-center {
     display: flex;
     flex-direction: column;
@@ -2157,6 +2153,10 @@ span.dot {
         padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom) + 58px + 2rem);
         border: none;
         width: auto !important;
+    }
+
+    .content[data-page="user"] {
+        padding-top: 0;
     }
 
     .load-more {
