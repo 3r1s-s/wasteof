@@ -2139,6 +2139,7 @@ span.dot {
     }
 
     .content {
+        background-color: var(--app-100);
         padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
         padding-bottom: calc(63px + 18px);
         border: none;
