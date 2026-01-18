@@ -266,7 +266,7 @@ span.logo>svg {
     width: 100%;
     max-width: var(--content-width);
     height: var(--titlebar-height);
-    background-color: var(--app-100);
+    background-color: var(--app-200);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2141,9 +2141,14 @@ span.dot {
     .content {
         background-color: var(--app-100);
         padding-top: calc(var(--titlebar-height) + env(safe-area-inset-top));
-        padding-bottom: calc(63px + 18px);
+        padding-bottom: calc(var(--tab-bar-height) + env(safe-area-inset-bottom));
         border: none;
         width: auto !important;
+    }
+
+    .load-more {
+        background-color: var(--app-100) !important;
+        border: none !important;
     }
 
     .mask-left,
@@ -2152,7 +2157,7 @@ span.dot {
     }
 
     .jump {
-        bottom: calc(1rem + 63px + 0px);
+        bottom: calc(1rem + var(--tab-bar-height) + env(safe-area-inset-bottom));
         left: 1rem;
     }
 
@@ -2169,7 +2174,7 @@ span.dot {
     .newpost-float {
         display: flex;
 
-        bottom: calc(1rem + 63px + 0px);
+        bottom: calc(1rem + var(--tab-bar-height) + env(safe-area-inset-bottom));
         right: 1rem;
         left: unset;
     }
