@@ -2332,7 +2332,7 @@ span.dot {
     }
 
     body:not(.translucent-titlebar):has(.content[data-page="user"]) .titlebar {
-        background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--app-100) 100%, transparent 5%) 100%);
+        background: linear-gradient(0deg, transparent 0%, color-mix(in srgb, var(--app-100) 100%, transparent 70%) 40%, color-mix(in srgb, var(--app-100) 100%, transparent 5%) 100%);
     }
 
     body:not(.translucent-titlebar):has(.content[data-page="user"]) .mask-border {
