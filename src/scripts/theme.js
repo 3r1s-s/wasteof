@@ -9,8 +9,14 @@ export function setTheme(theme) {
 export function applyTheme() {
     const theme = settings.get('theme');
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
+    let color = "";
+    if (window.innerWidth < 800) {
+        color = window.getComputedStyle(content).backgroundColor;
+    } else {
+        color = window.getComputedStyle(document.body).backgroundColor;
+    }
     if (metaThemeColor) {
-        metaThemeColor.setAttribute("content", "#0f0f14");
+        metaThemeColor.setAttribute("content", color);
     }
 
     document.body.classList.remove('light');
@@ -18,15 +24,9 @@ export function applyTheme() {
     if (theme === 'system') {
         if (window.matchMedia('(prefers-color-scheme: light)').matches) {
             document.body.classList.add('light');
-            if (metaThemeColor) {
-                metaThemeColor.setAttribute("content", "#E9E9EC");
-            }
         }
     } else if (theme === 'light') {
         document.body.classList.add('light');
-        if (metaThemeColor) {
-            metaThemeColor.setAttribute("content", "#E9E9EC");
-        }
     } else {
         document.body.classList.add(theme);
     }
@@ -47,7 +47,7 @@ export function themeName() {
     } else {
         return theme.replace(
             /\w\S*/g,
-            function(txt){
+            function (txt) {
                 return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
             }
         );
