@@ -10,14 +10,6 @@ export function applyTheme() {
     const theme = settings.get('theme');
     const metaThemeColor = document.querySelector("meta[name=theme-color]");
     let color = "";
-    if (window.innerWidth < 800) {
-        color = window.getComputedStyle(content).backgroundColor;
-    } else {
-        color = window.getComputedStyle(document.body).backgroundColor;
-    }
-    if (metaThemeColor) {
-        metaThemeColor.setAttribute("content", color);
-    }
 
     document.body.classList.remove('light');
     document.body.classList.remove('black');
@@ -29,6 +21,15 @@ export function applyTheme() {
         document.body.classList.add('light');
     } else {
         document.body.classList.add(theme);
+    }
+
+    if (window.innerWidth < 800) {
+        color = window.getComputedStyle(content).backgroundColor;
+    } else {
+        color = window.getComputedStyle(document.body).backgroundColor;
+    }
+    if (metaThemeColor) {
+        metaThemeColor.setAttribute("content", color);
     }
 
     if (content.dataset.page === 'settings') {
