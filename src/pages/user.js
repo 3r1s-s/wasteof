@@ -5,6 +5,7 @@ import { activeTab, setTranslucentTitle, toTop } from "../scripts/utils.js"
 import { loadUserInfo, loadUserPosts, followButton, loadMoreUserPosts } from "../scripts/api.js";
 import { storage } from "../scripts/storage.js";
 import { loginModal } from "../scripts/page-helpers.js";
+import { iconC } from "../scripts/icons.js";
 
 export function userPage(params) {
     setTranslucentTitle(true);
@@ -24,6 +25,9 @@ export function userPage(params) {
                 <div style="--image: url('https://api.wasteof.money/users/${params.username}/picture')" class=" profile-picture" id="profile-picture"></div>
                 <div class="profile-name">
                     <span class="username">@${params.username}</span>
+                    <span class="profile-badge" id="verified"></span>
+                    <span class="profile-badge" id="beta"></span>
+                    <span class="profile-badge" id="admin"></span>
                 </div>
             </div>
             <div class="profile-section right" style="margin-top: calc(10% + 5px);">

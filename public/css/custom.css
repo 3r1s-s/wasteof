@@ -222,6 +222,17 @@ input::placeholder {
     margin-bottom: 8px;
 }
 
+.profile-name {
+    display: flex;
+    align-items: center;
+}
+
+.profile-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 0.25rem;
+}
+
 #bio {
     line-height: 1.2;
 }
@@ -1092,7 +1103,8 @@ input::placeholder {
         height: calc(120px + var(--titlebar-height) + env(safe-area-inset-top));
     }
 
-    .profile-picture {
+    .profile-picture,
+    .profile-picture.online::after {
         border-color: var(--app-100);
     }
 }

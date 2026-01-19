@@ -709,6 +709,12 @@ export async function loadUserInfo(user) {
             document.getElementById('bio').innerHTML = data.bio;
             document.getElementById('user-date').innerText = `Joined: ${joinedAgo(data.history.joined)}`;
         }
+
+        console.log(data);
+        document.getElementById('verified').innerHTML = data.verified ? `<eui-icon name="verified" width="18" height="18"></eui-icon>` : '';
+        document.getElementById('beta').innerHTML = data.beta ? `<eui-icon name="beta" width="18" height="18"></eui-icon>` : '';
+        document.getElementById('admin').innerHTML = data.permissions.admin ? `<eui-icon name="admin" width="18" height="18"></eui-icon>` : '';
+
         if (document.getElementById('profile-picture') && data.online) {
             document.getElementById('profile-picture').classList.add('online');
         }
