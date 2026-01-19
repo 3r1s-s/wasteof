@@ -16,7 +16,7 @@ import { storage, settings } from './scripts/storage.js';
 import { iconC } from './scripts/icons.js';
 
 import { notificationBadge, checkWom, lovePost, markAsRead, loadMoreUserPosts } from './scripts/api.js';
-import { newPost, newComment, newRepost, pfpModal, bannerModal, logoutModal, saveBio } from './scripts/page-helpers.js';
+import { newPost, newComment, newRepost, pfpModal, bannerModal, logoutModal, saveBio, loginModal } from './scripts/page-helpers.js';
 import { toTop, jump } from "./scripts/utils.js";
 import { haptic } from "./scripts/haptics.js";
 
@@ -89,6 +89,7 @@ router.add('/users/:username', userPage, 'users');
 router.add('/posts/:id', postPage, 'post');
 router.add('/notifications', notificationsPage, 'notifications');
 router.add('/settings', settingsPage, 'settings');
+router.add('/login', loginModal, 'login');
 
 nav.innerHTML = `
     <div class="nav-logo">
@@ -433,9 +434,22 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', eve
 });
 
 const tabBar = document.querySelector("eui-tab-bar");
-tabBar.tabItems = [
-    { path: "/", icon: "home", label: "Home" },
-    { path: "/explore", icon: "search", label: "Explore" },
-    { path: "/notifications", icon: "notifications", label: "Notifications" },
-    { path: "/users/eris", avatar: { name: "Eris", src: "https://eris.cafe/src/assets/image/me.png" }, label: "Profile" },
-];
+
+export function updateTabbar() {
+    let u = storage.get('user');
+    if (!u) {
+        tabBar.tabItems = [
+            { path: "/", icon: "home", label: "Home" },
+            { path: "/explore", icon: "search", label: "Explore" },
+            { path: "/notifications", icon: "notifications", label: "Notifications" },
+            { path: "/login", icon: "user", label: "Profile" },
+        ];
+    } else {
+        tabBar.tabItems = [
+            { path: "/", icon: "home", label: "Home" },
+            { path: "/explore", icon: "search", label: "Explore" },
+            { path: "/notifications", icon: "notifications", label: "Notifications" },
+            { path: `/users/${u}`, avatar: { name: `${u}`, src: `https://api.wasteof.money/users/${u}/picture` }, label: "Profile" },
+        ];
+    }
+}

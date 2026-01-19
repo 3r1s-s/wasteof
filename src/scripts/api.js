@@ -1,7 +1,7 @@
 import { router } from '@3r1s_s/erisui';
 
 import { storage, settings } from './storage.js';
-import { setNotifications, notificationsIcon, content, splash, postImages, backButton } from '../index.js';
+import { setNotifications, notificationsIcon, content, splash, postImages, backButton, updateTabbar } from '../index.js';
 import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener } from './utils.js';
 import { iconC } from './icons.js';
 import { openAlert, closeAlert, loggingIn, closeModal, tooltip } from './modals.js';
@@ -1353,6 +1353,7 @@ export async function checkWom() {
             splash.classList.add('hidden');
         }, 200);
     }
+    updateTabbar();
 }
 
 function formatPost(html) {
