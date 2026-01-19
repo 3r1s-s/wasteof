@@ -389,7 +389,16 @@ export async function getSearch(query) {
 
     document.querySelector('.explore-users').innerHTML = '';
     data2.results.forEach(data => {
-        document.querySelector('.explore-users').innerHTML += createNameplate(data.name, true);
+        const temp = document.createElement('div');
+        temp.innerHTML = createNameplate(data.name, true).trim();
+
+        const userElement = temp.firstChild;
+        userElement.addEventListener('click', () => {
+            event.stopPropagation();
+            router.navigate('/users/' + data.name);
+        });
+
+        document.querySelector('.explore-users').appendChild(userElement);
     })
 }
 
@@ -710,7 +719,6 @@ export async function loadUserInfo(user) {
             document.getElementById('user-date').innerText = `Joined: ${joinedAgo(data.history.joined)}`;
         }
 
-        console.log(data);
         document.getElementById('verified').innerHTML = data.verified ? `<eui-icon name="verified" width="18" height="18"></eui-icon>` : '';
         document.getElementById('beta').innerHTML = data.beta ? `<eui-icon name="beta" width="18" height="18"></eui-icon>` : '';
         document.getElementById('admin').innerHTML = data.permissions.admin ? `<eui-icon name="admin" width="18" height="18"></eui-icon>` : '';
@@ -998,7 +1006,6 @@ function openNotification(data) {
     if (data.type === 'follow') {
         router.navigate('/users/' + data.data.actor.name);
     } else if (data.type === 'repost') {
-        console.log(data.data.post._id);
         router.navigate('/posts/' + data.data.post._id);
     } else if (data.type === 'comment') {
         router.navigate('/posts/' + data.data.comment.post);
