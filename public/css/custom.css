@@ -231,6 +231,7 @@ input::placeholder {
     display: inline-flex;
     align-items: center;
     margin-left: 0.25rem;
+    margin-top: 2px;
 }
 
 #bio {
