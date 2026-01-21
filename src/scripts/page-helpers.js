@@ -76,8 +76,8 @@ export function newPost() {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: sendModalPost }],
+        headerRight: `<eui-button class="modal-close" border-radius="100" width="50" height="50"><eui-icon name="cross"></eui-icon></eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <div class="create-post" id="create-post">
                 <div class="pfp-container">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
@@ -177,8 +177,8 @@ export function newRepost(id) {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: () => { sendModalRepost(id) } }],
+        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <div class="create-post">
                 <div class="pfp-container">
                     <div class="pfp" style="--image: url('https://api.wasteof.money/users/${storage.get('user')}/picture');"></div>
@@ -232,8 +232,8 @@ export function newComment(id, parent, postid) {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: () => sendModalComment(id, parent, postid) }],
+        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <div class="replying-to">
                 <div class="content-center" id="preview-loading" style="padding:0.25rem;">
                 <eui-loader></eui-loader>
@@ -308,8 +308,8 @@ export function pfpModal() {
         mx: 400,
         my: 300,
         buttons: [],
+        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
                 ${iconC.attachment}
@@ -329,8 +329,8 @@ export function bannerModal() {
         mx: 400,
         my: 300,
         buttons: [],
+        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
                 ${iconC.attachment}
@@ -357,8 +357,8 @@ async function editPfpModal() {
                     { text: 'Cancel', action: closeModal },
                     { text: 'Save', action: saveCroppedPfp, highlight: true }
                 ],
+                headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
                 body: `
-                    <div class="modal-close">${iconC.cross}</div>
                     <h3 class="modal-center-title">Adjust Profile Picture</h3>
                     <div class="image-cropper">
                         <div class="crop-container">
@@ -394,11 +394,11 @@ async function editBannerModal() {
                 mx: 400,
                 my: 300,
                 buttons: [
-                    { text: 'Cancel', action: 'closeModal()' },
+                    { text: 'Cancel', action: closeModal },
                     { text: 'Save', action: () => saveBanner(), highlight: true }
                 ],
+                headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
                 body: `
-                    <div class="modal-close">${iconC.cross}</div>
                     <h3 class="modal-center-title">Preview Banner</h3>
                     <div class="banner-section">
                         <img src="${imageData}" id="crop-image banner" class="banner-crop" draggable="false">
@@ -416,11 +416,11 @@ export function reportModal(id) {
     openModal({
         mx: 400,
         buttons: [
-            { text: 'Cancel', action: 'closeModal()' },
-            { text: 'Report', action: `sendReportModal('${id}')`, highlight: true }
+            { text: 'Cancel', action: closeModal },
+            { text: 'Report', action: () => sendReportModal(id), highlight: true }
         ],
+        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
-            <div class="modal-close">${iconC.cross}</div>
             <h3 class="modal-center-title">Report Post</h3>
             <div class="post-report" id="post-repost"></div>
 

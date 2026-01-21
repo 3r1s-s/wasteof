@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@3r1s_s/erisui": "^1.0.26",
+    "@3r1s_s/erisui": "^1.0.34",
     "vite": "^7.1.12"
   },
   "devDependencies": {
