@@ -91,14 +91,14 @@ export function openModal(data) {
     if (data.small) modal.classList.add('small');
     if (data.post) modal.classList.add('post-modal');
     if (data.login) modal.classList.add('login-modal-colors');
-
-    modal.open();
+    setTimeout(() => {
+        modal.open();
+    }, 10);
 }
 
 export function closeModal() {
     if (modal) modal.close();
 }
-
 
 export function openAlert(data) {
     const modalOuter = document.querySelector(".alert-outer");
