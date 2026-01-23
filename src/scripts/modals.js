@@ -212,7 +212,7 @@ export function loggingIn(g) {
         title: g || 'Logging in...',
         buttons: false
     });
-    alert.classList.add('logging-in');
+    document.querySelector('.alert')?.classList.add('logging-in');
 }
 
 export function workingAlert(g) {
@@ -220,7 +220,7 @@ export function workingAlert(g) {
         title: g || 'Working...',
         buttons: false
     });
-    alert.classList.add('logging-in');
+    document.querySelector('.alert')?.classList.add('logging-in');
 }
 
 export function tooltip(data) {
