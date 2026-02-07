@@ -2,7 +2,7 @@ import { router } from '@3r1s_s/erisui';
 
 import { storage, settings } from './storage.js';
 import { setNotifications, notificationsIcon, content, splash, postImages, backButton, updateTabbar } from '../index.js';
-import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener } from './utils.js';
+import { timeAgo, joinedAgo, sanitize, updateContext, dropdownListeners, repostListener, usernameIsValid } from './utils.js';
 import { iconC } from './icons.js';
 import { openAlert, closeAlert, loggingIn, closeModal, tooltip } from './modals.js';
 import { settingsPage } from '../pages/settings.js';
@@ -48,20 +48,30 @@ export const manageCache = (() => {
 
 export function login(user, pass) {
     loggingIn(false);
+
+    user = user.toLowerCase().trim();
+    if (!usernameIsValid(user)) {
+        closeAlert();
+        setTimeout(() => {
+            openAlert({ title: 'Invalid username', message: 'Usernames must be between 1 and 20 characters long and can only contain letters, numbers, underscores, and dashes.' });
+        }, 500);
+        return;
+    }
+
     fetch('https://api.wasteof.money/session', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: user.toLowerCase(),
+            username: user,
             password: pass
         })
     }).then(res => res.json()).then(data => {
         if (data.token) {
             console.log("Logged in!");
             storage.set('token', data.token);
-            storage.set('user', user.toLowerCase());
+            storage.set('user', user);
             storage.set('session', true);
 
             closeAlert();

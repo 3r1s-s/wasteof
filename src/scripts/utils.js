@@ -267,3 +267,9 @@ export function setTranslucentTitle(e) {
         title.style = ``;
     }, 10);
 }
+
+export function usernameIsValid(username) {
+    return (
+        username.length >= 1 && username.length <= 20
+    ) && !(/[^-\w]/g.test(username));
+}
