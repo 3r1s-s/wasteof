@@ -76,7 +76,6 @@ export function newPost() {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: sendModalPost }],
-        headerRight: `<eui-button class="modal-close" border-radius="100" width="50" height="50"><eui-icon name="cross"></eui-icon></eui-button>`,
         body: `
             <div class="create-post" id="create-post">
                 <div class="pfp-container">
@@ -107,7 +106,6 @@ export function newPost() {
     }
 
     const input = document.querySelector('.post-input');
-    const close = document.querySelector('.modal-close');
 
     input.addEventListener('input', () => {
         input.style.height = `24px`;
@@ -119,10 +117,6 @@ export function newPost() {
             e.preventDefault();
             sendModalPost();
         }
-    });
-
-    close.addEventListener('click', () => {
-        closeModal();
     });
 
     document.getElementById('append-image').addEventListener('click', () => {
@@ -177,7 +171,6 @@ export function newRepost(id) {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: () => { sendModalRepost(id) } }],
-        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
             <div class="create-post">
                 <div class="pfp-container">
@@ -232,7 +225,6 @@ export function newComment(id, parent, postid) {
     openModal({
         post: true,
         buttons: [{ text: 'Post', action: () => sendModalComment(id, parent, postid) }],
-        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
             <div class="replying-to">
                 <div class="content-center" id="preview-loading" style="padding:0.25rem;">
@@ -308,7 +300,6 @@ export function pfpModal() {
         mx: 400,
         my: 300,
         buttons: [],
-        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
@@ -329,7 +320,6 @@ export function bannerModal() {
         mx: 400,
         my: 300,
         buttons: [],
-        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
             <h3 class="modal-center-title">Upload Image</h3>
             <div class="upload-image" style="margin: auto;">
@@ -357,7 +347,6 @@ async function editPfpModal() {
                     { text: 'Cancel', action: closeModal },
                     { text: 'Save', action: saveCroppedPfp, highlight: true }
                 ],
-                headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
                 body: `
                     <h3 class="modal-center-title">Adjust Profile Picture</h3>
                     <div class="image-cropper">
@@ -397,7 +386,6 @@ async function editBannerModal() {
                     { text: 'Cancel', action: closeModal },
                     { text: 'Save', action: () => saveBanner(), highlight: true }
                 ],
-                headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
                 body: `
                     <h3 class="modal-center-title">Preview Banner</h3>
                     <div class="banner-section">
@@ -419,7 +407,6 @@ export function reportModal(id) {
             { text: 'Cancel', action: closeModal },
             { text: 'Report', action: () => sendReportModal(id), highlight: true }
         ],
-        headerRight: `<eui-button type="transparent" class="modal-close">${iconC.cross}</eui-button>`,
         body: `
             <h3 class="modal-center-title">Report Post</h3>
             <div class="post-report" id="post-repost"></div>

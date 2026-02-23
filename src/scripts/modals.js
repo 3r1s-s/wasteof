@@ -27,13 +27,10 @@ export function openModal(data) {
         }
     }
 
-    if (data.headerRight) {
-        const el = document.createRange().createContextualFragment(data.headerRight.trim()).firstElementChild;
-        if (el) {
-            el.slot = 'header-right';
-            modal.appendChild(el);
-        }
-    }
+    const el = document.createRange().createContextualFragment(`<eui-button class="modal-close" border-radius="100" width="50" height="50"><eui-icon name="cross"></eui-icon></eui-button>`).firstElementChild;
+    el.slot = 'header-right';
+    el.addEventListener('click', closeModal);
+    modal.appendChild(el);
 
     if (data.body) {
         const bodyDiv = document.createElement('div');
@@ -84,10 +81,35 @@ export function openModal(data) {
         modal.id = data.id;
     }
 
-    if (data.mx) modal.setAttribute('width', data.mx + 'px');
-    if (data.my) modal.setAttribute('height', data.my + 'px');
+    if (data.mx) {
+        modal.setAttribute('width', data.mx + 'px');
+    } else {
+        modal.removeAttribute('width');
+    }
+
+    if (data.my) {
+        modal.setAttribute('height', data.my + 'px');
+    } else {
+        modal.removeAttribute('height');
+    }
 
     modal.className = '';
+
+    if (!modal.shadowRoot.querySelector('#desktop-anim-fix')) {
+        const style = document.createElement('style');
+        style.id = 'desktop-anim-fix';
+        style.textContent = `
+            @media (min-width: 768px) {
+                :host(.closing) .modal,
+                :host([type="alert"].closing) .modal {
+                    transform: scale(0.95) !important;
+                    opacity: 0 !important;
+                    transition: transform 0.2s cubic-bezier(0.38, 1.21, 0.22, 1), opacity 0.2s ease-out !important;
+                }
+            }
+        `;
+        modal.shadowRoot.appendChild(style);
+    }
     if (data.small) modal.classList.add('small');
     if (data.post) modal.classList.add('post-modal');
     if (data.login) modal.classList.add('login-modal-colors');
