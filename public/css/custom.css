@@ -441,8 +441,7 @@ input::placeholder {
     resize: none;
     outline: none;
     border: none;
-    background-color: var(--app-200);
-    /* originally 400 */
+    background-color: var(--app-400);
     color: var(--app-text);
     border-radius: 0px;
     padding: 0px;
