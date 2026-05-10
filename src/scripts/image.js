@@ -84,7 +84,7 @@ export async function saveCroppedPfp() {
     canvas.width = outputSize;
     canvas.height = outputSize;
 
-    const baseScale = containerRect.width / img.width;
+    const baseScale = Math.min(1, containerRect.width / img.width, containerRect.height / img.height);
 
     const imgX = cropperState.posX + (containerRect.width - img.width * cropperState.scale * baseScale) / 2;
     const imgY = cropperState.posY + (containerRect.height - img.height * cropperState.scale * baseScale) / 2;
