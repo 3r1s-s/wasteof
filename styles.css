@@ -468,6 +468,18 @@ span.logo>svg {
     border-radius: 100px;
     padding: 0.5rem;
     z-index: 100;
+
+    width: 46px;
+    height: 46px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading eui-loader {
+    width: 24px;
+    height: 24px;
 }
 
 /* Post */
