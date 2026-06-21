@@ -91,6 +91,8 @@ router.add('/notifications', notificationsPage, 'notifications');
 router.add('/settings', settingsPage, 'settings');
 router.add('/login', loginModal, 'login');
 
+router.add("/@:username", userPage, "users");
+
 nav.innerHTML = `
     <div class="nav-logo">
         <span class="logo">${iconC.wom}</span>
