@@ -1,7 +1,7 @@
 {
   "name": "worm",
   "version": "1.0.0",
-  "description": "",
+  "description": "<h1 align=\"center\">wasteof</h1> <p align=\"center\">I don't have a unique name yet ok</p>",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
@@ -18,5 +18,13 @@
   },
   "devDependencies": {
     "gh-pages": "^6.3.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3r1s-s/wasteof.git"
+  },
+  "bugs": {
+    "url": "https://github.com/3r1s-s/wasteof/issues"
+  },
+  "homepage": "https://github.com/3r1s-s/wasteof#readme"
 }

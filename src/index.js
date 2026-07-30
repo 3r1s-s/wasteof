@@ -455,3 +455,24 @@ export function updateTabbar() {
         ];
     }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    if (storage.get('show-worm-modal') === 'false') return;
+
+    openModal({
+        title: "Try Worm",
+        body: `
+        <span>Hi, this client is no longer being maintained. Check out <a href="https://worm.eris.cafe">Worm</a> for a newer more modern wasteof.money client.</span>
+        `,
+        buttons: [
+            {
+                text: "Close",
+                action: () => {
+                    closeModal();
+                    storage.set('show-worm-modal', 'false');
+                }
+            },
+            { text: "Go to Worm", action: () => window.open("https://worm.eris.cafe", "_self") },
+        ],
+    });
+});
